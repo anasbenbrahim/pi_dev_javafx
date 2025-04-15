@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="Controller.AdminPublicationController">
+    <TabPane layoutX="10" layoutY="10" prefWidth="800" prefHeight="600">
+
+        <!-- Tab 1: Publications -->
+        <Tab text="Publications">
+            <VBox spacing="10">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+                <TableView fx:id="adminTableView" prefHeight="300">
+                    <columns>
+                        <TableColumn fx:id="titreColumn" text="Titre"/>
+                        <TableColumn fx:id="descriptionColumn" text="Description"/>
+                        <TableColumn fx:id="dateColumn" text="Date"/>
+                        <TableColumn fx:id="imageColumn" text="Image URL"/>
+                        <TableColumn fx:id="deleteButtonColumn" text="Action"/>
+                    </columns>
+                </TableView>
+            </VBox>
+        </Tab>
+
+        <!-- Tab 2: Reclamations -->
+        <Tab text="Reclamations">
+            <VBox spacing="10">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+                <TableView fx:id="reclamationTableView" prefHeight="300">
+                    <columns>
+                        <TableColumn fx:id="reclamationTitreColumn" text="Titre"/>
+                        <TableColumn fx:id="reclamationDescriptionColumn" text="Description"/>
+                        <TableColumn fx:id="reclamationDateColumn" text="Date"/>
+                        <TableColumn fx:id="reclamationStatusColumn" text="Status"/>
+                        <TableColumn fx:id="approveColumn" text="Approve"/>
+                        <TableColumn fx:id="deleteReclamationColumn" text="Delete"/>
+                    </columns>
+                </TableView>
+            </VBox>
+        </Tab>
+    </TabPane>
+</AnchorPane>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="500.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AfficherPublicationController">
+    <children>
+        <Button fx:id="addPublicationBtn" layoutX="750.0" layoutY="10.0" mnemonicParsing="false" onAction="#openAddPublicationForm" text="Ajouter Publication" />
+        <Button fx:id="adminButton" layoutX="630.0" layoutY="10.0" mnemonicParsing="false" onAction="#openAdminPanel" text="Admin" />
+
+        <TableView fx:id="tableView" layoutX="30.0" layoutY="50.0" prefHeight="400.0" prefWidth="840.0">
+            <columns>
+                <TableColumn fx:id="titreColumn" prefWidth="100.0" text="Titre" />
+                <TableColumn fx:id="descriptionColumn" prefWidth="150.0" text="Description" />
+                <TableColumn fx:id="dateColumn" prefWidth="100.0" text="Date" />
+                <TableColumn fx:id="imageColumn" prefWidth="100.0" text="Image" />
+
+                <TableColumn fx:id="testbutton" prefWidth="75.0" text="Modifier" />
+                <TableColumn fx:id="voirbutton" prefWidth="50.0" text="Voir" />
+                <TableColumn fx:id="supprimerbutton" prefWidth="75.0" text="Supprimer" />
+                <TableColumn fx:id="reclamationButton" prefWidth="75.0" text="Reclamer" />
+                <TableColumn fx:id="viewMyReclamationButton" prefWidth="120.0" text="Ma Réclamation" />
+            </columns>
+        </TableView>
+    </children>
+</AnchorPane>

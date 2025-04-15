@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="Controller.AddReclamationController" spacing="10">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Titre:"/>
+    <TextField fx:id="titreField" promptText="Enter titre"/>
+
+    <Label text="Description:"/>
+    <TextArea fx:id="descriptionField" promptText="Enter details" prefHeight="100"/>
+
+    <Button text="Submit Reclamation" onAction="#handleAddReclamation"/>
+</VBox>
