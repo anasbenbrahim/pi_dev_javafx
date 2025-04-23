@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.pidev.FermierDashboard">
+
+    <!-- Top Navigation Bar -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="20" styleClass="top-bar">
+            <padding>
+                <Insets bottom="15" left="20" right="20" top="15" />
+            </padding>
+
+            <HBox alignment="CENTER_LEFT" spacing="10">
+
+                <Text styleClass="app-title" text="AgriConnect Fournisseur Dashboard" />
+            </HBox>
+
+            <HBox HBox.hgrow="ALWAYS" />
+
+            <Label fx:id="welcomeLabel" styleClass="welcome-text" text="Welcome, Fournisseur" />
+
+            <Button onAction="#handleLogout" styleClass="logout-button" text="Logout">
+                <graphic>
+
+                </graphic>
+            </Button>
+        </HBox>
+    </top>
+
+    <!-- Left Sidebar - Modern Design -->
+    <left>
+        <VBox prefWidth="220" spacing="15" styleClass="sidebar">
+            <padding>
+                <Insets bottom="25" left="15" right="15" top="25" />
+            </padding>
+
+            <!-- Profile Section -->
+            <VBox alignment="CENTER" spacing="10" styleClass="profile-section">
+                <StackPane>
+                    <Circle fill="WHITE" radius="40" />
+
+                </StackPane>
+                <Text styleClass="doctor-name" text="Fournisseur" />
+
+                <Separator styleClass="divider" />
+            </VBox>
+
+            <!-- Menu Items -->
+            <VBox spacing="8" styleClass="menu-items">
+                <Button onAction="#showDashboard" styleClass="menu-button" text="Dashboard">
+                    <graphic>
+
+                    </graphic>
+                </Button>
+
+
+            </VBox>
+
+            <VBox VBox.vgrow="ALWAYS" />
+
+            <!-- Bottom Menu Items -->
+            <VBox spacing="8" styleClass="bottom-menu">
+                <Button onAction="#showProfile" styleClass="menu-button" text="My Profile">
+                    <graphic>
+
+                    </graphic>
+                </Button>
+
+                <Button onAction="#showSettings" styleClass="menu-button" text="Settings">
+                    <graphic>
+
+                    </graphic>
+                </Button>
+            </VBox>
+        </VBox>
+    </left>
+
+    <!-- Main Content Area -->
+    <center>
+        <StackPane>
+            <!-- Dashboard Panel (Default View) -->
+            <VBox fx:id="dashboardPane" spacing="20" visible="true">
+                <padding>
+                    <Insets bottom="20" left="20" right="20" top="20" />
+                </padding>
+
+                <HBox spacing="20">
+                    <VBox styleClass="stats-card" HBox.hgrow="ALWAYS">
+                        <HBox alignment="CENTER_LEFT" spacing="10">
+
+                            <Text styleClass="stats-title" text="Users" />
+                        </HBox>
+                        <Text fx:id="todayAppointmentsCount" styleClass="stats-value" text="0" />
+                    </VBox>
+
+                    <VBox styleClass="stats-card" HBox.hgrow="ALWAYS">
+                        <HBox alignment="CENTER_LEFT" spacing="10">
+
+                            <Text styleClass="stats-title" text="Products" />
+                        </HBox>
+                        <Text fx:id="totalPatientsCount" styleClass="stats-value" text="0" />
+                    </VBox>
+
+                    <VBox styleClass="stats-card" HBox.hgrow="ALWAYS">
+                        <HBox alignment="CENTER_LEFT" spacing="10">
+
+                            <Text styleClass="stats-title" text="Equippements" />
+                        </HBox>
+                        <Text fx:id="pendingReportsCount" styleClass="stats-value" text="0" />
+                    </VBox>
+                </HBox>
+
+                <VBox styleClass="content-card" VBox.vgrow="ALWAYS">
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+
+                        <Text styleClass="card-title" text="Statistiques" />
+                    </HBox>
+
+
+                </VBox>
+
+                <HBox spacing="20">
+                    <VBox styleClass="content-card" HBox.hgrow="ALWAYS">
+                        <HBox alignment="CENTER_LEFT" spacing="10">
+
+                            <Text styleClass="card-title" text="Recent Notifications" />
+                        </HBox>
+
+                        <ListView fx:id="notificationsListView" prefHeight="200" styleClass="notification-list" />
+                    </VBox>
+
+                    <VBox styleClass="content-card" HBox.hgrow="ALWAYS">
+                        <HBox alignment="CENTER_LEFT" spacing="10">
+
+                            <Text styleClass="card-title" text="Quick Actions" />
+                        </HBox>
+
+                        <HBox alignment="CENTER" spacing="15" styleClass="quick-actions-box">
+
+
+                        </HBox>
+                    </VBox>
+                </HBox>
+            </VBox>
+
+            <!-- Other content panes -->
+            <VBox fx:id="appointmentsPane" spacing="20" visible="false">
+                <padding>
+                    <Insets bottom="20" left="20" right="20" top="20" />
+                </padding>
+                <Text styleClass="page-title" text="My Appointments" />
+            </VBox>
+
+            <VBox fx:id="patientRecordsPane" spacing="20" visible="false">
+                <padding>
+                    <Insets bottom="20" left="20" right="20" top="20" />
+                </padding>
+                <Text styleClass="page-title" text="Patient Records" />
+            </VBox>
+
+            <VBox fx:id="prescriptionsPane" spacing="20" visible="false">
+                <padding>
+                    <Insets bottom="20" left="20" right="20" top="20" />
+                </padding>
+                <Text styleClass="page-title" text="Prescriptions" />
+            </VBox>
+
+            <VBox fx:id="medicalNotesPane" spacing="20" visible="false">
+                <padding>
+                    <Insets bottom="20" left="20" right="20" top="20" />
+                </padding>
+                <Text styleClass="page-title" text="Medical Notes" />
+            </VBox>
+
+            <!-- User Management Pane -->
+            <VBox fx:id="userManagementPane" spacing="20" visible="false">
+                <padding>
+                    <Insets bottom="20" left="20" right="20" top="20" />
+                </padding>
+                <fx:include fx:id="userManagementContent" source="UserManagement.fxml" />
+            </VBox>
+
+            <VBox fx:id="profilePane" spacing="20" visible="false">
+                <padding>
+                    <Insets bottom="20" left="20" right="20" top="20" />
+                </padding>
+                <Text styleClass="page-title" text="My Profile" />
+            </VBox>
+
+            <VBox fx:id="settingsPane" spacing="20" visible="false">
+                <padding>
+                    <Insets bottom="20" left="20" right="20" top="20" />
+                </padding>
+                <Text styleClass="page-title" text="Settings" />
+            </VBox>
+        </StackPane>
+    </center>
+
+    <!-- Footer -->
+    <bottom>
+        <HBox alignment="CENTER" styleClass="footer">
+            <padding>
+                <Insets bottom="10" left="20" right="20" top="10" />
+            </padding>
+            <Label styleClass="footer-text" text="© 2025 AgriConnect" />
+        </HBox>
+    </bottom>
+    <stylesheets>
+
+        <URL value="@styles/dashboard.css" />
+
+    </stylesheets>
+</BorderPane>

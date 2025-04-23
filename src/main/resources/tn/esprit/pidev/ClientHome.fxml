@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="background-image" stylesheets="@styles/clientHome.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.pidev.ClientHomeController">
+    <top>
+        <HBox alignment="CENTER" prefHeight="81.0" prefWidth="1279.0" stylesheets="@styles/clientHome.css" BorderPane.alignment="CENTER">
+            <children>
+                  <ImageView fitHeight="90" fitWidth="90" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
+                      <image>
+                          <Image url="@images/logo.png" />
+                      </image>
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
+                  </ImageView>
+                  <TextField promptText="AgriConnect...." styleClass="transparent" stylesheets="@styles/clientHome.css">
+                      <font>
+                          <Font name="Andalus" size="20.0" />
+                      </font>
+                      <HBox.margin>
+                          <Insets left="10.0" />
+                      </HBox.margin>
+                  </TextField>
+                <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                <HBox alignment="CENTER" prefHeight="81.0" prefWidth="286.0" />
+                <Button fx:id="loginButton" mnemonicParsing="false" onAction="#navigerToLogin" prefHeight="61.0" prefWidth="88.0" styleClass="transparent-button" stylesheets="@styles/clientHome.css" text="Login" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
+                    <font>
+                        <Font name="Andalus" size="20.0" />
+                    </font>
+               <opaqueInsets>
+                  <Insets top="5.0" />
+               </opaqueInsets>
+               <HBox.margin>
+                  <Insets right="15.0" />
+               </HBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+                </Button>
+                <Button fx:id="signupButton" mnemonicParsing="false" onAction="#navigerToRegister" prefHeight="61.0" prefWidth="115.0" styleClass="transparent-button" stylesheets="@styles/clientHome.css" text="Register" textFill="WHITE" HBox.hgrow="NEVER">
+                    <font>
+                        <Font name="Andalus" size="20.0" />
+                    </font>
+                    <HBox.margin>
+                        <Insets right="20.0" />
+                    </HBox.margin>
+                </Button>
+            </children>
+            <BorderPane.margin>
+                <Insets />
+            </BorderPane.margin>
+            <styleClass>
+                <String fx:value="top-bar" />
+                <String fx:value="shadow" />
+            </styleClass>
+        </HBox>
+    </top>
+    <center>
+        <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER_LEFT">
+            <children>
+                <Label text="WE ARE OPEN 24/24 INCLUDING MAJOR HOLIDAYS" textFill="WHITE">
+                    <font>
+                        <Font name="Andalus" size="18.0" />
+                    </font>
+                </Label>
+                <Label text="Welcom To &#10;AgriConnect&#10;" textFill="WHITE">
+                    <font>
+                        <Font name="Andalus" size="72.0" />
+                    </font>
+                </Label>
+                <Label text="Rent a Car Online Today &amp; Enjoy The Best Deal, Rent &amp; Accessories" textFill="WHITE">
+                    <font>
+                        <Font name="Andalus" size="18.0" />
+                    </font>
+                </Label>
+                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="60.0">
+                    <children>
+                        <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="170.0" stylesheets="@styles/clientHome.css" text="Join" textFill="WHITE">
+                            <font>
+                                <Font name="Andalus" size="24.0" />
+                            </font>
+                            <styleClass>
+                                <String fx:value="purple-button" />
+                                <String fx:value="shadow" />
+                            </styleClass>
+                        </Button>
+                    </children>
+                </HBox>
+            </children>
+            <BorderPane.margin>
+                <Insets left="100.0" />
+            </BorderPane.margin>
+        </VBox>
+    </center>
+    <bottom>
+        <HBox prefHeight="265.0" prefWidth="1279.0" spacing="50.0" BorderPane.alignment="CENTER">
+            <children>
+                <VBox prefHeight="200.0" prefWidth="303.0" stylesheets="@styles/clientHome.css">
+                    <children>
+                        <HBox prefHeight="56.0" prefWidth="303.0">
+                            <children>
+                                <Label prefHeight="56.0" prefWidth="231.0" text="G.Produits" textFill="WHITE">
+                                    <font>
+                                        <Font name="Andalus" size="24.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                            <VBox.margin>
+                                <Insets left="20.0" top="10.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <Label prefHeight="21.0" prefWidth="306.0" styleClass="shadow" stylesheets="@styles/clientHome.css" text="Preparer par Mannai Dhia" textFill="#0e943b">
+                            <font>
+                                <Font name="Andalus" size="18.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets left="20.0" />
+                            </VBox.margin>
+                        </Label>
+                        <HBox prefHeight="56.0" prefWidth="303.0">
+                            <children>
+                                <Label prefHeight="56.0" prefWidth="188.0" text="Nbr" textFill="WHITE">
+                                    <font>
+                                        <Font name="Andalus" size="24.0" />
+                                    </font>
+                                </Label>
+                                <Label prefHeight="57.0" prefWidth="125.0" styleClass="shadow" stylesheets="@styles/clientHome.css" text="700" textFill="WHITE">
+                                    <font>
+                                        <Font name="Andalus" size="36.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                            <VBox.margin>
+                                <Insets left="20.0" top="10.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                            <VBox.margin>
+                                <Insets top="10.0" />
+                            </VBox.margin>
+                            <children>
+                                <Button mnemonicParsing="false" prefHeight="41.0" prefWidth="122.0" stylesheets="@styles/clientHome.css" text="More" textFill="WHITE">
+                                    <font>
+                                        <Font name="Andalus" size="18.0" />
+                                    </font>
+                                    <styleClass>
+                                        <String fx:value="transparent-button" />
+                                        <String fx:value="shadow" />
+                                    </styleClass>
+                                </Button>
+                                <Button mnemonicParsing="false" prefHeight="41.0" prefWidth="122.0" stylesheets="@styles/clientHome.css" text="Rent" textFill="WHITE">
+                                    <font>
+                                        <Font name="Andalus" size="18.0" />
+                                    </font>
+                                    <styleClass>
+                                        <String fx:value="pink-button" />
+                                        <String fx:value="shadow" />
+                                    </styleClass>
+                                </Button>
+                            </children>
+                        </HBox>
+                    </children>
+                    <styleClass>
+                        <String fx:value="offer-background" />
+                        <String fx:value="shadow" />
+                    </styleClass>
+                </VBox>
+                <VBox prefHeight="200.0" prefWidth="303.0" stylesheets="@styles/clientHome.css">
+                    <children>
+                        <HBox prefHeight="56.0" prefWidth="303.0">
+                            <children>
+                                <Label prefHeight="56.0" prefWidth="231.0" text="G.Equipements" textFill="WHITE">
+                                    <font>
+                                        <Font name="Andalus" size="24.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                            <VBox.margin>
+                                <Insets left="20.0" top="10.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <Label prefHeight="21.0" prefWidth="306.0" styleClass="shadow" stylesheets="@styles/clientHome.css" text="Preparer par Jeribi Aziz" textFill="#0e943b">
+                            <font>
+                                <Font name="Andalus" size="18.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets left="20.0" />
+                            </VBox.margin>
+                        </Label>
+                        <HBox prefHeight="56.0" prefWidth="303.0">
+                            <children>
+                                <Label prefHeight="56.0" prefWidth="188.0" text="Nbr" textFill="WHITE">
+                                    <font>
+                                        <Font name="Andalus" size="24.0" />
+                                    </font>
+                                </Label>
+                                <Label prefHeight="57.0" prefWidth="125.0" styleClass="shadow" stylesheets="@styles/clientHome.css" text="800" textFill="WHITE">
+                                    <font>
+                                        <Font name="Andalus" size="36.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                            <VBox.margin>
+                                <Insets left="20.0" top="10.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                            <VBox.margin>
+                                <Insets top="10.0" />
+                            </VBox.margin>
+                            <children>
+                                <Button mnemonicParsing="false" prefHeight="41.0" prefWidth="122.0" stylesheets="@styles/clientHome.css" text="More" textFill="WHITE">
+                                    <font>
+                                        <Font name="Andalus" size="18.0" />
+                                    </font>
+                                    <styleClass>
+                                        <String fx:value="transparent-button" />
+                                        <String fx:value="shadow" />
+                                    </styleClass>
+                                </Button>
+                                <Button mnemonicParsing="false" prefHeight="41.0" prefWidth="122.0" stylesheets="@styles/clientHome.css" text="Rent" textFill="WHITE">
+                                    <font>
+                                        <Font name="Andalus" size="18.0" />
+                                    </font>
+                                    <styleClass>
+                                        <String fx:value="pink-button" />
+                                        <String fx:value="shadow" />
+                                    </styleClass>
+                                </Button>
+                            </children>
+                        </HBox>
+                    </children>
+                    <styleClass>
+                        <String fx:value="offer-background" />
+                        <String fx:value="shadow" />
+                    </styleClass>
+                </VBox>
+                <VBox prefHeight="200.0" prefWidth="303.0" stylesheets="@styles/clientHome.css">
+                    <children>
+                        <HBox prefHeight="56.0" prefWidth="303.0">
+                            <children>
+                                <Label prefHeight="56.0" prefWidth="231.0" text="G.Publication" textFill="WHITE">
+                                    <font>
+                                        <Font name="Andalus" size="24.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                            <VBox.margin>
+                                <Insets left="20.0" top="10.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <Label prefHeight="21.0" prefWidth="306.0" styleClass="shadow" stylesheets="@styles/clientHome.css" text="Preparer par Graja Amin" textFill="#0e943b">
+                            <font>
+                                <Font name="Andalus" size="18.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets left="20.0" />
+                            </VBox.margin>
+                        </Label>
+                        <HBox prefHeight="56.0" prefWidth="303.0">
+                            <children>
+                                <Label prefHeight="56.0" prefWidth="188.0" text="Nbr" textFill="WHITE">
+                                    <font>
+                                        <Font name="Andalus" size="24.0" />
+                                    </font>
+                                </Label>
+                                <Label prefHeight="57.0" prefWidth="125.0" styleClass="shadow" stylesheets="@styles/clientHome.css" text="20" textFill="WHITE">
+                                    <font>
+                                        <Font name="Andalus" size="36.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                            <VBox.margin>
+                                <Insets left="20.0" top="10.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                            <VBox.margin>
+                                <Insets top="10.0" />
+                            </VBox.margin>
+                            <children>
+                                <Button mnemonicParsing="false" prefHeight="41.0" prefWidth="122.0" stylesheets="@styles/clientHome.css" text="More" textFill="WHITE">
+                                    <font>
+                                        <Font name="Andalus" size="18.0" />
+                                    </font>
+                                    <styleClass>
+                                        <String fx:value="transparent-button" />
+                                        <String fx:value="shadow" />
+                                    </styleClass>
+                                </Button>
+                                <Button mnemonicParsing="false" prefHeight="41.0" prefWidth="122.0" stylesheets="@styles/clientHome.css" text="Rent" textFill="WHITE">
+                                    <font>
+                                        <Font name="Andalus" size="18.0" />
+                                    </font>
+                                    <styleClass>
+                                        <String fx:value="pink-button" />
+                                        <String fx:value="shadow" />
+                                    </styleClass>
+                                </Button>
+                            </children>
+                        </HBox>
+                    </children>
+                    <styleClass>
+                        <String fx:value="offer-background" />
+                        <String fx:value="shadow" />
+                    </styleClass>
+                </VBox>
+                <VBox prefHeight="200.0" prefWidth="303.0" stylesheets="@styles/clientHome.css">
+                    <children>
+                        <HBox prefHeight="56.0" prefWidth="303.0">
+                            <children>
+                                <Label prefHeight="56.0" prefWidth="231.0" text="G.Events" textFill="WHITE">
+                                    <font>
+                                        <Font name="Andalus" size="24.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                            <VBox.margin>
+                                <Insets left="20.0" top="10.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <Label prefHeight="21.0" prefWidth="306.0" styleClass="shadow" stylesheets="@styles/clientHome.css" text="Preparer par Benkhebab Med" textFill="#0e943b">
+                            <font>
+                                <Font name="Andalus" size="18.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets left="20.0" />
+                            </VBox.margin>
+                        </Label>
+                        <HBox prefHeight="56.0" prefWidth="303.0">
+                            <children>
+                                <Label prefHeight="56.0" prefWidth="188.0" text="Nbr" textFill="WHITE">
+                                    <font>
+                                        <Font name="Andalus" size="24.0" />
+                                    </font>
+                                </Label>
+                                <Label prefHeight="57.0" prefWidth="125.0" styleClass="shadow" stylesheets="@styles/clientHome.css" text="90" textFill="WHITE">
+                                    <font>
+                                        <Font name="Andalus" size="36.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                            <VBox.margin>
+                                <Insets left="20.0" top="10.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                            <VBox.margin>
+                                <Insets top="10.0" />
+                            </VBox.margin>
+                            <children>
+                                <Button mnemonicParsing="false" prefHeight="41.0" prefWidth="122.0" stylesheets="@styles/clientHome.css" text="More" textFill="WHITE">
+                                    <font>
+                                        <Font name="Andalus" size="18.0" />
+                                    </font>
+                                    <styleClass>
+                                        <String fx:value="transparent-button" />
+                                        <String fx:value="shadow" />
+                                    </styleClass>
+                                </Button>
+                                <Button mnemonicParsing="false" prefHeight="41.0" prefWidth="122.0" stylesheets="@styles/clientHome.css" text="Rent" textFill="WHITE">
+                                    <font>
+                                        <Font name="Andalus" size="18.0" />
+                                    </font>
+                                    <styleClass>
+                                        <String fx:value="pink-button" />
+                                        <String fx:value="shadow" />
+                                    </styleClass>
+                                </Button>
+                            </children>
+                        </HBox>
+                    </children>
+                    <styleClass>
+                        <String fx:value="offer-background" />
+                        <String fx:value="shadow" />
+                    </styleClass>
+                </VBox>
+                <VBox prefHeight="200.0" prefWidth="303.0" stylesheets="@styles/clientHome.css">
+                    <children>
+                        <HBox prefHeight="56.0" prefWidth="303.0">
+                            <children>
+                                <Label prefHeight="56.0" prefWidth="231.0" text="G.Offers" textFill="WHITE">
+                                    <font>
+                                        <Font name="Andalus" size="24.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                            <VBox.margin>
+                                <Insets left="20.0" top="10.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <Label prefHeight="21.0" prefWidth="306.0" styleClass="shadow" stylesheets="@styles/clientHome.css" text="Preparer par Yassine HS" textFill="#0e943b">
+                            <font>
+                                <Font name="Andalus" size="18.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets left="20.0" />
+                            </VBox.margin>
+                        </Label>
+                        <HBox prefHeight="56.0" prefWidth="303.0">
+                            <children>
+                                <Label prefHeight="56.0" prefWidth="188.0" text="Nbr" textFill="WHITE">
+                                    <font>
+                                        <Font name="Andalus" size="24.0" />
+                                    </font>
+                                </Label>
+                                <Label prefHeight="57.0" prefWidth="125.0" styleClass="shadow" stylesheets="@styles/clientHome.css" text="74" textFill="WHITE">
+                                    <font>
+                                        <Font name="Andalus" size="36.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                            <VBox.margin>
+                                <Insets left="20.0" top="10.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                            <VBox.margin>
+                                <Insets top="10.0" />
+                            </VBox.margin>
+                            <children>
+                                <Button mnemonicParsing="false" prefHeight="41.0" prefWidth="122.0" stylesheets="@styles/clientHome.css" text="More" textFill="WHITE">
+                                    <font>
+                                        <Font name="Andalus" size="18.0" />
+                                    </font>
+                                    <styleClass>
+                                        <String fx:value="transparent-button" />
+                                        <String fx:value="shadow" />
+                                    </styleClass>
+                                </Button>
+                                <Button mnemonicParsing="false" prefHeight="41.0" prefWidth="122.0" stylesheets="@styles/clientHome.css" text="Rent" textFill="WHITE">
+                                    <font>
+                                        <Font name="Andalus" size="18.0" />
+                                    </font>
+                                    <styleClass>
+                                        <String fx:value="pink-button" />
+                                        <String fx:value="shadow" />
+                                    </styleClass>
+                                </Button>
+                            </children>
+                        </HBox>
+                    </children>
+                    <styleClass>
+                        <String fx:value="offer-background" />
+                        <String fx:value="shadow" />
+                    </styleClass>
+                </VBox>
+            </children>
+            <BorderPane.margin>
+                <Insets bottom="50.0" left="20.0" />
+            </BorderPane.margin>
+        </HBox>
+    </bottom>
+</BorderPane>

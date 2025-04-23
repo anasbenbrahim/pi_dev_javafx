@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="tn.esprit.pidev.PatientHomeController"
+            prefHeight="700.0" prefWidth="1000.0" >
+
+    <!-- Top Navigation Bar -->
+    <top>
+        <HBox styleClass="top-bar" alignment="CENTER_LEFT" spacing="20">
+            <padding>
+                <Insets top="15" right="20" bottom="15" left="20"/>
+            </padding>
+
+            <Text styleClass="app-title" text="Patient Portal" />
+
+            <HBox HBox.hgrow="ALWAYS" />
+
+            <Label fx:id="welcomeLabel" text="Welcome, " styleClass="welcome-text" />
+
+            <Button text="Logout" onAction="#handleLogout" styleClass="logout-button" />
+        </HBox>
+    </top>
+
+    <!-- Left Sidebar -->
+    <left>
+        <VBox styleClass="sidebar" spacing="10" prefWidth="200">
+            <padding>
+                <Insets top="20" right="10" bottom="20" left="10"/>
+            </padding>
+
+            <Text styleClass="sidebar-header" text="Patient Menu" />
+
+            <Button text="Dashboardffff" onAction="#showDashboard" styleClass="menu-button" maxWidth="Infinity" />
+            <Button text="Book Appointment" onAction="#showBookAppointment" styleClass="menu-button" maxWidth="Infinity" />
+            <Button text="My Appointments" onAction="#showAppointments" styleClass="menu-button" maxWidth="Infinity" />
+            <Button text="Medical History" onAction="#showMedicalHistory" styleClass="menu-button" maxWidth="Infinity" />
+            <Button text="Prescriptions" onAction="#showPrescriptions" styleClass="menu-button" maxWidth="Infinity" />
+            <Button text="Find Doctors" onAction="#showFindDoctors" styleClass="menu-button" maxWidth="Infinity" />
+            <Button text="My Profile" onAction="#showProfile" styleClass="menu-button" maxWidth="Infinity" />
+            <Button text="Settings" onAction="#showSettings" styleClass="menu-button" maxWidth="Infinity" />
+
+            <VBox VBox.vgrow="ALWAYS" />
+
+            <Label fx:id="emergencyContactLabel" text="Emergency: Call 911" styleClass="emergency-text" />
+        </VBox>
+    </left>
+
+    <!-- Main Content Area -->
+    <center>
+        <StackPane>
+            <!-- Dashboard Panel (Default View) -->
+            <VBox fx:id="dashboardPane" spacing="20" visible="true">
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
+
+                <HBox spacing="20">
+                    <VBox styleClass="stats-card" HBox.hgrow="ALWAYS">
+                        <Text styleClass="stats-title" text="Next Appointment" />
+                        <Text fx:id="nextAppointmentDate" styleClass="stats-value" text="None" />
+                    </VBox>
+
+                    <VBox styleClass="stats-card" HBox.hgrow="ALWAYS">
+                        <Text styleClass="stats-title" text="Active Prescriptions" />
+                        <Text fx:id="activePrescriptionsCount" styleClass="stats-value" text="0" />
+                    </VBox>
+
+                    <VBox styleClass="stats-card" HBox.hgrow="ALWAYS">
+                        <Text styleClass="stats-title" text="Unread Messages" />
+                        <Text fx:id="unreadMessagesCount" styleClass="stats-value" text="0" />
+                    </VBox>
+                </HBox>
+
+                <VBox styleClass="content-card" VBox.vgrow="ALWAYS">
+                    <Text styleClass="card-title" text="Upcoming Appointments" />
+
+                    <TableView fx:id="upcomingAppointmentsTable" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="dateColumn" text="Date" prefWidth="120" />
+                            <TableColumn fx:id="timeColumn" text="Time" prefWidth="100" />
+                            <TableColumn fx:id="doctorNameColumn" text="Doctor" prefWidth="200" />
+                            <TableColumn fx:id="purposeColumn" text="Purpose" prefWidth="250" />
+                            <TableColumn fx:id="statusColumn" text="Status" prefWidth="100" />
+                            <TableColumn fx:id="actionsColumn" text="Actions" prefWidth="100" />
+                        </columns>
+                    </TableView>
+                </VBox>
+
+                <HBox spacing="20">
+                    <VBox styleClass="content-card" HBox.hgrow="ALWAYS">
+                        <Text styleClass="card-title" text="Recent Prescriptions" />
+
+                        <ListView fx:id="recentPrescriptionsListView" prefHeight="200" />
+                    </VBox>
+
+                    <VBox styleClass="content-card" HBox.hgrow="ALWAYS">
+                        <Text styleClass="card-title" text="Quick Actions" />
+
+                        <HBox spacing="10" alignment="CENTER">
+                            <Button text="Book Appointment"
+                                    styleClass="action-button" />
+                            <Button text="View Doctors"
+                                    styleClass="action-button" />
+                            <Button text="Message Doctor"
+                                    styleClass="action-button" />
+                        </HBox>
+                    </VBox>
+                </HBox>
+            </VBox>
+
+            <!-- Book Appointment Panel -->
+            <VBox fx:id="bookAppointmentPane" spacing="20" visible="false">
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
+
+                <Text styleClass="page-title" text="Book New Appointment" />
+
+                <GridPane vgap="15" hgap="15">
+                    <Label text="Select Doctor:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                    <ComboBox fx:id="doctorComboBox" prefWidth="250" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+                    <Label text="Select Date:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                    <DatePicker fx:id="appointmentDatePicker" prefWidth="250" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+                    <Label text="Select Time:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                    <ComboBox fx:id="timeSlotComboBox" prefWidth="250" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+
+                    <Label text="Reason for Visit:" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+                    <TextArea fx:id="reasonTextArea" prefWidth="250" prefHeight="100"
+                              GridPane.rowIndex="3" GridPane.columnIndex="1" />
+                </GridPane>
+
+                <HBox spacing="10" alignment="CENTER_RIGHT">
+                    <Button text="Cancel" styleClass="cancel-button" />
+                    <Button text="Book Appointment"  styleClass="submit-button" />
+                </HBox>
+            </VBox>
+
+            <!-- Appointments list Panel -->
+            <VBox fx:id="appointmentsPane" spacing="20" visible="false">
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
+                <Text styleClass="page-title" text="My Appointments" />
+                <!-- Actual appointments content would go here -->
+            </VBox>
+
+            <!-- Medical History Panel -->
+            <VBox fx:id="medicalHistoryPane" spacing="20" visible="false">
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
+                <Text styleClass="page-title" text="Medical History" />
+                <!-- Actual medical history content would go here -->
+            </VBox>
+
+            <!-- Prescriptions Panel -->
+            <VBox fx:id="prescriptionsPane" spacing="20" visible="false">
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
+                <Text styleClass="page-title" text="My Prescriptions" />
+                <!-- Actual prescriptions content would go here -->
+            </VBox>
+
+            <!-- Find Doctors Panel -->
+            <VBox fx:id="findDoctorsPane" spacing="20" visible="false">
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
+                <Text styleClass="page-title" text="Find Doctors" />
+
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Search by Speciality:" />
+                    <ComboBox fx:id="specialityFilterComboBox" prefWidth="200" />
+
+                    <Label text="Search by Name:" />
+                    <TextField fx:id="doctorSearchField" prefWidth="200" promptText="Doctor name..." />
+
+                    <Button text="Search" onAction="#searchDoctors" styleClass="search-button" />
+                </HBox>
+
+                <TableView fx:id="doctorsTableView" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="doctorNameCol" text="Name" prefWidth="200" />
+                        <TableColumn fx:id="specialityCol" text="Speciality" prefWidth="200" />
+                        <TableColumn fx:id="ratingCol" text="Rating" prefWidth="100" />
+                        <TableColumn fx:id="availabilityCol" text="Availability" prefWidth="150" />
+                        <TableColumn fx:id="doctorActionsCol" text="Actions" prefWidth="150" />
+                    </columns>
+                </TableView>
+            </VBox>
+
+            <!-- Profile Panel -->
+            <VBox fx:id="profilePane" spacing="20" visible="false">
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
+                <Text styleClass="page-title" text="My Profile" />
+                <!-- Actual profile content would go here -->
+            </VBox>
+
+            <!-- Settings Panel -->
+            <VBox fx:id="settingsPane" spacing="20" visible="false">
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
+                <Text styleClass="page-title" text="Settings" />
+                <!-- Actual settings content would go here -->
+            </VBox>
+        </StackPane>
+    </center>
+
+    <!-- Footer -->
+    <bottom>
+        <HBox styleClass="footer" alignment="CENTER">
+            <padding>
+                <Insets top="10" right="20" bottom="10" left="20"/>
+            </padding>
+            <Label text="© 2025 Medical Application - Patient Portal" />
+        </HBox>
+    </bottom>
+</BorderPane>

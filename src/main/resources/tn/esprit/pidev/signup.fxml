@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.paint.*?>
+
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<?import javafx.scene.effect.DropShadow?>
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="tn.esprit.pidev.SignupController"
+           style="-fx-background-color: #f0f8f0;"> <ImageView fx:id="BgImageView" fitWidth="1920" fitHeight="1080" preserveRatio="false">
+
+</ImageView>
+
+    <Rectangle fill="rgba(255, 255, 255, 0.8)" width="750" height="650" arcWidth="20" arcHeight="20">
+        <effect>
+            <DropShadow radius="10" color="rgba(0, 0, 0, 0.15)" />
+        </effect>
+    </Rectangle>
+
+    <VBox fx:id="signupFormVBox" alignment="CENTER" spacing="20" prefWidth="650">
+        <padding>
+            <Insets top="40" right="50" bottom="40" left="50"/>
+        </padding>
+
+        <VBox alignment="CENTER" spacing="12">
+            <ImageView fx:id="myImageView" fitWidth="90" fitHeight="90" preserveRatio="true">
+            </ImageView>
+            <Text style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-fill: #388e3c;"
+                  text="Rejoignez la Terre Connectée" />
+            <Text style="-fx-font-size: 15px; -fx-fill: #555;"
+                  text="Créez votre compte et cultivez l'avenir avec nous." />
+        </VBox>
+
+
+        <GridPane vgap="15" hgap="20" alignment="CENTER">
+            <padding>
+                <Insets top="15" right="15" bottom="15" left="15"/>
+            </padding>
+
+            <Label text="Prénom:" style="-fx-text-fill: #43a047; -fx-font-weight: bold;"
+                   GridPane.rowIndex="0" GridPane.columnIndex="0" />
+            <TextField fx:id="firstNameField" style="-fx-background-radius: 8; -fx-border-color: #81c784; -fx-border-radius: 8; -fx-padding: 8;"
+                       GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+            <Label text="Nom:" style="-fx-text-fill: #43a047; -fx-font-weight: bold;"
+                   GridPane.rowIndex="1" GridPane.columnIndex="0" />
+            <TextField fx:id="lastNameField" style="-fx-background-radius: 8; -fx-border-color: #81c784; -fx-border-radius: 8; -fx-padding: 8;"
+                       GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+            <Label text="Email:" style="-fx-text-fill: #43a047; -fx-font-weight: bold;"
+                   GridPane.rowIndex="2" GridPane.columnIndex="0" />
+            <TextField fx:id="emailField" style="-fx-background-radius: 8; -fx-border-color: #81c784; -fx-border-radius: 8; -fx-padding: 8;"
+                       GridPane.rowIndex="2" GridPane.columnIndex="1" />
+
+            <Label text="Mot de passe:" style="-fx-text-fill: #43a047; -fx-font-weight: bold;"
+                   GridPane.rowIndex="3" GridPane.columnIndex="0" />
+            <PasswordField fx:id="passwordField" style="-fx-background-radius: 8; -fx-border-color: #81c784; -fx-border-radius: 8; -fx-padding: 8;"
+                           GridPane.rowIndex="3" GridPane.columnIndex="1" />
+
+            <Label text="Confirmer mot de passe:" style="-fx-text-fill: #43a047; -fx-font-weight: bold;"
+                   GridPane.rowIndex="4" GridPane.columnIndex="0" />
+            <PasswordField fx:id="confirmPasswordField" style="-fx-background-radius: 8; -fx-border-color: #81c784; -fx-border-radius: 8; -fx-padding: 8;"
+                           GridPane.rowIndex="4" GridPane.columnIndex="1" />
+
+            <Label text="Rôle:" style="-fx-text-fill: #43a047; -fx-font-weight: bold;"
+                   GridPane.rowIndex="5" GridPane.columnIndex="0" />
+            <ComboBox fx:id="roleComboBox" style="-fx-background-radius: 8; -fx-border-color: #81c784; -fx-border-radius: 8; -fx-padding: 8;"
+                      GridPane.rowIndex="5" GridPane.columnIndex="1">
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="admin" />
+                        <String fx:value="fermier" />
+                        <String fx:value="fournisseur" />
+                        <String fx:value="client" />
+                    </FXCollections>
+                </items>
+            </ComboBox>
+
+            <Label fx:id="specialityLabel" text="Spécialité:" visible="false"
+                   style="-fx-text-fill: #43a047; -fx-font-weight: bold;"
+                   GridPane.rowIndex="6" GridPane.columnIndex="0" />
+            <TextField fx:id="specialityField" visible="false" style="-fx-background-radius: 8; -fx-border-color: #81c784; -fx-border-radius: 8; -fx-padding: 8;"
+                       GridPane.rowIndex="6" GridPane.columnIndex="1" />
+
+            <Label text="Adresse:" style="-fx-text-fill: #43a047; -fx-font-weight: bold;"
+                   GridPane.rowIndex="7" GridPane.columnIndex="0" />
+            <TextField fx:id="addressField" style="-fx-background-radius: 8; -fx-border-color: #81c784; -fx-border-radius: 8; -fx-padding: 8;"
+                       GridPane.rowIndex="7" GridPane.columnIndex="1" />
+
+            <Label text="Date de naissance:" style="-fx-text-fill: #43a047; -fx-font-weight: bold;"
+                   GridPane.rowIndex="8" GridPane.columnIndex="0" />
+            <DatePicker fx:id="birthDatePicker" style="-fx-background-radius: 8; -fx-border-color: #81c784; -fx-border-radius: 8; -fx-padding: 8;"
+                        GridPane.rowIndex="8" GridPane.columnIndex="1" />
+
+            <Label text="Téléphone:" style="-fx-text-fill: #43a047; -fx-font-weight: bold;"
+                   GridPane.rowIndex="9" GridPane.columnIndex="0" />
+            <TextField fx:id="phoneField" style="-fx-background-radius: 8; -fx-border-color: #81c784; -fx-border-radius: 8; -fx-padding: 8;"
+                       GridPane.rowIndex="9" GridPane.columnIndex="1" />
+
+
+        </GridPane>
+
+
+        <HBox spacing="20" alignment="CENTER">
+            <Button text="S'inscrire" onAction="#handleSignup"
+                    style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 30; -fx-cursor: hand; -fx-font-size: 16px;" />
+            <Button text="Se connecter" onAction="#goToLogin"
+                    style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 30; -fx-cursor: hand; -fx-font-size: 16px;" />
+        </HBox>
+
+        <Label fx:id="messageLabel" style="-fx-text-fill: #d32f2f; -fx-font-size: 14px; -fx-padding: 10 0;" />
+    </VBox>
+
+    <VBox fx:id="verificationVBox" alignment="CENTER" spacing="25" visible="false" prefWidth="550">
+        <padding>
+            <Insets top="50" right="50" bottom="50" left="50"/>
+        </padding>
+
+
+
+        <Text style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-fill: #388e3c; -fx-text-alignment: center;"
+              text="Vérification d'Email" />
+
+        <Text style="-fx-font-size: 15px; -fx-fill: #555; -fx-text-alignment: center;"
+              wrappingWidth="450" textAlignment="CENTER"
+              text="Un code de vérification a été envoyé à votre adresse email. Veuillez l'entrer ci-dessous pour activer votre compte." />
+
+        <VBox spacing="12" alignment="CENTER" maxWidth="350">
+            <Label text="Code de vérification:" style="-fx-text-fill: #43a047; -fx-font-weight: bold; -fx-font-size: 16px;" />
+            <TextField fx:id="verificationCodeField" style="-fx-background-radius: 8; -fx-border-color: #81c784; -fx-border-radius: 8; -fx-padding: 10; -fx-font-size: 14px;" />
+        </VBox>
+
+        <HBox spacing="20" alignment="CENTER">
+            <Button text="Vérifier" onAction="#handleVerification"
+                    style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 30; -fx-cursor: hand; -fx-font-size: 16px;" />
+            <Button text="Renvoyer le code" onAction="#resendVerificationCode"
+                    style="-fx-background-color: transparent; -fx-text-fill: #388e3c; -fx-border-color: #388e3c; -fx-border-radius: 10; -fx-padding: 10 20; -fx-cursor: hand; -fx-font-weight: bold; -fx-font-size: 16px;" />
+            <Button text="Retour" onAction="#backToSignup"
+                    style="-fx-background-color: transparent; -fx-text-fill: #777; -fx-padding: 10 20; -fx-cursor: hand; -fx-font-size: 16px;" />
+        </HBox>
+
+        <Label fx:id="verificationMessageLabel" style="-fx-text-fill: #d32f2f; -fx-font-size: 14px; -fx-padding: 10 0;" />
+    </VBox>
+</StackPane>

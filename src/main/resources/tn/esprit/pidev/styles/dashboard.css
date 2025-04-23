@@ -1,0 +1,293 @@
+/* Main Colors - Thème Agricole */
+.root {
+    -fx-primary-color: #5d9c49; /* Vert nature */
+    -fx-secondary-color: #3a6b35; /* Vert foncé */
+    -fx-accent-color: #e67e22; /* Orange terre */
+    -fx-light-color: #f5f5f5; /* Fond clair */
+    -fx-dark-color: #2c3e22; /* Vert très foncé */
+    -fx-soil-color: #8d6e63; /* Couleur terre */
+}
+
+/* Top Bar Styles */
+.top-bar {
+    -fx-background-color: -fx-secondary-color;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 2);
+    -fx-background-image: url("../images/logo.png");
+    -fx-background-repeat: repeat;
+}
+
+.app-title {
+    -fx-fill: white;
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.3), 2, 0, 1, 1);
+}
+
+.welcome-text {
+    -fx-text-fill: #f0f0f0;
+    -fx-font-size: 14px;
+    -fx-font-style: italic;
+}
+
+.logout-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-border-color: white;
+    -fx-border-radius: 4px;
+    -fx-border-width: 1px;
+    -fx-padding: 5 10 5 10;
+    -fx-cursor: hand;
+}
+
+.logout-button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Sidebar Styles */
+.sidebar {
+    -fx-background-color: #FFFFFF;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 0);
+    -fx-border-color: #2c3e22;
+    -fx-border-width: 0 1 0 0;
+}
+
+.profile-section {
+    -fx-padding: 0 0 20 0;
+    -fx-alignment: center;
+    -fx-background-color: rgba(0,0,0,0.1);
+    -fx-background-radius: 10 10 10 10;
+}
+
+.profile-image {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 0, 0);
+    -fx-border-radius: 50%;
+    -fx-background-radius: 50%;
+    -fx-border-width: 3px;
+    -fx-border-color: #e8f5e9;
+}
+
+.farmer-name {
+    -fx-fill: white;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.3), 1, 0, 1, 1);
+}
+
+.farm-label {
+    -fx-text-fill: #e8f5e9;
+    -fx-font-size: 14px;
+    -fx-font-style: italic;
+}
+
+.divider {
+    -fx-padding: 10 0 10 0;
+    -fx-pref-width: 180px;
+    -fx-border-color: rgba(232, 245, 233, 0.4);
+}
+
+.menu-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-alignment: center-left;
+    -fx-padding: 10 15 10 15;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.menu-button:hover {
+    -fx-background-color: rgb(7, 118, 19);
+    -fx-text-fill: #000000;
+}
+
+.menu-button:armed, .menu-button:focused {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+}
+
+.menu-button .graphic {
+    -fx-padding: 0 10 0 0;
+}
+
+.bottom-menu {
+    -fx-padding: 20 0 0 0;
+    -fx-border-color: rgba(232, 245, 233, 0.4);
+    -fx-border-width: 1 0 0 0;
+}
+
+/* Content Styles */
+.stats-card {
+    -fx-background-color: white;
+    -fx-background-radius: 8px;
+    -fx-padding: 15px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 0);
+    -fx-alignment: center-left;
+    -fx-spacing: 10;
+    -fx-border-color: #c8e6c9;
+    -fx-border-width: 1px;
+}
+
+.stats-title {
+    -fx-fill: #5d9c49;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.stats-value {
+    -fx-fill: -fx-secondary-color;
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+}
+
+.content-card {
+    -fx-background-color: white;
+    -fx-background-radius: 8px;
+    -fx-padding: 15px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 0);
+    -fx-spacing: 15;
+    -fx-border-color: #c8e6c9;
+    -fx-border-width: 1px;
+}
+
+.card-title {
+    -fx-fill: -fx-secondary-color;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-border-color: #c8e6c9;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 0 0 10 0;
+}
+
+.page-title {
+    -fx-fill: -fx-secondary-color;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(one-pass-box, rgba(139, 195, 74, 0.3), 1, 0, 1, 1);
+}
+
+.action-button {
+    -fx-background-color: -fx-primary-color;
+    -fx-text-fill: #000000;
+    -fx-font-size: 14px;
+    -fx-padding: 8 15 8 15;
+    -fx-background-radius: 4px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.2), 3, 0, 1, 1);
+}
+
+.action-button:hover {
+    -fx-background-color: #4a7c3a;
+}
+
+.quick-actions-box {
+    -fx-padding: 20 0 10 0;
+    -fx-spacing: 15;
+}
+
+/* Table Styles */
+.custom-table {
+    -fx-background-color: transparent;
+    -fx-padding: 5px 0 0 0;
+}
+
+.custom-table .column-header {
+    -fx-background-color: #e8f5e9;
+    -fx-border-color: #c8e6c9;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e22;
+}
+
+.custom-table .table-row-cell {
+    -fx-border-color: #e8f5e9;
+}
+
+.custom-table .table-row-cell:odd {
+    -fx-background-color: #f9f9f9;
+}
+
+.custom-table .table-row-cell:selected {
+    -fx-background-color: -fx-primary-color;
+    -fx-text-fill: white;
+}
+
+/* List View Styles */
+.notification-list {
+    -fx-border-color: #e8f5e9;
+    -fx-border-radius: 4px;
+}
+
+.notification-list .list-cell {
+    -fx-padding: 8px;
+    -fx-border-color: #e8f5e9;
+    -fx-background-insets: 0;
+}
+
+.notification-list .list-cell:odd {
+    -fx-background-color: #f9f9f9;
+}
+
+.notification-list .list-cell:filled:hover {
+    -fx-background-color: #e8f5e9;
+}
+
+/* Footer Styles */
+.footer {
+    -fx-background-color: #e8f5e9;
+    -fx-border-color: #c8e6c9;
+    -fx-border-width: 1 0 0 0;
+}
+
+.footer-text {
+    -fx-text-fill: #5d9c49;
+    -fx-font-size: 12px;
+}
+
+/* Styles spécifiques agriculture */
+.agriculture-icon {
+    -fx-fill: #5d9c49;
+}
+
+.weather-card {
+    -fx-background-color: #e3f2fd;
+    -fx-border-color: #bbdefb;
+}
+
+.soil-card {
+    -fx-background-color: #efebe9;
+    -fx-border-color: #d7ccc8;
+}
+
+.crop-card {
+    -fx-background-color: #f1f8e9;
+    -fx-border-color: #dcedc8;
+}
+
+
+/* Navigation Section */
+.menu_container {
+    -fx-padding: 10 10 10 10;
+    -fx-spacing: 20;
+}
+
+.menu_container Button {
+    -fx-pref-width: 200;
+    -fx-pref-height: 40;
+    -fx-background-color: -fx-secondary-color;
+    -fx-text-fill: #FFFF;
+    -fx-font-size: 1.1em;
+    -fx-alignment: center_left;
+    -fx-effect: dropshadow(three-pass-box, #DDDDDDD, 5, 0, 0, 6);
+}
+
+.menu_container Button:hover {
+    -fx-cursor: hand;
+}
+
+.alt_menu_btn {
+    -fx-background-color: -fx-secondary-color;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 2);
+    -fx-background-radius: 10;
+    -fx-alignment: center;
+    -fx-spacing: 10;
+    -fx-padding: 10 0 10 0;
+}

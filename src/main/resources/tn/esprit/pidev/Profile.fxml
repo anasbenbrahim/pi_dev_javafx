@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.paint.*?>
+
+<?import javafx.scene.effect.DropShadow?>
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="tn.esprit.pidev.ProfileController"
+           style="-fx-background-color: #f0f8f0;">
+
+    <ImageView fx:id="bgImageView" fitWidth="1920" fitHeight="1080" preserveRatio="false"/>
+
+    <Rectangle fill="rgba(255, 255, 255, 0.8)" width="850" height="700" arcWidth="20" arcHeight="20">
+        <effect>
+            <DropShadow radius="10" color="rgba(0, 0, 0, 0.15)" />
+        </effect>
+    </Rectangle>
+
+    <VBox alignment="TOP_CENTER" spacing="20" prefWidth="800">
+        <padding>
+            <Insets top="40" right="50" bottom="40" left="50"/>
+        </padding>
+
+        <!-- Header Section -->
+        <VBox alignment="CENTER" spacing="15">
+            <StackPane>
+                <Circle radius="50" fill="#E0E0E0" stroke="#4CAF50" strokeWidth="2">
+                    <effect>
+                        <DropShadow radius="5" color="rgba(0,0,0,0.2)"/>
+                    </effect>
+                </Circle>
+                <ImageView fx:id="profileImageView" fitWidth="90" fitHeight="90" preserveRatio="true"
+                           pickOnBounds="true" mouseTransparent="true"/>
+            </StackPane>
+
+            <Text style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-fill: #388e3c;"
+                  text="Mon Profil"/>
+
+        </VBox>
+
+        <!-- Profile Information -->
+        <GridPane vgap="15" hgap="20" alignment="CENTER">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+
+            <!-- Row 0 -->
+            <Label text="Nom Complet:" style="-fx-text-fill: #43a047; -fx-font-weight: bold;"
+                   GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <Label fx:id="fullNameLabel" style="-fx-font-size: 14px;"
+                   GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+            <!-- Row 1 -->
+            <Label text="Email:" style="-fx-text-fill: #43a047; -fx-font-weight: bold;"
+                   GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <Label fx:id="emailLabel" style="-fx-font-size: 14px;"
+                   GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+            <!-- Row 2 -->
+            <Label text="Rôle:" style="-fx-text-fill: #43a047; -fx-font-weight: bold;"
+                   GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <Label fx:id="roleLabel" style="-fx-font-size: 14px;"
+                   GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+            <!-- Row 3 -->
+            <Label text="Adresse:" style="-fx-text-fill: #43a047; -fx-font-weight: bold;"
+                   GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <Label fx:id="addressLabel" style="-fx-font-size: 14px;"
+                   GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+            <!-- Row 4 -->
+            <Label text="Téléphone:" style="-fx-text-fill: #43a047; -fx-font-weight: bold;"
+                   GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+            <Label fx:id="phoneLabel" style="-fx-font-size: 14px;"
+                   GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+            <!-- Row 5 -->
+            <Label text="Date de naissance:" style="-fx-text-fill: #43a047; -fx-font-weight: bold;"
+                   GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+            <Label fx:id="birthDateLabel" style="-fx-font-size: 14px;"
+                   GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+        </GridPane>
+
+        <!-- Action Buttons -->
+        <HBox spacing="20" alignment="CENTER">
+            <Button text="Modifier Profil" onAction="#handleEditProfile"
+                    style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 25; -fx-cursor: hand;"/>
+
+            <Button text="Changer Mot de Passe" onAction="#handleChangePassword"
+                    style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 15; -fx-cursor: hand;"/>
+
+            <Button text="Déconnexion"
+                    style="-fx-background-color: #f44336; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 25; -fx-cursor: hand;"/>
+        </HBox>
+
+        <!-- Status Message -->
+        <Label fx:id="statusLabel" style="-fx-text-fill: #d32f2f; -fx-font-size: 14px;"/>
+    </VBox>
+</StackPane>

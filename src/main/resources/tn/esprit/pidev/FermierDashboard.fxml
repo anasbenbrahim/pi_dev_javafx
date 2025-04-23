@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.pidev.FermierDashboard">
+    <top>
+        <HBox style="-fx-background-color: #2c3e50; -fx-padding: 15;" alignment="CENTER_LEFT">
+            <Label text="Hello! Ready With New Article" style="-fx-text-fill: white; -fx-font-size: 20; -fx-font-weight: bold;"/>
+        </HBox>
+    </top>
+
+    <center>
+        <VBox spacing="20" style="-fx-padding: 20;">
+            <Label text="Let's Create It..." style="-fx-font-size: 16; -fx-text-fill: #2c3e50;"/>
+
+            <HBox spacing="20">
+                <VBox spacing="10">
+                    <Label text="Name" style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+                    <Button text="New Article +" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold;"/>
+                </VBox>
+
+                <TableView style="-fx-background-color: #ecf0f1;" fx:id="articlesTable">
+                    <columns>
+                        <TableColumn text="Articles" fx:id="articlesCol" style="-fx-font-weight: bold;"/>
+                        <TableColumn text="Articles 142" fx:id="articlesCountCol" style="-fx-font-weight: bold;"/>
+                        <TableColumn text="Likes 128K" fx:id="likesCol" style="-fx-font-weight: bold;"/>
+                        <TableColumn text="Comments 2K" fx:id="commentsCol" style="-fx-font-weight: bold;"/>
+                        <TableColumn text="Readers 245K" fx:id="readersCol" style="-fx-font-weight: bold;"/>
+                    </columns>
+                </TableView>
+            </HBox>
+
+            <HBox spacing="20">
+                <VBox spacing="10" style="-fx-background-color: #ecf0f1; -fx-padding: 15; -fx-pref-width: 300;">
+                    <Label text="Updates" style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+                    <ListView fx:id="updatesList"/>
+                </VBox>
+
+                <VBox spacing="10" style="-fx-background-color: #ecf0f1; -fx-padding: 15; -fx-pref-width: 300;">
+                    <Label text="News" style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+                    <ListView fx:id="newsList"/>
+                </VBox>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>
