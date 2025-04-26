@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" stylesheets="@style.css"
+            xmlns="http://javafx.com/javafx/22.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.controllers.Modifier">
+    <children>
+        <!-- Responsive Sidebar -->
+        <VBox fx:id="sidebar" styleClass="sidebar" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" prefWidth="250">
+            <padding>
+                <Insets top="20" right="15" bottom="20" left="15"/>
+            </padding>
+
+            <!-- Logo Section -->
+            <VBox alignment="CENTER" spacing="10" styleClass="logo-section">
+                <ImageView fx:id="logo" fitHeight="100.0" fitWidth="100.0" styleClass="logo">
+                    <image>
+                        <Image url="@logo-app.png" />
+                    </image>
+                </ImageView>
+                <Label text="Modifier Équipement" styleClass="app-title"/>
+            </VBox>
+
+            <!-- Menu Buttons -->
+            <VBox spacing="15" styleClass="menu-section" VBox.vgrow="ALWAYS">
+                <Button fx:id="btn_affichage" text="Afficher" onAction="#nav_affichage" styleClass="menu-button" maxWidth="Infinity"/>
+                <Button fx:id="btn_supprimer" text="Supprimer" onAction="#nav_supprimer" styleClass="menu-button" maxWidth="Infinity"/>
+                <Button fx:id="btn_ajout" text="Ajouter" onAction="#nav_ajout" styleClass="menu-button" maxWidth="Infinity"/>
+            </VBox>
+        </VBox>
+
+        <!-- Responsive Main Content -->
+        <VBox styleClass="content-container" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="250" AnchorPane.rightAnchor="0">
+            <!-- Header -->
+            <HBox styleClass="page-header" alignment="CENTER" HBox.hgrow="ALWAYS">
+                <Label text="Modifier un Équipement" styleClass="page-title"/>
+            </HBox>
+
+            <!-- Form Content -->
+            <ScrollPane fitToWidth="true" styleClass="transparent-scroll" VBox.vgrow="ALWAYS">
+                <VBox styleClass="content-card" spacing="20" alignment="TOP_CENTER">
+                    <GridPane hgap="15" vgap="15" VBox.vgrow="ALWAYS">
+                        <padding>
+                            <Insets top="20" right="20" bottom="20" left="20"/>
+                        </padding>
+
+                        <columnConstraints>
+                            <ColumnConstraints minWidth="100" hgrow="SOMETIMES" />
+                            <ColumnConstraints minWidth="250" hgrow="ALWAYS" />
+                        </columnConstraints>
+
+                        <rowConstraints>
+                            <RowConstraints minHeight="40" valignment="CENTER" />
+                            <RowConstraints minHeight="40" valignment="CENTER" />
+                            <RowConstraints minHeight="40" valignment="CENTER" />
+                            <RowConstraints minHeight="40" valignment="CENTER" />
+                            <RowConstraints minHeight="40" valignment="CENTER" />
+                            <RowConstraints minHeight="40" valignment="CENTER" />
+                            <RowConstraints minHeight="40" valignment="CENTER" />
+                            <RowConstraints minHeight="40" valignment="CENTER" />
+                        </rowConstraints>
+
+                        <!-- Form Fields -->
+                        <Label text="ID" styleClass="form-label" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                        <TextField fx:id="idMod" styleClass="form-field" GridPane.rowIndex="0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS"/>
+
+                        <Label text="Nom" styleClass="form-label" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                        <TextField fx:id="nomMod" styleClass="form-field" GridPane.rowIndex="1" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS"/>
+
+                        <Label text="Catégorie" styleClass="form-label" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                        <ComboBox fx:id="comboCategorie" styleClass="form-field" promptText="Choisir une catégorie" GridPane.rowIndex="2" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS"/>
+
+                        <Label text="Prix" styleClass="form-label" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+                        <TextField fx:id="prixMod" styleClass="form-field" GridPane.rowIndex="3" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS"/>
+
+                        <Label text="Quantité" styleClass="form-label" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+                        <TextField fx:id="quantiteMod" styleClass="form-field" GridPane.rowIndex="4" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS"/>
+
+                        <Label text="Description" styleClass="form-label" GridPane.rowIndex="5" GridPane.columnIndex="0" />
+                        <TextField fx:id="descriptionMod" styleClass="form-field" GridPane.rowIndex="5" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS"/>
+
+                        <Label text="Image" styleClass="form-label" GridPane.rowIndex="6" GridPane.columnIndex="0" />
+                        <HBox spacing="10" alignment="CENTER_LEFT" GridPane.rowIndex="6" GridPane.columnIndex="1">
+                            <TextField fx:id="imageMod" styleClass="form-field" HBox.hgrow="ALWAYS"/>
+                            <Button fx:id="bouton_image" text="Parcourir" onAction="#btn_image" styleClass="action-button"/>
+                        </HBox>
+
+                        <Button fx:id="btn_modifier" text="Modifier" onAction="#btnMod"
+                                styleClass="action-button primary"
+                                GridPane.rowIndex="7" GridPane.columnIndex="1"
+                                GridPane.halignment="RIGHT">
+                            <padding>
+                                <Insets top="10" right="20" bottom="10" left="20"/>
+                            </padding>
+                        </Button>
+                    </GridPane>
+                </VBox>
+            </ScrollPane>
+        </VBox>
+    </children>
+</AnchorPane>

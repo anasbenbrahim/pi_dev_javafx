@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane style="-fx-background-color: #f8f9fa;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/22.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.Devis">
+
+    <!-- En-tête -->
+    <top>
+        <HBox alignment="CENTER" style="-fx-padding: 20;" styleClass="main-container">
+            <Label styleClass="title-large" text="Détails de l'équipement" />
+        </HBox>
+    </top>
+
+    <!-- Contenu principal -->
+    <center>
+        <VBox alignment="TOP_CENTER" spacing="20" styleClass="content-container">
+            <HBox alignment="CENTER_LEFT" spacing="30" styleClass="product-card">
+                <!-- Conteneur d'image -->
+                <StackPane styleClass="product-image-container">
+                    <ImageView fx:id="equipmentImage" fitHeight="240" fitWidth="300" preserveRatio="true" />
+                </StackPane>
+
+                <!-- Détails produit -->
+                <VBox spacing="15" style="-fx-padding: 0 0 0 20;">
+                    <VBox spacing="5">
+                        <Label fx:id="equipmentName" styleClass="title-medium" wrapText="true" />
+                        <Separator styleClass="separator-line" />
+                    </VBox>
+
+                    <VBox spacing="8">
+                        <Label styleClass="title-small" text="DESCRIPTION" />
+                        <Text fx:id="equipmentDescription" style="-fx-fill: #333333; -fx-font-size: 14px;" wrappingWidth="400" />
+                    </VBox>
+
+                    <VBox spacing="8">
+                        <Label styleClass="title-small" text="CARACTÉRISTIQUES" />
+                        <Text fx:id="equipmentSpecs" style="-fx-fill: #333333; -fx-font-size: 14px;" wrappingWidth="400" />
+                    </VBox>
+
+                    <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-padding: 15 0 0 0;">
+                        <Button fx:id="demander_devis" onAction="#demande" styleClass="primary-button" text="Demander un devis" />
+                        <Button fx:id="backButton" onAction="#bouton_retour" styleClass="secondary-button" text="Retour" />
+                    </HBox>
+                </VBox>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>

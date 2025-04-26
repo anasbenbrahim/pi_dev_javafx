@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Pos?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.GridPane?>
+
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.RowConstraints?>
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" stylesheets="@style.css"
+            xmlns="http://javafx.com/javafx/22.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.controllers.Ajout">
+
+   <children>
+      <!-- Sidebar -->
+      <VBox fx:id="sidebar" layoutX="0" layoutY="0" prefWidth="242.0" prefHeight="600.0" styleClass="sidebar">
+         <padding>
+            <Insets top="20" right="15" bottom="20" left="15"/>
+         </padding>
+
+         <!-- Logo Section -->
+         <VBox alignment="CENTER" spacing="10" styleClass="logo-section">
+            <ImageView fx:id="logo" fitHeight="100.0" fitWidth="100.0" styleClass="logo">
+               <image>
+                  <Image url="@logo-app.png" />
+               </image>
+            </ImageView>
+            <Label text="Gestion Équipements" styleClass="app-title"/>
+         </VBox>
+
+         <!-- Menu Buttons -->
+         <VBox spacing="15" styleClass="menu-section">
+            <Button fx:id="btn_categorie" text="Catégorie" onAction="#nav_categorie" styleClass="menu-button"/>
+            <Button fx:id="navigate_affichage" text="Affichage" onAction="#nav_affichage" styleClass="menu-button"/>
+            <Button fx:id="navigate_supprimer" text="Supprimer" onAction="#nav_supprimer" styleClass="menu-button"/>
+            <Button fx:id="navigate_modifier" text="Modifier" onAction="#nav_modifier" styleClass="menu-button"/>
+         </VBox>
+      </VBox>
+
+      <!-- Main Content -->
+      <VBox layoutX="242.0" layoutY="0" prefWidth="758.0" prefHeight="600.0" styleClass="content-container">
+         <!-- Form Header -->
+         <HBox styleClass="page-header" alignment="CENTER" prefHeight="80.0">
+            <Label text="Ajouter un Équipement" styleClass="page-title"/>
+         </HBox>
+
+         <!-- Form Content -->
+         <VBox styleClass="content-card" spacing="20" alignment="TOP_CENTER">
+            <GridPane hgap="15" vgap="15">
+               <padding>
+                  <Insets top="20" right="20" bottom="20" left="20"/>
+               </padding>
+
+               <columnConstraints>
+                  <ColumnConstraints minWidth="100" hgrow="SOMETIMES" />
+                  <ColumnConstraints minWidth="250" hgrow="ALWAYS" />
+               </columnConstraints>
+
+               <rowConstraints>
+                  <RowConstraints minHeight="40" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="40" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="40" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="40" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="40" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="40" vgrow="SOMETIMES" />
+               </rowConstraints>
+
+               <!-- Form Fields -->
+               <Label text="Nom" styleClass="form-label" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+               <TextField fx:id="ajout_nom" styleClass="form-field" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+               <Label text="Catégorie" styleClass="form-label" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+               <ComboBox fx:id="comboCategorie" styleClass="form-field" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+               <Label text="Prix" styleClass="form-label" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+               <TextField fx:id="ajout_prix" styleClass="form-field" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+
+               <Label text="Description" styleClass="form-label" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+               <TextField fx:id="ajout_description" styleClass="form-field" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+
+               <Label text="Image" styleClass="form-label" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+               <HBox spacing="10" alignment="CENTER_LEFT" GridPane.rowIndex="4" GridPane.columnIndex="1">
+                  <TextField fx:id="ajout_image" styleClass="form-field" prefWidth="150.0" />
+                  <Button fx:id="parcourir_image" text="Parcourir" onAction="#parcourirImage" styleClass="action-button"/>
+               </HBox>
+
+               <Label text="Quantité" styleClass="form-label" GridPane.rowIndex="5" GridPane.columnIndex="0" />
+               <TextField fx:id="ajout_quantite" styleClass="form-field" GridPane.rowIndex="5" GridPane.columnIndex="1" />
+
+               <Button fx:id="ajouter" text="Ajouter" onAction="#bouton_ajouter"
+                       styleClass="action-button primary"
+                       GridPane.rowIndex="6" GridPane.columnIndex="1"
+                       GridPane.halignment="RIGHT"/>
+            </GridPane>
+         </VBox>
+      </VBox>
+   </children>
+</AnchorPane>

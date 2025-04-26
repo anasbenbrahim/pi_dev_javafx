@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Priority?>
+
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" stylesheets="@style.css"
+            xmlns="http://javafx.com/javafx/22.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.controllers.Supprimer">
+
+   <children>
+      <!-- Responsive Sidebar -->
+      <VBox fx:id="sidebar" styleClass="sidebar" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" prefWidth="250">
+         <padding>
+            <Insets top="20" right="15" bottom="20" left="15"/>
+         </padding>
+
+         <!-- Logo Section -->
+         <VBox alignment="CENTER" spacing="10" styleClass="logo-section">
+            <ImageView fx:id="logo" fitHeight="100.0" fitWidth="100.0" styleClass="logo">
+               <image>
+                  <Image url="@logo-app.png" />
+               </image>
+            </ImageView>
+            <Label text="Gestion Équipements" styleClass="app-title"/>
+         </VBox>
+
+         <!-- Menu Buttons -->
+         <VBox spacing="15" styleClass="menu-section">
+            <Button fx:id="btn_categorie" text="Catégorie" onAction="#nav_categorie" styleClass="menu-button" maxWidth="Infinity"/>
+            <Button fx:id="navigate_affichage" text="Affichage" onAction="#nav_affichage" styleClass="menu-button" maxWidth="Infinity"/>
+            <Button fx:id="navigate_ajout" text="Ajouter" onAction="#nav_ajout" styleClass="menu-button" maxWidth="Infinity"/>
+            <Button fx:id="navigate_modifier" text="Modifier" onAction="#nav_modifier" styleClass="menu-button" maxWidth="Infinity"/>
+            <VBox VBox.vgrow="ALWAYS"/> <!-- Spacer to push buttons up -->
+         </VBox>
+      </VBox>
+
+      <!-- Main Content Area -->
+      <VBox styleClass="content-container" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="250" AnchorPane.rightAnchor="0">
+         <!-- Header -->
+         <HBox styleClass="page-header" alignment="CENTER" HBox.hgrow="ALWAYS">
+            <Label text="Supprimer un Équipement" styleClass="page-title"/>
+         </HBox>
+
+         <!-- Form Content -->
+         <VBox styleClass="content-card" alignment="CENTER" spacing="30" VBox.vgrow="ALWAYS">
+            <padding>
+               <Insets top="30" right="30" bottom="30" left="30"/>
+            </padding>
+
+            <VBox alignment="CENTER" spacing="15">
+               <Label text="ID de l'équipement:" styleClass="form-label"/>
+               <TextField fx:id="champ_supprimer" styleClass="form-field" prefWidth="300.0"/>
+               <HBox spacing="20" alignment="CENTER">
+                  <Button fx:id="btn_supprimer" text="Supprimer" onAction="#supprimer"
+                          styleClass="action-button" style="-fx-background-color: #E74C3C;">
+                     <padding>
+                        <Insets top="10" right="20" bottom="10" left="20"/>
+                     </padding>
+                     <graphic>
+                        <ImageView fitHeight="20" fitWidth="20">
+                           <Image url="@delete.png" />
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </HBox>
+            </VBox>
+         </VBox>
+      </VBox>
+   </children>
+</AnchorPane>

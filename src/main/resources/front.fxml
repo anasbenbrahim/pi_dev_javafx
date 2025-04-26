@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane stylesheets="@front-style.css" xmlns="http://javafx.com/javafx/22.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.Front_office">
+
+    <!-- ========== SIDEBAR GAUCHE ========== -->
+    <left>
+        <VBox prefWidth="250" spacing="20" styleClass="sidebar">
+            <!-- En-tête avec logo -->
+            <VBox alignment="CENTER" spacing="10" styleClass="logo-section">
+                <ImageView fitHeight="80" fitWidth="80" styleClass="shadow-md">
+                    <image>
+                        <Image url="@logo-app.png" />
+                    </image>
+                </ImageView>
+                <Label styleClass="app-title title-medium" text="ÉQUIPEMENTS PRO" />
+            </VBox>
+
+            <!-- Barre de recherche -->
+            <TextField fx:id="searchField" onKeyReleased="#search" promptText="Rechercher..." styleClass="search-field shadow-sm" />
+
+            <!-- Filtres par catégorie -->
+            <VBox spacing="10" styleClass="filter-section">
+                <Label styleClass="section-title title-small" text="CATÉGORIES" />
+                <ComboBox fx:id="categoryCombo" onAction="#handleCategorieSelection" promptText="Toutes catégories" styleClass="category-combo filter-combo shadow-sm" />
+            </VBox>
+
+            <!-- Bouton de rafraîchissement -->
+            <Button fx:id="refresh" onAction="#handleRefresh" styleClass="refresh-btn primary-button" text="Rafraîchir">
+                <graphic>
+                    <ImageView fitHeight="16" fitWidth="16" />
+                </graphic>
+            </Button>
+        </VBox>
+    </left>
+
+    <!-- ========== CONTENU CENTRAL ========== -->
+    <center>
+        <VBox styleClass="main-content content-container">
+            <!-- En-tête du contenu -->
+            <HBox alignment="CENTER_LEFT" styleClass="content-header">
+                <Label fx:id="resultsCount" styleClass="results-count title-small" text="0 équipements" />
+                <HBox styleClass="spacer" HBox.hgrow="ALWAYS" />
+                <Button fx:id="tri" onAction="#handleSort" styleClass="sort-btn secondary-button" text="Tri: Par défaut" />
+            </HBox>
+
+            <!-- Conteneur principal avec scroll -->
+            <ScrollPane fitToWidth="true" styleClass="scroll-pane">
+                <FlowPane fx:id="productsFlowPane" alignment="TOP_CENTER" hgap="20" styleClass="product-grid" vgap="20" />
+            </ScrollPane>
+        </VBox>
+    </center>
+
+    <!-- ========== PIED DE PAGE ========== -->
+    <bottom>
+        <HBox alignment="CENTER" styleClass="footer">
+            <Label styleClass="footer-text" text="© 2024 Gestion Équipements - Tous droits réservés" />
+        </HBox>
+    </bottom>
+
+</BorderPane>

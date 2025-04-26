@@ -1,0 +1,54 @@
+package org.example.services;
+
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+
+public class Ollama {
+    private String model;
+    private String text;
+
+    public Ollama(String model, String text) throws IOException {
+        this.model = model;
+        this.text = text;
+    }
+    public void generate()throws IOException{
+        URL url =new URL("http://localhost:11434/api/generate");
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty("Content-Type", "application/json; utf-8");
+        conn.setRequestProperty("Accept", "application/json");
+        conn.setDoOutput(true);
+
+        String jsonoutput=String.format("{\"model\":\"%s\",\"prompt\":\"%s\",\"stream\": false}", model, text);
+
+        try(OutputStream os = conn.getOutputStream()) {
+            byte[] input = jsonoutput.getBytes("utf-8");
+            os.write(input, 0, input.length);
+        }
+        int responseCode = conn.getResponseCode();
+        System.out.println("la reponse est " + responseCode);
+
+        BufferedReader in= new BufferedReader(new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8));
+        StringBuilder response = new StringBuilder();
+        String inputLine;
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+        in.close();
+
+        JSONObject obj = new JSONObject(response.toString());
+        String result = obj.getString("response");
+        System.out.println(result);
+
+        conn.disconnect();
+    }
+
+}
