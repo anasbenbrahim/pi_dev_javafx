@@ -1,23 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="Controller.UpdatePublication" spacing="15" alignment="CENTER"
+      stylesheets="@styles/publication.css" maxWidth="400">
+   <padding>
+      <Insets top="20" right="20" bottom="20" left="20"/>
+   </padding>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.UpdatePublication">
-   <children>
-      <TextField fx:id="titreupdate" layoutX="60.0" layoutY="79.0" />
-      <TextField fx:id="imageupdate" layoutX="61.0" layoutY="234.0" />
-      <DatePicker fx:id="dateupdate" layoutX="49.0" layoutY="156.0" />
-      <TextArea fx:id="descriptionupdate" layoutX="334.0" layoutY="34.0" prefHeight="200.0" prefWidth="200.0" />
-      <Label layoutX="61.0" layoutY="34.0" text="Titre" />
-      <Label layoutX="59.0" layoutY="126.0" text="Date" />
-      <Label layoutX="59.0" layoutY="200.0" text="ImageUrl" />
-      <Label layoutX="406.0" layoutY="14.0" text="Description" />
-      <Button fx:id="UpdateButton" layoutX="344.0" layoutY="289.0" mnemonicParsing="false" text="Update" onAction="#updatePublication" />
-      <Button layoutX="420.0" layoutY="289.0" text="Cancel" onAction="#cancelUpdate"/>
-   </children>
-</AnchorPane>
+   <Label text="Modifier Publication" styleClass="form-title"/>
+
+   <HBox spacing="10" alignment="CENTER_LEFT">
+      <Label text="Titre:" styleClass="form-label"/>
+      <TextField fx:id="titreupdate" promptText="Entrez le titre" styleClass="input-field" prefWidth="300" maxWidth="300"/>
+   </HBox>
+
+   <HBox spacing="10" alignment="CENTER_LEFT">
+      <Label text="Description:" styleClass="form-label"/>
+      <TextArea fx:id="descriptionupdate" promptText="Entrez la description" prefHeight="120" prefWidth="300" maxWidth="300" styleClass="input-field"/>
+   </HBox>
+
+   <HBox spacing="10" alignment="CENTER_LEFT">
+      <Label text="Image:" styleClass="form-label"/>
+      <TextField fx:id="imageupdate" promptText="Sélectionnez une image" styleClass="input-field" prefWidth="230" maxWidth="230"/>
+      <Button fx:id="chooseImageButton" text="Choisir" onAction="#chooseImage" styleClass="action-button"/>
+   </HBox>
+
+   <HBox spacing="15" alignment="CENTER">
+      <Button text="Enregistrer" onAction="#updatePublication" styleClass="submit-button"/>
+      <Button fx:id="retourButton" text="Retour" onAction="#goBack" styleClass="action-button"/>
+   </HBox>
+</VBox>

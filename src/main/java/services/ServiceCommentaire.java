@@ -14,116 +14,163 @@ public class ServiceCommentaire implements IService<Commentaire> {
         this.con = DataSource.getInstance().getConnection();
     }
 
+    private void validateConnection() throws SQLException {
+        if (con == null || con.isClosed()) {
+            throw new SQLException("Database connection is null or closed.");
+        }
+    }
+
     @Override
     public void insert(Commentaire commentaire) {
-        String req = "INSERT INTO commentaire (publication_id, client_id, description, image) VALUES (?, ?, ?, ?)";
-        try (PreparedStatement ps = con.prepareStatement(req)) {
-            ps.setInt(1, commentaire.getPublicationId());
-            ps.setInt(2, commentaire.getClientId());
-            ps.setString(3, commentaire.getDescription());
-            ps.setString(4, commentaire.getImage());
-            ps.executeUpdate();
-            System.out.println("Commentaire added successfully!");
+        try {
+            validateConnection();
+            String req = "INSERT INTO commentaire (description, publication_id, client_id, image) VALUES (?, ?, ?, ?)";
+            try (PreparedStatement ps = con.prepareStatement(req, Statement.RETURN_GENERATED_KEYS)) {
+                ps.setString(1, commentaire.getDescription());
+                ps.setInt(2, commentaire.getPublicationId());
+                ps.setInt(3, commentaire.getClientId());
+                ps.setString(4, commentaire.getImage());
+                ps.executeUpdate();
+                try (ResultSet rs = ps.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        commentaire.setId(rs.getInt(1));
+                    }
+                }
+                System.out.println("Comment added successfully!");
+            }
         } catch (SQLException e) {
-            System.out.println("Error inserting commentaire: " + e.getMessage());
+            System.err.println("Error inserting comment: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
     @Override
     public void update(Commentaire commentaire) {
-        String req = "UPDATE commentaire SET publication_id=?, client_id=?, description=?, image=? WHERE id=?";
-        try (PreparedStatement ps = con.prepareStatement(req)) {
-            ps.setInt(1, commentaire.getPublicationId());
-            ps.setInt(2, commentaire.getClientId());
-            ps.setString(3, commentaire.getDescription());
-            ps.setString(4, commentaire.getImage());
-            ps.setInt(5, commentaire.getId());
-            ps.executeUpdate();
-            System.out.println("Commentaire updated successfully!");
+        try {
+            validateConnection();
+            String req = "UPDATE commentaire SET description=?, image=? WHERE id=?";
+            try (PreparedStatement ps = con.prepareStatement(req)) {
+                ps.setString(1, commentaire.getDescription());
+                ps.setString(2, commentaire.getImage());
+                ps.setInt(3, commentaire.getId());
+                int rowsAffected = ps.executeUpdate();
+                if (rowsAffected > 0) {
+                    System.out.println("Comment updated successfully!");
+                } else {
+                    System.err.println("No comment found with ID: " + commentaire.getId());
+                }
+            }
         } catch (SQLException e) {
-            System.out.println("Error updating commentaire: " + e.getMessage());
+            System.err.println("Error updating comment: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
     @Override
     public void delete(int id) {
-        String req = "DELETE FROM commentaire WHERE id=?";
-        try (PreparedStatement ps = con.prepareStatement(req)) {
-            ps.setInt(1, id);
-            ps.executeUpdate();
-            System.out.println("Commentaire deleted successfully!");
+        try {
+            validateConnection();
+            // Delete related notifications
+            int notificationsDeleted = deleteRelatedRecords("DELETE FROM notification WHERE commentaire_id = ?", id);
+            System.out.println("Deleted " + notificationsDeleted + " notifications for comment ID: " + id);
+
+            // Delete comment
+            String req = "DELETE FROM commentaire WHERE id=?";
+            try (PreparedStatement ps = con.prepareStatement(req)) {
+                ps.setInt(1, id);
+                int rowsAffected = ps.executeUpdate();
+                if (rowsAffected == 0) {
+                    System.err.println("No comment found with ID: " + id);
+                    throw new SQLException("No comment found with ID: " + id);
+                }
+                System.out.println("Comment deleted successfully!");
+            }
         } catch (SQLException e) {
-            System.out.println("Error deleting commentaire: " + e.getMessage());
+            System.err.println("Error deleting comment: " + e.getMessage());
+            e.printStackTrace();
+            throw new RuntimeException("Failed to delete comment: " + e.getMessage(), e);
+        }
+    }
+
+    private int deleteRelatedRecords(String sql, int id) throws SQLException {
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            return ps.executeUpdate();
         }
     }
 
     @Override
     public List<Commentaire> getAll() {
         List<Commentaire> list = new ArrayList<>();
-        String req = "SELECT * FROM commentaire";
-        try (Statement st = con.createStatement(); ResultSet rs = st.executeQuery(req)) {
-            while (rs.next()) {
-                list.add(new Commentaire(
-                        rs.getInt("id"),
-                        rs.getInt("publication_id"),
-                        rs.getInt("client_id"),
-                        rs.getString("description"),
-                        rs.getString("image")
-                ));
+        try {
+            validateConnection();
+            String req = "SELECT * FROM commentaire";
+            try (Statement st = con.createStatement(); ResultSet rs = st.executeQuery(req)) {
+                while (rs.next()) {
+                    list.add(new Commentaire(
+                            rs.getInt("id"),
+                            rs.getString("description"),
+                            rs.getInt("publication_id"),
+                            rs.getInt("client_id")
+                    ));
+                }
             }
         } catch (SQLException e) {
-            System.out.println("Error retrieving commentaires: " + e.getMessage());
+            System.err.println("Error retrieving comments: " + e.getMessage());
+            e.printStackTrace();
         }
         return list;
     }
 
     @Override
     public Commentaire getById(int id) {
-        String req = "SELECT * FROM commentaire WHERE id=?";
-        try (PreparedStatement ps = con.prepareStatement(req)) {
-            ps.setInt(1, id);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return new Commentaire(
-                            rs.getInt("id"),
-                            rs.getInt("publication_id"),
-                            rs.getInt("client_id"),
-                            rs.getString("description"),
-                            rs.getString("image")
-                    );
+        try {
+            validateConnection();
+            String req = "SELECT * FROM commentaire WHERE id=?";
+            try (PreparedStatement ps = con.prepareStatement(req)) {
+                ps.setInt(1, id);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        return new Commentaire(
+                                rs.getInt("id"),
+                                rs.getString("description"),
+                                rs.getInt("publication_id"),
+                                rs.getInt("client_id")
+                        );
+                    }
                 }
             }
         } catch (SQLException e) {
-            System.out.println("Error retrieving commentaire: " + e.getMessage());
+            System.err.println("Error retrieving comment: " + e.getMessage());
+            e.printStackTrace();
         }
         return null;
     }
 
     public List<Commentaire> afficherCommentairesParPublication(int publicationId) {
-        List<Commentaire> commentaires = new ArrayList<>();
-        String query = "SELECT * FROM commentaire WHERE publication_id = ?";
-
-        try (PreparedStatement pst = con.prepareStatement(query)) {
-            pst.setInt(1, publicationId);
-            ResultSet rs = pst.executeQuery();
-
-            while (rs.next()) {
-                // Ensure all fields are correctly set
-                Commentaire c = new Commentaire(
-                        rs.getInt("publication_id"),
-                        rs.getInt("client_id"),
-                        rs.getString("description"),
-                        rs.getString("image")
-                );
-                c.setId(rs.getInt("id")); // Set the ID field separately if it's not in the constructor
-                commentaires.add(c);
+        List<Commentaire> list = new ArrayList<>();
+        try {
+            validateConnection();
+            String req = "SELECT * FROM commentaire WHERE publication_id=?";
+            try (PreparedStatement ps = con.prepareStatement(req)) {
+                ps.setInt(1, publicationId);
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        Commentaire commentaire = new Commentaire(
+                                rs.getInt("id"),
+                                rs.getString("description"),
+                                rs.getInt("publication_id"),
+                                rs.getInt("client_id")
+                        );
+                        System.out.println("Fetched comment: " + commentaire.getDescription());
+                        list.add(commentaire);
+                    }
+                }
             }
-
         } catch (SQLException e) {
-            System.out.println("Erreur lors de l'affichage des commentaires: " + e.getMessage());
+            System.err.println("Error retrieving comments for publication: " + e.getMessage());
+            e.printStackTrace();
         }
-
-        return commentaires;
+        return list;
     }
-
 }

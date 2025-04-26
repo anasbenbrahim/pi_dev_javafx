@@ -1,33 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.VBox?>
+<ScrollPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="Controller.Publicationdetail" fitToWidth="true"
+            styleClass="card-scroll-pane" stylesheets="@styles/publication.css">
+    <content>
+        <VBox fx:id="mainContainer" spacing="15" style="-fx-background-color: #f5f9f5;" alignment="TOP_CENTER" maxWidth="600">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
 
-<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="Controller.Publicationdetail"
-      style="-fx-background-color: #f4f4f4; -fx-padding: 10;"
-      spacing="10">
+            <Label fx:id="titleLabel" styleClass="card-title" wrapText="true" maxWidth="550"/>
+            <ImageView fx:id="imageView" fitWidth="550" fitHeight="300" preserveRatio="true" styleClass="card-image"/>
+            <Label fx:id="descriptionLabel" styleClass="card-description" wrapText="true" maxWidth="550"/>
+            <Label fx:id="dateLabel" styleClass="card-date" maxWidth="550"/>
 
-    <!-- Title Label -->
-    <Label fx:id="titreLabel" text="Publication Title" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+            <HBox fx:id="ratingBox" spacing="5" alignment="CENTER_LEFT">
+                <Label text="Évaluation: " styleClass="form-label"/>
+                <Button fx:id="star1" text="☆" styleClass="star-button" onAction="#ratePublication"/>
+                <Button fx:id="star2" text="☆" styleClass="star-button" onAction="#ratePublication"/>
+                <Button fx:id="star3" text="☆" styleClass="star-button" onAction="#ratePublication"/>
+                <Button fx:id="star4" text="☆" styleClass="star-button" onAction="#ratePublication"/>
+                <Button fx:id="star5" text="☆" styleClass="star-button" onAction="#ratePublication"/>
+                <Label fx:id="averageRatingLabel" text="(0.0)" styleClass="card-date"/>
+            </HBox>
 
-    <!-- Description Label -->
-    <Label fx:id="descriptionLabel" text="Publication Description" style="-fx-font-size: 14px;"/>
+            <VBox fx:id="commentsContainer" spacing="10" styleClass="comment-box" maxWidth="550"/>
 
-    <!-- Date Label -->
-    <Label fx:id="dateLabel" text="Publication Date" style="-fx-font-size: 12px; color: gray;"/>
-
-    <!-- Image View -->
-    <ImageView fx:id="imageView" fitWidth="200" fitHeight="200" style="-fx-padding: 10;" />
-
-    <!-- VBox for dynamic comments -->
-    <VBox fx:id="commentairesVBox" spacing="10" style="-fx-padding: 10;">
-        <!-- Comments will be added dynamically here -->
-    </VBox>
-
-    <!-- Button to add a comment -->
-    <Button text="Ajouter un Commentaire" onAction="#openCommentaireForm"/>
-
-</VBox>
+            <HBox spacing="15" alignment="CENTER">
+                <Button fx:id="addCommentButton" text="Ajouter Commentaire" onAction="#openAddCommentForm" styleClass="submit-button"/>
+                <Button fx:id="retourButton" text="Retour" onAction="#goBack" styleClass="action-button"/>
+            </HBox>
+        </VBox>
+    </content>
+</ScrollPane>

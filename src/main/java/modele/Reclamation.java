@@ -25,6 +25,15 @@ public class Reclamation {
         this.clientId = clientId;
     }
 
+    public Reclamation(String titre, String description, int publicationId, int clientId, LocalDate date) {
+        this.titre = titre;
+        this.description = description;
+        this.publicationId = publicationId;
+        this.clientId = clientId;
+        this.date = date != null ? date : LocalDate.now();
+        this.status = "Pending";
+    }
+
     // Getters and Setters
     public int getId() {
         return id;

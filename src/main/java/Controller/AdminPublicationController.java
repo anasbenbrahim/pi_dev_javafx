@@ -5,30 +5,23 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import modele.Publication;
 import modele.Reclamation;
 import services.ServicePublication;
 import services.ServiceReclamation;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AdminPublicationController implements Initializable {
 
-    // Publications
     @FXML private TableView<Publication> adminTableView;
     @FXML private TableColumn<Publication, String> titreColumn;
     @FXML private TableColumn<Publication, String> descriptionColumn;
     @FXML private TableColumn<Publication, String> dateColumn;
     @FXML private TableColumn<Publication, String> imageColumn;
     @FXML private TableColumn<Publication, Void> deleteButtonColumn;
-
-    // Reclamations
     @FXML private TableView<Reclamation> reclamationTableView;
     @FXML private TableColumn<Reclamation, String> reclamationTitreColumn;
     @FXML private TableColumn<Reclamation, String> reclamationDescriptionColumn;
@@ -36,9 +29,20 @@ public class AdminPublicationController implements Initializable {
     @FXML private TableColumn<Reclamation, String> reclamationStatusColumn;
     @FXML private TableColumn<Reclamation, Void> approveColumn;
     @FXML private TableColumn<Reclamation, Void> deleteReclamationColumn;
+    @FXML private Button retourButton;
 
     private final ServicePublication servicePublication = new ServicePublication();
     private final ServiceReclamation serviceReclamation = new ServiceReclamation();
+    private NavigationManager navigationManager;
+    private Runnable refreshCallback;
+
+    public void setNavigationManager(NavigationManager navigationManager) {
+        this.navigationManager = navigationManager;
+    }
+
+    public void setRefreshCallback(Runnable refreshCallback) {
+        this.refreshCallback = refreshCallback;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -52,11 +56,8 @@ public class AdminPublicationController implements Initializable {
         titreColumn.setCellValueFactory(new PropertyValueFactory<>("titre"));
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
-
-        // Set cell value factory for image column using imageUrl
         imageColumn.setCellValueFactory(new PropertyValueFactory<>("imageUrl"));
 
-        // Set custom cell factory to display images
         imageColumn.setCellFactory(column -> new TableCell<Publication, String>() {
             private final ImageView imageView = new ImageView();
 
@@ -73,13 +74,13 @@ public class AdminPublicationController implements Initializable {
                         imageView.setFitHeight(60);
                         setGraphic(imageView);
                     } catch (Exception e) {
-                        setGraphic(null); // handle bad URL or loading error
+                        setGraphic(null);
                     }
                 }
             }
         });
 
-        addDeleteButtonToPublicationTable(); // Your existing method for delete buttons
+        addDeleteButtonToPublicationTable();
     }
 
     private void setupReclamationTable() {
@@ -105,10 +106,15 @@ public class AdminPublicationController implements Initializable {
         deleteButtonColumn.setCellFactory(param -> new TableCell<>() {
             private final Button deleteBtn = new Button("Supprimer");
             {
+                deleteBtn.setStyle("-fx-background-color: #f44336; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 20; -fx-background-radius: 6; -fx-cursor: hand;");
                 deleteBtn.setOnAction(event -> {
                     Publication publication = getTableView().getItems().get(getIndex());
                     servicePublication.delete(publication.getId());
                     loadPublications();
+                    if (refreshCallback != null) {
+                        System.out.println("Triggering refresh callback from AdminPublicationController (delete publication)");
+                        refreshCallback.run();
+                    }
                 });
             }
             @Override
@@ -123,6 +129,7 @@ public class AdminPublicationController implements Initializable {
         approveColumn.setCellFactory(param -> new TableCell<>() {
             private final Button approveBtn = new Button("Approuver");
             {
+                approveBtn.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 20; -fx-background-radius: 6; -fx-cursor: hand;");
                 approveBtn.setOnAction(event -> {
                     Reclamation reclamation = getTableView().getItems().get(getIndex());
                     reclamation.setStatus("Approuvée");
@@ -131,7 +138,7 @@ public class AdminPublicationController implements Initializable {
                 });
             }
             @Override
-            protected void updateItem(Void item, boolean empty) {
+            protected void updateItem(Void  item, boolean empty) {
                 super.updateItem(item, empty);
                 setGraphic(empty ? null : approveBtn);
             }
@@ -142,6 +149,7 @@ public class AdminPublicationController implements Initializable {
         deleteReclamationColumn.setCellFactory(param -> new TableCell<>() {
             private final Button deleteBtn = new Button("Supprimer");
             {
+                deleteBtn.setStyle("-fx-background-color: #f44336; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 20; -fx-background-radius: 6; -fx-cursor: hand;");
                 deleteBtn.setOnAction(event -> {
                     Reclamation reclamation = getTableView().getItems().get(getIndex());
                     serviceReclamation.delete(reclamation.getId());
@@ -154,5 +162,10 @@ public class AdminPublicationController implements Initializable {
                 setGraphic(empty ? null : deleteBtn);
             }
         });
+    }
+
+    @FXML
+    private void goBack() {
+        navigationManager.goBack();
     }
 }

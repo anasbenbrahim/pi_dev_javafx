@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.VBox?>
-
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
-<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="Controller.Addcommentaire" spacing="10">
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="Controller.Addcommentaire" spacing="15" alignment="CENTER"
+      stylesheets="@styles/publication.css" maxWidth="400">
     <padding>
-        <Insets top="20.0" right="20.0" bottom="20.0" left="20.0"/>
+        <Insets top="20" right="20" bottom="20" left="20"/>
     </padding>
-    <TextField fx:id="descriptionField" promptText="Description" prefWidth="300" />
-    <TextArea fx:id="imageField" promptText="Image URL" prefWidth="300" />
-    <Button text="Submit" onAction="#handleAddCommentaire" />
+
+    <Label text="Ajouter un Commentaire" styleClass="form-title"/>
+
+    <TextArea fx:id="commentTextArea" promptText="Entrez votre commentaire" wrapText="true" styleClass="input-field" prefWidth="350" maxWidth="350" prefHeight="100"/>
+
+    <HBox spacing="15" alignment="CENTER">
+        <Button fx:id="submitButton" text="Ajouter Commentaire" onAction="#submitComment" styleClass="submit-button"/>
+        <Button fx:id="retourButton" text="Retour" onAction="#goBack" styleClass="action-button"/>
+    </HBox>
 </VBox>

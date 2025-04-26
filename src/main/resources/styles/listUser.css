@@ -1,0 +1,133 @@
+/* User Management Specific Styles */
+.form-label {
+    -fx-text-fill: -fx-secondary-color;
+    -fx-font-weight: bold;
+}
+
+.form-field {
+    -fx-background-color: white;
+    -fx-border-color: #c8e6c9;
+    -fx-border-radius: 4px;
+    -fx-border-width: 1px;
+    -fx-padding: 5;
+    -fx-font-size: 14px;
+}
+
+.form-field:focused {
+    -fx-border-color: -fx-primary-color;
+    -fx-effect: dropshadow(one-pass-box, rgba(93, 156, 73, 0.3), 5, 0, 0, 1);
+}
+
+.form-combo {
+    -fx-background-color: white;
+    -fx-border-color: #c8e6c9;
+    -fx-border-radius: 4px;
+    -fx-border-width: 1px;
+    -fx-padding: 5;
+    -fx-font-size: 14px;
+}
+
+.search-field {
+    -fx-background-color: white;
+    -fx-border-color: #c8e6c9;
+    -fx-border-radius: 20px;
+    -fx-border-width: 1px;
+    -fx-padding: 5 15 5 15;
+    -fx-font-size: 14px;
+    -fx-pref-width: 300px;
+}
+
+.filter-combo {
+    -fx-background-color: white;
+    -fx-border-color: #c8e6c9;
+    -fx-border-radius: 20px;
+    -fx-border-width: 1px;
+    -fx-padding: 5 15 5 15;
+    -fx-font-size: 14px;
+}
+
+.secondary-button {
+    -fx-background-color: -fx-soil-color;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 8 15 8 15;
+    -fx-background-radius: 4px;
+    -fx-cursor: hand;
+}
+
+.secondary-button:hover {
+    -fx-background-color: #7a5b52;
+}
+
+.delete-button {
+    -fx-background-color: #e74c3c;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 8 15 8 15;
+    -fx-background-radius: 4px;
+    -fx-cursor: hand;
+}
+
+.delete-button:hover {
+    -fx-background-color: #c0392b;
+}
+
+.badge-label {
+    -fx-background-color: -fx-accent-color;
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-padding: 3 8 3 8;
+    -fx-background-radius: 10px;
+}
+
+.status-message {
+    -fx-font-size: 14px;
+    -fx-padding: 10 0 0 0;
+}
+
+/* User Card Style */
+.user-card {
+    -fx-background-color: white;
+    -fx-background-radius: 8px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 0);
+    -fx-border-color: #c8e6c9;
+    -fx-border-width: 1px;
+    -fx-border-radius: 8px;
+    -fx-pref-width: 250px;
+}
+
+.user-card:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(93, 156, 73, 0.3), 10, 0, 0, 2);
+}
+
+.user-card-header {
+    -fx-background-color: linear-gradient(to right, #5d9c49, #3a6b35);
+    -fx-background-radius: 8 8 0 0;
+    -fx-padding: 10;
+}
+
+.user-card-name {
+    -fx-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.user-card-role {
+    -fx-fill: #e8f5e9;
+    -fx-font-size: 12px;
+}
+
+.user-card-body {
+    -fx-padding: 15;
+    -fx-spacing: 10;
+}
+
+.user-card-detail {
+    -fx-text-fill: -fx-secondary-color;
+    -fx-font-size: 14px;
+}
+
+.user-card-icon {
+    -fx-fill: -fx-primary-color;
+}

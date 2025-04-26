@@ -1,17 +1,15 @@
 package Controller;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
-import modele.Publication;
 import modele.Reclamation;
-import services.ServicePublication;
 import services.ServiceReclamation;
+import services.ServicePublication;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -24,30 +22,32 @@ public class AllReclamationsViewController {
     @FXML private TableColumn<Reclamation, LocalDate> dateColumn;
     @FXML private TableColumn<Reclamation, String> statusColumn;
     @FXML private TableColumn<Reclamation, Void> actionsColumn;
+    @FXML private Button retourButton;
 
     private final ServiceReclamation reclamationService = new ServiceReclamation();
     private final ServicePublication publicationService = new ServicePublication();
     private int clientId;
+    private NavigationManager navigationManager;
 
     public void setClientId(int clientId) {
         this.clientId = clientId;
         loadReclamations();
     }
 
+    public void setNavigationManager(NavigationManager navigationManager) {
+        this.navigationManager = navigationManager;
+    }
+
     @FXML
     public void initialize() {
-        // Configure table columns
         pubTitleColumn.setCellValueFactory(cellData -> {
-            Publication pub = publicationService.getById(cellData.getValue().getPublicationId());
-            return javafx.beans.binding.Bindings.createStringBinding(() ->
-                    pub != null ? pub.getTitre() : "Unknown");
+            String pubTitle = publicationService.getById(cellData.getValue().getPublicationId()).getTitre();
+            return javafx.beans.binding.Bindings.createStringBinding(() -> pubTitle != null ? pubTitle : "Unknown");
         });
         titreColumn.setCellValueFactory(new PropertyValueFactory<>("titre"));
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
-
-        // Add action buttons
         addActionButtonsToTable();
     }
 
@@ -62,6 +62,8 @@ public class AllReclamationsViewController {
             private final HBox buttonsPane = new HBox(5, editBtn, deleteBtn);
 
             {
+                editBtn.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 3 10; -fx-background-radius: 5; -fx-cursor: hand;");
+                deleteBtn.setStyle("-fx-background-color: #f44336; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 3 10; -fx-background-radius: 5; -fx-cursor: hand;");
 
                 editBtn.setOnAction(event -> {
                     Reclamation reclamation = getTableView().getItems().get(getIndex());
@@ -86,15 +88,11 @@ public class AllReclamationsViewController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/EditReclamation.fxml"));
             Parent root = loader.load();
-
             EditReclamationController controller = loader.getController();
             controller.setReclamation(reclamation);
             controller.setOnReclamationUpdated(this::loadReclamations);
-
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Modifier Réclamation");
-            stage.show();
+            controller.setNavigationManager(navigationManager);
+            navigationManager.navigateTo(root);
         } catch (IOException e) {
             showAlert("Erreur", "Impossible d'ouvrir l'éditeur de réclamation");
         }
@@ -118,5 +116,10 @@ public class AllReclamationsViewController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    @FXML
+    private void goBack() {
+        navigationManager.goBack();
     }
 }

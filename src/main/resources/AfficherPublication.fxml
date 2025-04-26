@@ -1,26 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="500.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AfficherPublicationController">
+<AnchorPane xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="Controller.AfficherPublicationController"
+            stylesheets="@styles/publication.css">
+
     <children>
-        <Button fx:id="addPublicationBtn" layoutX="750.0" layoutY="10.0" mnemonicParsing="false" onAction="#openAddPublicationForm" text="Ajouter Publication" />
-        <Button fx:id="adminButton" layoutX="630.0" layoutY="10.0" mnemonicParsing="false" onAction="#openAdminPanel" text="Admin" />
+        <HBox fx:id="topBar" spacing="15" AnchorPane.topAnchor="10.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0">
+            <TextField fx:id="searchField" promptText="Rechercher par titre..." styleClass="search-field" HBox.hgrow="ALWAYS"/>
+            <Button fx:id="addPublicationBtn" text="Ajouter Publication" onAction="#openAddPublicationForm" styleClass="action-button"/>
+            <Button fx:id="adminButton" text="Admin" onAction="#openAdminPanel" styleClass="action-button"/>
+            <Button fx:id="retourButton" text="Retour" onAction="#goBack" styleClass="action-button" visible="false"/>
+        </HBox>
 
-        <TableView fx:id="tableView" layoutX="30.0" layoutY="50.0" prefHeight="400.0" prefWidth="840.0">
-            <columns>
-                <TableColumn fx:id="titreColumn" prefWidth="100.0" text="Titre" />
-                <TableColumn fx:id="descriptionColumn" prefWidth="150.0" text="Description" />
-                <TableColumn fx:id="dateColumn" prefWidth="100.0" text="Date" />
-                <TableColumn fx:id="imageColumn" prefWidth="100.0" text="Image" />
-
-                <TableColumn fx:id="testbutton" prefWidth="75.0" text="Modifier" />
-                <TableColumn fx:id="voirbutton" prefWidth="50.0" text="Voir" />
-                <TableColumn fx:id="supprimerbutton" prefWidth="75.0" text="Supprimer" />
-                <TableColumn fx:id="reclamationButton" prefWidth="75.0" text="Reclamer" />
-                <TableColumn fx:id="viewMyReclamationButton" prefWidth="120.0" text="Ma Réclamation" />
-            </columns>
-        </TableView>
+        <ScrollPane fx:id="scrollPane"
+                    AnchorPane.topAnchor="60.0"
+                    AnchorPane.leftAnchor="30.0"
+                    AnchorPane.rightAnchor="30.0"
+                    AnchorPane.bottomAnchor="30.0"
+                    fitToWidth="true"
+                    fitToHeight="true"
+                    styleClass="card-scroll-pane">
+            <content>
+                <FlowPane fx:id="cardContainer"
+                          hgap="20" vgap="20"
+                          prefWrapLength="800.0"
+                          AnchorPane.topAnchor="0.0"
+                          AnchorPane.leftAnchor="0.0"
+                          AnchorPane.rightAnchor="0.0"
+                          AnchorPane.bottomAnchor="0.0"
+                />
+            </content>
+        </ScrollPane>
     </children>
 </AnchorPane>

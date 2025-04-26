@@ -3,46 +3,54 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="Controller.AdminPublicationController" spacing="15"
+      stylesheets="@styles/publication.css" style="-fx-background-color: #f5f9f5;" alignment="TOP_CENTER">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
 
+    <Label text="Panneau d'Administration" styleClass="form-title"/>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="Controller.AdminPublicationController">
-    <TabPane layoutX="10" layoutY="10" prefWidth="800" prefHeight="600">
+    <HBox spacing="15" alignment="CENTER_LEFT">
+        <TextField fx:id="searchField" promptText="Rechercher par titre..." styleClass="search-field" prefWidth="300" maxWidth="300"/>
+    </HBox>
 
-        <!-- Tab 1: Publications -->
+    <TabPane styleClass="admin-tab-pane" prefHeight="500">
         <Tab text="Publications">
             <VBox spacing="10">
                 <padding>
                     <Insets top="10" right="10" bottom="10" left="10"/>
                 </padding>
-                <TableView fx:id="adminTableView" prefHeight="300">
+                <TableView fx:id="adminTableView" styleClass="custom-table">
                     <columns>
-                        <TableColumn fx:id="titreColumn" text="Titre"/>
-                        <TableColumn fx:id="descriptionColumn" text="Description"/>
-                        <TableColumn fx:id="dateColumn" text="Date"/>
-                        <TableColumn fx:id="imageColumn" text="Image URL"/>
-                        <TableColumn fx:id="deleteButtonColumn" text="Action"/>
+                        <TableColumn fx:id="titreColumn" text="Titre" prefWidth="150"/>
+                        <TableColumn fx:id="descriptionColumn" text="Description" prefWidth="250"/>
+                        <TableColumn fx:id="dateColumn" text="Date" prefWidth="120"/>
+                        <TableColumn fx:id="imageColumn" text="Image URL" prefWidth="150"/>
+                        <TableColumn fx:id="deleteButtonColumn" text="Action" prefWidth="100"/>
                     </columns>
                 </TableView>
             </VBox>
         </Tab>
-
-        <!-- Tab 2: Reclamations -->
-        <Tab text="Reclamations">
+        <Tab text="Réclamations">
             <VBox spacing="10">
                 <padding>
                     <Insets top="10" right="10" bottom="10" left="10"/>
                 </padding>
-                <TableView fx:id="reclamationTableView" prefHeight="300">
+                <TableView fx:id="reclamationTableView" styleClass="custom-table">
                     <columns>
-                        <TableColumn fx:id="reclamationTitreColumn" text="Titre"/>
-                        <TableColumn fx:id="reclamationDescriptionColumn" text="Description"/>
-                        <TableColumn fx:id="reclamationDateColumn" text="Date"/>
-                        <TableColumn fx:id="reclamationStatusColumn" text="Status"/>
-                        <TableColumn fx:id="approveColumn" text="Approve"/>
-                        <TableColumn fx:id="deleteReclamationColumn" text="Delete"/>
+                        <TableColumn fx:id="reclamationTitreColumn" text="Titre" prefWidth="150"/>
+                        <TableColumn fx:id="reclamationDescriptionColumn" text="Description" prefWidth="250"/>
+                        <TableColumn fx:id="reclamationDateColumn" text="Date" prefWidth="120"/>
+                        <TableColumn fx:id="reclamationStatusColumn" text="Status" prefWidth="100"/>
+                        <TableColumn fx:id="approveColumn" text="Approuver" prefWidth="100"/>
+                        <TableColumn fx:id="deleteReclamationColumn" text="Supprimer" prefWidth="100"/>
                     </columns>
                 </TableView>
             </VBox>
         </Tab>
     </TabPane>
-</AnchorPane>
+
+    <Button fx:id="retourButton" text="Retour" onAction="#goBack" styleClass="action-button"/>
+</VBox>

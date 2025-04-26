@@ -1,23 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Text?>
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="Controller.AjouterPublicationForm" spacing="15" alignment="CENTER"
+      stylesheets="@styles/publication.css" maxWidth="400">
+   <padding>
+      <Insets top="20" right="20" bottom="20" left="20"/>
+   </padding>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AjouterPublicationForm">
-   <children>
-      <TextField fx:id="titreField" layoutX="65.0" layoutY="58.0" />
-      <DatePicker fx:id="datePicker" layoutX="52.0" layoutY="155.0" />
-      <TextArea fx:id="descriptionField" layoutX="292.0" layoutY="44.0" prefHeight="200.0" prefWidth="200.0" />
-      <Button fx:id="submitButton" layoutX="513.0" layoutY="204.0" mnemonicParsing="false" onAction="#onSubmit" text="Ajouter" />
-      <Text layoutX="78.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Titre" />
-      <Text layoutX="79.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date" />
-      <Text layoutX="335.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Description" />
-      <Text layoutX="79.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Image" />
-      <TextField fx:id="imageUrlField" layoutX="46.0" layoutY="232.0" />
-      <Button fx:id="viewPublicationsButton" layoutX="513.0" layoutY="244.0" mnemonicParsing="false" onAction="#onViewPublications" text="Voir Publications" />
-   </children>
-</AnchorPane>
+   <Label text="Ajouter une Publication" styleClass="form-title"/>
+
+   <HBox spacing="10" alignment="CENTER_LEFT">
+      <Label text="Titre:" styleClass="form-label"/>
+      <TextField fx:id="titreField" promptText="Entrez le titre" styleClass="input-field" prefWidth="300" maxWidth="300"/>
+   </HBox>
+
+   <HBox spacing="10" alignment="CENTER_LEFT">
+      <Label text="Description:" styleClass="form-label"/>
+      <TextArea fx:id="descriptionField" promptText="Entrez la description" prefHeight="120" prefWidth="300" maxWidth="300" styleClass="input-field"/>
+   </HBox>
+
+   <HBox spacing="10" alignment="CENTER_LEFT">
+      <Label text="Image:" styleClass="form-label"/>
+      <TextField fx:id="imageUrlField" promptText="Sélectionnez une image" styleClass="input-field" prefWidth="230" maxWidth="230"/>
+      <Button fx:id="chooseImageButton" text="Choisir" onAction="#chooseImage" styleClass="action-button"/>
+   </HBox>
+
+   <HBox spacing="15" alignment="CENTER">
+      <Button fx:id="submitButton" text="Ajouter Publication" onAction="#onSubmit" styleClass="submit-button"/>
+      <Button fx:id="retourButton" text="Retour" onAction="#goBack" styleClass="action-button"/>
+   </HBox>
+</VBox>

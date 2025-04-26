@@ -1,86 +1,114 @@
 package Controller;
 
-import modele.Commentaire;
-import modele.Publication;
-import services.ServiceCommentaire;
 import javafx.fxml.FXML;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import modele.Publication;
+import modele.Commentaire;
+import modele.Notification;
+import services.ServiceCommentaire;
+import services.NotificationService;
+import utils.FiltreCommentaire;
 
 public class Addcommentaire {
 
-    @FXML
-    private TextField descriptionField;
+    @FXML private TextArea commentTextArea;
+    @FXML private Button submitButton;
+    @FXML private Button retourButton;
 
-    @FXML
-    private TextArea imageField;
-
+    private Publication publication;
+    private Commentaire commentaire;
     private ServiceCommentaire commentaireService;
+    private NotificationService notificationService;
+    private Runnable onCommentAdded;
+    private final int currentClientId = 1; // Replace with actual user system
+    private NavigationManager navigationManager;
 
     public Addcommentaire() {
         commentaireService = new ServiceCommentaire();
+        notificationService = new NotificationService();
     }
-
-    private Publication publication;
 
     public void setPublication(Publication publication) {
-        this.publication = publication;  // Correctly set the publication object
+        this.publication = publication;
     }
 
-    // This method will be called when the Submit button is clicked
-    @FXML
-    private void handleAddCommentaire() {
-        String description = descriptionField.getText();
-        String imageUrl = imageField.getText();
-
-        // Validation to ensure fields are not empty
-        if (description == null || description.isEmpty() || imageUrl == null || imageUrl.isEmpty()) {
-            showAlert("Error", "Description and image URL cannot be empty.");
-            return;
-        }
-
-        // Get publicationId and clientId from the Publication and Client
-        int publicationId = publication.getId();  // Use the correct publicationId
-
-        // Get clientId from the logged-in user (replace with actual client logic)
-        int clientId = getLoggedInClientId();  // Assuming a method to get client ID from session or user info
-
-        // Create a new Commentaire object
-        Commentaire commentaire = new Commentaire(publicationId, clientId, description, imageUrl);
-
-        try {
-            // Insert the comment using the service
-            commentaireService.insert(commentaire);
-            showAlert("Success", "Comment added successfully!");
-
-            // Clear the fields after successful submission
-            descriptionField.clear();
-            imageField.clear();
-        } catch (Exception e) {
-            showAlert("Error", "Failed to add comment. Please try again.");
-            e.printStackTrace();  // Optional: log the error for debugging purposes
+    public void setCommentaire(Commentaire commentaire) {
+        this.commentaire = commentaire;
+        if (commentaire != null) {
+            commentTextArea.setText(commentaire.getDescription());
+            submitButton.setText("Update Comment");
         }
     }
-
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
-    private Runnable onCommentAdded;
 
     public void setOnCommentAdded(Runnable onCommentAdded) {
         this.onCommentAdded = onCommentAdded;
     }
 
-    // Dummy method for getting the clientId, replace with actual logic to get the client
-    private int getLoggedInClientId() {
-        // Replace with actual logic to get the logged-in client ID (e.g., from session, authentication system, etc.)
-        return 1;  // For now, just return 1 as a placeholder
+    public void setNavigationManager(NavigationManager navigationManager) {
+        this.navigationManager = navigationManager;
+    }
+
+    @FXML
+    public void initialize() {
+        if (commentaire == null) {
+            submitButton.setText("Add Comment");
+        }
+    }
+
+    @FXML
+    private void submitComment() {
+        String description = commentTextArea.getText();
+        if (description == null || description.trim().isEmpty()) {
+            showAlert("Error", "Comment cannot be empty");
+            return;
+        }
+
+        String filteredDescription = FiltreCommentaire.filtreCommentaire(description);
+
+        try {
+            if (commentaire == null) {
+                Commentaire newComment = new Commentaire(
+                        filteredDescription,
+                        publication.getId(),
+                        currentClientId
+                );
+                commentaireService.insert(newComment);
+
+                String message = "New comment added to publication: " + publication.getTitre();
+                Notification notification = new Notification(
+                        message,
+                        publication.getId(),
+                        currentClientId,
+                        newComment.getId()
+                );
+                notificationService.addNotification(notification);
+            } else {
+                commentaire.setDescription(filteredDescription);
+                commentaireService.update(commentaire);
+            }
+
+            if (onCommentAdded != null) {
+                onCommentAdded.run();
+            }
+
+            navigationManager.goBack();
+        } catch (Exception e) {
+            showAlert("Error", "Failed to submit comment: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    private void goBack() {
+        navigationManager.goBack();
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

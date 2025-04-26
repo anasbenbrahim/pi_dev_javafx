@@ -7,7 +7,24 @@ public class Commentaire {
     private String description;
     private String image;
 
-    // Constructor that matches the parameters in your Addcommentaire controller
+    // Constructor for adding a new comment (used in Addcommentaire)
+    public Commentaire(String description, int publicationId, int clientId) {
+        this.description = description;
+        this.publicationId = publicationId;
+        this.clientId = clientId;
+        this.image = null;
+    }
+
+    // Constructor for full initialization (e.g., from database)
+    public Commentaire(int id, String description, int publicationId, int clientId) {
+        this.id = id;
+        this.description = description;
+        this.publicationId = publicationId;
+        this.clientId = clientId;
+        this.image = null;
+    }
+
+    // Constructor with image
     public Commentaire(int publicationId, int clientId, String description, String image) {
         this.publicationId = publicationId;
         this.clientId = clientId;
@@ -15,10 +32,7 @@ public class Commentaire {
         this.image = image;
     }
 
-    public Commentaire(int id, int publicationId, int clientId, String description, String image) {
-    }
-
-    // Getters and Setters for all fields
+    // Getters and Setters
     public int getId() {
         return id;
     }

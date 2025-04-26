@@ -1,0 +1,39 @@
+.background-image {
+    -fx-background-image: url("../images/bgimage.jpg");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}
+
+.top-bar{
+    -fx-background-color: rgb(10, 72, 17);
+}
+
+.transparent{
+    -fx-background-color: rgba(0,0,0,0);
+}
+
+.pink-button{
+    -fx-background-color: #a9f69b;
+    -fx-background-radius: 100;
+}
+
+.purple-button{
+    -fx-background-color: rgb(134, 189, 141);
+    -fx-background-radius: 100;
+}
+
+.transparent-button{
+    -fx-background-color: rgba(0,0,0,0);
+    -fx-border-color: #FFFFFF;
+    -fx-border-radius: 100;
+}
+
+.shadow{
+    -fx-effect: dropShadow(one-pass-box,rgba(0,0,0,0.3), 10.0 , 0.0 , 0.0, 10.0);
+}
+
+.offer-background{
+    -fx-background-color: rgb(10, 72, 17);
+    -fx-background-radius: 30;
+}
