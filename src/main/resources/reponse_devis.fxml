@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.collections.FXCollections?>
+
+<?import java.lang.String?>
+<VBox xmlns="http://javafx.com/javafx/22.0.1"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.controllers.ReponseDevis"
+      stylesheets="@style.css"
+      spacing="25"
+      styleClass="form-container"
+      alignment="CENTER"
+      prefWidth="500">
+
+    <!-- En-tête avec titre -->
+    <StackPane VBox.vgrow="NEVER">
+        <Label text="Réponse au Devis" styleClass="page-title"/>
+    </StackPane>
+
+    <!-- Séparateur visuel -->
+    <Separator styleClass="separator-style"/>
+
+    <!-- Conteneur principal du formulaire -->
+    <GridPane hgap="20" vgap="20" alignment="CENTER" VBox.vgrow="ALWAYS">
+        <columnConstraints>
+            <ColumnConstraints halignment="RIGHT" hgrow="NEVER" prefWidth="150"/>
+            <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" prefWidth="300"/>
+        </columnConstraints>
+
+        <!-- Section Prix -->
+        <Label text="Prix (€):" styleClass="form-label" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <TextField fx:id="prixField" styleClass="form-field" GridPane.rowIndex="0" GridPane.columnIndex="1">
+            <tooltip>
+                <Tooltip text="Entrez le prix unitaire en euros"/>
+            </tooltip>
+        </TextField>
+
+        <!-- Section Disponibilité - Version ComboBox -->
+        <Label text="Disponibilité:" styleClass="form-label" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="disponibiliteCombo" styleClass="form-field" GridPane.rowIndex="1" GridPane.columnIndex="1">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="Disponible"/>
+                    <String fx:value="Non disponible"/>
+                </FXCollections>
+            </items>
+            <value>
+                <String fx:value="Disponible"/>
+            </value>
+        </ComboBox>
+
+        <!-- Section Réponse -->
+        <Label text="Commentaire:" styleClass="form-label" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <TextArea fx:id="reponseField" styleClass="form-field" GridPane.rowIndex="2" GridPane.columnIndex="1"
+                  wrapText="true" prefRowCount="4" prefWidth="300">
+            <tooltip>
+                <Tooltip text="Ajoutez un commentaire optionnel"/>
+            </tooltip>
+        </TextArea>
+    </GridPane>
+
+    <!-- Séparateur visuel -->
+    <Separator styleClass="separator-style"/>
+
+    <!-- Boutons d'action -->
+    <HBox spacing="25" alignment="CENTER" VBox.vgrow="NEVER">
+        <Button text="Annuler" styleClass="secondary-button" onAction="#handleAnnuler" prefWidth="120"/>
+        <Button text="Valider" styleClass="primary-button" onAction="#handleValider" prefWidth="120" defaultButton="true"/>
+    </HBox>
+</VBox>

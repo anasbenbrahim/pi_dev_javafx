@@ -42,6 +42,11 @@
                     <ImageView fitHeight="16" fitWidth="16" />
                 </graphic>
             </Button>
+            <Button fx:id="btn_back" onAction="#nav_back" styleClass="refresh-btn primary-button" text="Consulter back_office">
+                <graphic>
+                    <ImageView fitHeight="16" fitWidth="16" />
+                </graphic>
+            </Button>
         </VBox>
     </left>
 

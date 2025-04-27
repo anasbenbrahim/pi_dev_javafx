@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import java.net.URL?>
+
+<BorderPane xmlns="http://javafx.com/javafx/22.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.statestiques">
+    <top>
+        <VBox alignment="CENTER" spacing="10" style="-fx-background-color: #f5f5f5;">
+            <Label text="Equipment Statistics Dashboard" style="-fx-font-size: 20px; -fx-font-weight: bold;">
+                <padding>
+                    <Insets top="10" bottom="10"/>
+                </padding>
+            </Label>
+            <Separator BorderPane.alignment="CENTER"/>
+        </VBox>
+    </top>
+
+    <center>
+        <TabPane tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab text="Category Distribution">
+                    <content>
+                        <VBox spacing="10" alignment="CENTER">
+                            <padding>
+                                <Insets top="10" right="10" bottom="10" left="10"/>
+                            </padding>
+                            <PieChart fx:id="categoryPieChart" title="Equipment by Category" legendSide="RIGHT"
+                                      style="-fx-font-size: 14px;" prefWidth="600" prefHeight="400">
+                            </PieChart>
+                            <Label text="Shows the proportion of equipment items in each category"/>
+                        </VBox>
+                    </content>
+                </Tab>
+
+                <Tab text="Quantity by Category">
+                    <content>
+                        <VBox spacing="10" alignment="CENTER">
+                            <padding>
+                                <Insets top="10" right="10" bottom="10" left="10"/>
+                            </padding>
+                            <BarChart fx:id="quantityBarChart" title="Total Quantity by Category"
+                                      style="-fx-font-size: 14px;" prefWidth="600" prefHeight="400">
+                                <xAxis>
+                                    <CategoryAxis label="Category" />
+                                </xAxis>
+                                <yAxis>
+                                    <NumberAxis label="Total Quantity" />
+                                </yAxis>
+                            </BarChart>
+                            <Label text="Shows the total available quantity for each equipment category"/>
+                        </VBox>
+                    </content>
+                </Tab>
+
+                <Tab text="Combined View">
+                    <content>
+                        <VBox spacing="20" alignment="CENTER">
+                            <padding>
+                                <Insets top="10" right="10" bottom="10" left="10"/>
+                            </padding>
+                            <HBox spacing="20" alignment="CENTER">
+                                <PieChart fx:id="pieChartCompact" title="Category Distribution"
+                                          legendSide="BOTTOM" style="-fx-font-size: 12px;"
+                                          prefWidth="400" prefHeight="300">
+                                </PieChart>
+
+                                <BarChart fx:id="barChartCompact" title="Quantity by Category"
+                                          style="-fx-font-size: 12px;" prefWidth="400" prefHeight="300">
+                                    <xAxis>
+                                        <CategoryAxis label="Category" />
+                                    </xAxis>
+                                    <yAxis>
+                                        <NumberAxis label="Quantity" />
+                                    </yAxis>
+                                </BarChart>
+                            </HBox>
+                            <Label text="Compact view showing both category distribution and quantity statistics"/>
+                        </VBox>
+                    </content>
+                </Tab>
+
+                <Tab text="Summary">
+                    <content>
+                        <VBox spacing="10" alignment="TOP_LEFT">
+                            <padding>
+                                <Insets top="20" right="20" bottom="20" left="20"/>
+                            </padding>
+                            <Label text="Equipment Summary Statistics" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+                            <VBox fx:id="summaryStatsContainer" spacing="8">
+                                <!-- Statistics will be populated by controller -->
+                            </VBox>
+                        </VBox>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER" spacing="20" style="-fx-background-color: #f5f5f5;">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <Button text="Refresh Data" fx:id="refreshButton" style="-fx-font-size: 14px;"/>
+            <Button text="Export to PDF" fx:id="exportButton" style="-fx-font-size: 14px;"/>
+            <Label fx:id="lastUpdatedLabel" style="-fx-font-style: italic;"/>
+        </HBox>
+    </bottom>
+
+    <stylesheets>
+        <URL value="@/style.css" />
+    </stylesheets>
+</BorderPane>

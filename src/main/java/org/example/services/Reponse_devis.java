@@ -39,10 +39,10 @@ public class Reponse_devis implements Service<ReponseDevis>{
     @Override
     public void supprimer(ReponseDevis reponseDevis) {
 
-        String req="delete from reponse_devis where devis_id=?";
+        String req="delete from reponse_devis where id=?";
         try{
             PreparedStatement ps = connection.prepareStatement(req);
-            ps.setInt(1,reponseDevis.getDevis());
+            ps.setInt(1,reponseDevis.getId());
             ps.executeUpdate();
         }catch(SQLException e){
             System.out.println(e.getMessage());

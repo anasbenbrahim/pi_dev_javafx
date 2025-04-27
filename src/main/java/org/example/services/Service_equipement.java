@@ -1,5 +1,6 @@
 package org.example.services;
 
+import javafx.scene.chart.*;
 import org.example.models.Category_equipement;
 import org.example.models.Equipements;
 import org.example.utils.Database;
@@ -7,6 +8,8 @@ import org.example.utils.Database;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Service_equipement implements Service<Equipements>{
 
@@ -168,7 +171,50 @@ public class Service_equipement implements Service<Equipements>{
             return null;
         }
     }
+    public PieChart createCategoryPieChart(List<Equipements> equipmentList) {
+        PieChart pieChart = new PieChart();
+        pieChart.setTitle("Equipment by Category");
 
-    //return equipement;
+        // Group by category and count
+        Map<String, Long> categoryCounts = equipmentList.stream()
+                .collect(Collectors.groupingBy(
+                        e -> e.getCategory() != null ? e.getCategory().getType() : "Uncategorized",
+                        Collectors.counting()
+                ));
+
+        // Add data to chart
+        categoryCounts.forEach((category, count) ->
+                pieChart.getData().add(new PieChart.Data(category + " (" + count + ")", count))
+        );
+
+        return pieChart;
+    }
+
+    public BarChart<String, Number> createQuantityByCategoryBarChart(List<Equipements> equipmentList) {
+        final CategoryAxis xAxis = new CategoryAxis();
+        final NumberAxis yAxis = new NumberAxis();
+        final BarChart<String, Number> barChart = new BarChart<>(xAxis, yAxis);
+
+        barChart.setTitle("Total Quantity by Category");
+        xAxis.setLabel("Category");
+        yAxis.setLabel("Total Quantity");
+
+        // Group by category and sum quantities
+        Map<String, Integer> categoryQuantities = equipmentList.stream()
+                .collect(Collectors.groupingBy(
+                        e -> e.getCategory() != null ? e.getCategory().getType() : "Uncategorized",
+                        Collectors.summingInt(Equipements::getQuantite)
+                ));
+
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.setName("Quantity");
+
+        categoryQuantities.forEach((category, quantity) ->
+                series.getData().add(new XYChart.Data<>(category, quantity))
+        );
+
+        barChart.getData().add(series);
+        return barChart;
+    }
 }
 
