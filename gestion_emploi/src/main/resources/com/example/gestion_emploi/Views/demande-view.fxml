@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controllers.DemandeController"
+      spacing="20"
+      style="-fx-padding: 20;">
+
+    <Label text="Demands Management" style="-fx-font-size: 20; -fx-font-weight: bold;"/>
+
+    <HBox alignment="CENTER_LEFT" spacing="10">
+        <Button text="Back to Main Menu" onAction="#goBackToMain" 
+                style="-fx-base: #34495e; -fx-text-fill: white; -fx-min-width: 120;"/>
+    </HBox>
+
+    <GridPane hgap="10" vgap="10">
+        <Label text="Offer:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="offerCombo" GridPane.rowIndex="0" GridPane.columnIndex="1" GridPane.columnSpan="2"/>
+
+        <Label text="Service:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <TextField fx:id="serviceField" GridPane.rowIndex="1" GridPane.columnIndex="1" GridPane.columnSpan="2"/>
+
+        <Label text="Date:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <DatePicker fx:id="date_demandePicker" GridPane.rowIndex="2" GridPane.columnIndex="1" GridPane.columnSpan="2"/>
+
+        <Label text="CV File:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <HBox GridPane.rowIndex="3" GridPane.columnIndex="1" spacing="5">
+            <TextField fx:id="cv_file_nameField" editable="false" HBox.hgrow="ALWAYS"/>
+            <Button text="Browse" onAction="#handleBrowseFile"/>
+        </HBox>
+
+        <Label text="Phone:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+        <TextField fx:id="phone_numberField" GridPane.rowIndex="4" GridPane.columnIndex="1" GridPane.columnSpan="2"/>
+    </GridPane>
+
+    <HBox spacing="10">
+        <Button text="Add" onAction="#handleAddDemande"
+                style="-fx-base: #2ecc71; -fx-min-width: 80;"/>
+        <Button fx:id="updateButton" text="Update" onAction="#handleUpdateDemande"
+                style="-fx-base: #3498db; -fx-min-width: 80;" disable="true"/>
+        <Button fx:id="deleteButton" text="Delete" onAction="#handleDeleteDemande"
+                style="-fx-base: #e74c3c; -fx-min-width: 80;" disable="true"/>
+        <Button fx:id="viewPDFButton" text="View CV" onAction="#handleViewPDF"
+                style="-fx-base: #9b59b6; -fx-min-width: 80;" disable="true"/>
+        <Button text="Clear" onAction="#handleClearForm"
+                style="-fx-base: #f39c12; -fx-min-width: 80;"/>
+    </HBox>
+
+    <TableView fx:id="demandeTable" style="-fx-padding: 5;">
+        <columns>
+            <TableColumn fx:id="idColumn" text="ID" prefWidth="50">
+                <cellValueFactory><PropertyValueFactory property="id"/></cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="offer_idColumn" text="Offer ID" prefWidth="70">
+                <cellValueFactory><PropertyValueFactory property="offer_id"/></cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="serviceColumn" text="Service" prefWidth="150">
+                <cellValueFactory><PropertyValueFactory property="service"/></cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="phone_numberColumn" text="Phone" prefWidth="120">
+                <cellValueFactory><PropertyValueFactory property="phone_number"/></cellValueFactory>
+            </TableColumn>
+        </columns>
+    </TableView>
+</VBox>

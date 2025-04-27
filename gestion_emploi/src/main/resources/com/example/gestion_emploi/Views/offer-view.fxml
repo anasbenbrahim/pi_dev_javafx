@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controllers.OfferController"
+      spacing="20"
+      style="-fx-padding: 20;">
+
+    <Label text="Offers Management" style="-fx-font-size: 20; -fx-font-weight: bold;"/>
+
+    <HBox alignment="CENTER_LEFT" spacing="10">
+        <Button text="Back to Main Menu" onAction="#goBackToMain" 
+                style="-fx-base: #34495e; -fx-text-fill: white; -fx-min-width: 120;"/>
+    </HBox>
+
+    <GridPane hgap="10" vgap="10">
+        <Label text="Name:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <TextField fx:id="nomField" GridPane.rowIndex="0" GridPane.columnIndex="1" GridPane.columnSpan="2"/>
+
+        <Label text="Domain:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <TextField fx:id="domainField" GridPane.rowIndex="1" GridPane.columnIndex="1" GridPane.columnSpan="2"/>
+
+        <Label text="Date:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <DatePicker fx:id="date_offerPicker" GridPane.rowIndex="2" GridPane.columnIndex="1" GridPane.columnSpan="2"/>
+
+        <Label text="Description:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <TextArea fx:id="descriptionArea" GridPane.rowIndex="3" GridPane.columnIndex="1" GridPane.columnSpan="2"
+                  wrapText="true" prefRowCount="3"/>
+
+        <Label text="Places:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+        <Spinner fx:id="nb_placesSpinner" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+    </GridPane>
+
+    <HBox spacing="10">
+        <Button text="Add" onAction="#handleAddOffer"
+                style="-fx-base: #2ecc71; -fx-min-width: 80;"/>
+        <Button fx:id="updateButton" text="Update" onAction="#handleUpdateOffer"
+                style="-fx-base: #3498db; -fx-min-width: 80;" disable="true"/>
+        <Button fx:id="deleteButton" text="Delete" onAction="#handleDeleteOffer"
+                style="-fx-base: #e74c3c; -fx-min-width: 80;" disable="true"/>
+        <Button text="Clear" onAction="#handleClearForm"
+                style="-fx-base: #f39c12; -fx-min-width: 80;"/>
+    </HBox>
+
+    <TableView fx:id="offerTable" style="-fx-padding: 5;">
+        <columns>
+            <TableColumn fx:id="idColumn" text="ID" prefWidth="50">
+                <cellValueFactory><PropertyValueFactory property="id"/></cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="nomColumn" text="Name" prefWidth="150">
+                <cellValueFactory><PropertyValueFactory property="nom"/></cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="domainColumn" text="Domain" prefWidth="120">
+                <cellValueFactory><PropertyValueFactory property="domain"/></cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="date_offerColumn" text="Date" prefWidth="100">
+                <cellValueFactory><PropertyValueFactory property="date_offer"/></cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="nb_placesColumn" text="Places" prefWidth="60">
+                <cellValueFactory><PropertyValueFactory property="nb_places"/></cellValueFactory>
+            </TableColumn>
+        </columns>
+    </TableView>
+</VBox>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controllers.MainController"
+      prefHeight="700.0" prefWidth="1000.0"
+      style="-fx-background-color: #f5f5f5;">
+      
+    <top>
+        <VBox style="-fx-background-color: #2c3e50; -fx-padding: 15;">
+            <Label text="Gestion Emploi - CRUD Application"
+                  style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: white;"/>
+        </VBox>
+    </top>
+    
+    <left>
+        <VBox spacing="15" style="-fx-background-color: #34495e; -fx-padding: 20;" prefWidth="250">
+            <Label text="Navigation" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: white;"/>
+            
+            <Button text="Offers Management"
+                    onAction="#showOfferManagement"
+                    style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold; -fx-min-width: 200; -fx-min-height: 40;"/>
+
+            <Button text="Demands Management"
+                    onAction="#showDemandeManagement"
+                    style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-weight: bold; -fx-min-width: 200; -fx-min-height: 40;"/>
+
+            <Button text="Calendar View"
+                    onAction="#showCalendarView"
+                    style="-fx-background-color: #9b59b6; -fx-text-fill: white; -fx-font-weight: bold; -fx-min-width: 200; -fx-min-height: 40;"/>
+                    
+            <Button text="Statistics"
+                    onAction="#showStatisticsView"
+                    style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold; -fx-min-width: 200; -fx-min-height: 40;"/>
+                    
+            <Separator style="-fx-background-color: #7f8c8d;" />
+            
+            <Button text="Refresh Data"
+                    onAction="#refreshMainViewData"
+                    style="-fx-background-color: #f39c12; -fx-text-fill: white; -fx-font-weight: bold; -fx-min-width: 200; -fx-min-height: 40;"/>
+        </VBox>
+    </left>
+    
+    <center>
+        <VBox style="-fx-padding: 20;">
+            <HBox spacing="20" VBox.vgrow="ALWAYS">
+                <!-- Offers List -->
+                <VBox spacing="10" HBox.hgrow="ALWAYS">
+                    <Label text="Recent Offers" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+                    <ListView fx:id="offersListView" VBox.vgrow="ALWAYS" style="-fx-background-radius: 5;"/>
+                </VBox>
+                
+                <!-- Demands List -->
+                <VBox spacing="10" HBox.hgrow="ALWAYS">
+                    <Label text="Recent Demands" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+                    <ListView fx:id="demandsListView" VBox.vgrow="ALWAYS" style="-fx-background-radius: 5;"/>
+                </VBox>
+            </HBox>
+            
+            <!-- Details section -->
+            <VBox fx:id="detailsPane" style="-fx-padding: 20 0 0 0;" spacing="10">
+                <Label text="Selected Item Details" style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+                <TextArea fx:id="detailsTextArea" prefHeight="100" editable="false" wrapText="true"
+                         style="-fx-background-radius: 5;"/>
+            </VBox>
+        </VBox>
+    </center>
+    
+    <bottom>
+        <HBox style="-fx-background-color: #2c3e50; -fx-padding: 10;" alignment="CENTER">
+            <Label text=" 2025 Gestion Emploi - All Rights Reserved" style="-fx-text-fill: white;"/>
+        </HBox>
+    </bottom>
+    
+</BorderPane>

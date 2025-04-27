@@ -1,0 +1,10 @@
+services\OfferService.class
+com\example\gestion_emploi\MainApp.class
+models\Offer.class
+controllers\OfferController.class
+controllers\MainController$ChildController.class
+utils\DatabaseConnection.class
+models\Demande.class
+controllers\DemandeController.class
+controllers\MainController.class
+services\DemandeService.class

@@ -1,0 +1,22 @@
+.calendar-day-cell {
+    -fx-padding: 5;
+    -fx-border-color: #ccc;
+    -fx-border-width: 0.5;
+    -fx-background-color: white;
+}
+
+.date-label {
+    -fx-font-weight: bold;
+}
+
+.offer-event {
+    -fx-background-color: #e3f2fd;
+    -fx-padding: 2;
+    -fx-background-radius: 3;
+}
+
+.demand-event {
+    -fx-background-color: #ffebee;
+    -fx-padding: 2;
+    -fx-background-radius: 3;
+}

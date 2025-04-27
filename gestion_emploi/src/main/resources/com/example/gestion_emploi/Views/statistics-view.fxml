@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controllers.StatisticsController"
+      prefHeight="600.0" prefWidth="800.0"
+      style="-fx-background-color: white;">
+      
+    <top>
+        <VBox style="-fx-background-color: #3498db; -fx-padding: 10;">
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <Button text="Go Back" onAction="#goBack" style="-fx-background-color: white; -fx-text-fill: #3498db;"/>
+                <Button text="Back to Main Menu" onAction="#goBackToMain" style="-fx-background-color: white; -fx-text-fill: #34495e;"/>
+                <Label text="Statistics View" style="-fx-font-size: 24px; -fx-text-fill: white; -fx-font-weight: bold;"/>
+            </HBox>
+        </VBox>
+    </top>
+    
+    <center>
+        <VBox spacing="20" alignment="CENTER" style="-fx-padding: 20;">
+            <Label text="Demands per Offer" style="-fx-font-size: 20; -fx-font-weight: bold;"/>
+            <Pane fx:id="statisticsPane" prefHeight="400" prefWidth="700" VBox.vgrow="ALWAYS" />
+            <HBox spacing="20" alignment="CENTER">
+                <Button text="Refresh Statistics" onAction="#refreshStatistics" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-size: 14px;"/>
+                <Button text="Show Detailed Report" onAction="#showDetailedReport" style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-size: 14px;"/>
+                <Button text="Export Statistics" onAction="#exportStatistics" style="-fx-background-color: #9b59b6; -fx-text-fill: white; -fx-font-size: 14px;"/>
+            </HBox>
+        </VBox>
+    </center>
+    
+    <bottom>
+        <HBox spacing="10" alignment="CENTER" style="-fx-padding: 10; -fx-background-color: #f5f5f5;">
+            <Label text="Circle size represents the number of demands for each offer" />
+        </HBox>
+    </bottom>
+</BorderPane>
