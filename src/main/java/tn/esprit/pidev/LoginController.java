@@ -83,7 +83,7 @@ public class LoginController {
 
         // Check roles in priority order
         if (containsRole(roles, "admin")) {
-            return "Dashboard.fxml";
+            return "AgriTechDashboard.fxml";
         }
         if (containsRole(roles, "fermier")) {
             return "FermierDashboard.fxml";

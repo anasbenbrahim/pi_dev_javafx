@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<?import javafx.scene.text.Text?>
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="1000" minWidth="1840" stylesheets="@styles/login.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.pidev.Login">
+
+    <HBox styleClass="main-container">
+        <!-- Image Section -->
+        <StackPane styleClass="image-section" HBox.hgrow="ALWAYS">
+            <ImageView fitHeight="1000" fitWidth="1000" preserveRatio="false">
+                <Image url="@images/loginbg.jpg" />
+            </ImageView>
+            <VBox alignment="CENTER" prefWidth="1200.0" spacing="15" styleClass="image-overlay">
+                <Label styleClass="logo-text-large" text="AgriConnect" />
+                <Label styleClass="subtitle-text" text="Votre partenaire pour une agriculture moderne, durable et connectée" wrapText="true" />
+            </VBox>
+        </StackPane>
+
+        <!-- Form Section -->
+        <VBox alignment="CENTER" prefWidth="1200.0" styleClass="form-section" HBox.hgrow="ALWAYS">
+            <StackPane alignment="TOP_LEFT">
+                <!-- Logo -->
+
+                <Label styleClass="logo-text-small" text="AgriConnect">
+               <StackPane.margin>
+                  <Insets top="-100.0" />
+               </StackPane.margin></Label>
+
+                <VBox alignment="CENTER" spacing="20">
+                    <!-- Tabs -->
+                    <HBox styleClass="tabs-container">
+                        <Button fx:id="loginTab" onAction="#showLoginForm" styleClass="tab-button,tab-active" text="Connexion" />
+                        <Button fx:id="signupTab" onAction="#showSignupForm" styleClass="tab-button" text="Inscription" />
+                    </HBox>
+
+                    <!-- Login Form -->
+                    <VBox fx:id="loginForm" managed="true" spacing="15" visible="true">
+                        <Label styleClass="form-title" text="Bienvenue" />
+
+                        <!-- Email -->
+                        <VBox spacing="5">
+                            <Label styleClass="input-label" text="Email" />
+                            <HBox styleClass="input-field">
+                                <Label styleClass="input-icon" text="📧" />
+                                <TextField fx:id="emailField" promptText="votre@email.com" HBox.hgrow="ALWAYS" />
+                            </HBox>
+                        </VBox>
+
+                        <!-- Password -->
+                        <VBox spacing="5">
+                            <HBox alignment="CENTER_LEFT">
+                                <Label styleClass="input-label" text="Mot de passe" />
+                                <Region HBox.hgrow="ALWAYS" />
+                                <Hyperlink onAction="#forgotPassword" text="Mot de passe oublié ?" />
+                            </HBox>
+                            <HBox styleClass="input-field">
+                                <Label styleClass="input-icon" text="🔒" />
+                                <PasswordField fx:id="passwordField" promptText="••••••••" HBox.hgrow="ALWAYS" />
+                                <Button fx:id="loginShowPassword" onAction="#toggleLoginPassword" styleClass="toggle-password" text="👁️" />
+                            </HBox>
+                        </VBox>
+
+                        <Label fx:id="messageLabel" style="-fx-text-fill: #d32f2f; -fx-font-size: 14px; -fx-padding: 5 0;" />
+
+                        <!-- Login Button -->
+                        <Button onAction="#handleLogin" styleClass="primary-button" text="Se connecter" />
+
+                        <!-- Divider -->
+                        <HBox alignment="CENTER">
+                            <Label styleClass="toggle-text" text="Back To ? " />
+                            <Hyperlink onAction="#home" text="Home" />
+                        </HBox>
+
+                        <!-- Toggle to Signup -->
+                        <HBox alignment="CENTER">
+                            <Label styleClass="toggle-text" text="Pas encore de compte ? " />
+                            <Hyperlink onAction="#showSignupForm" text="S'inscrire" />
+                        </HBox>
+                    </VBox>
+
+                    <!-- Signup Form -->
+                    <VBox fx:id="signupForm" managed="false" spacing="15" visible="false">
+
+                        <!-- Full Name -->
+                        <VBox spacing="5">
+                            <Label styleClass="input-label" text="Nom" />
+                            <HBox styleClass="input-field">
+                                <Label styleClass="input-icon" text="👤" />
+                                <TextField fx:id="firstNameField" promptText="Jean Dupont" HBox.hgrow="ALWAYS" />
+                            </HBox>
+                        </VBox>
+
+                        <!-- Full Name -->
+                        <VBox spacing="5">
+                            <Label styleClass="input-label" text="Prénom" />
+                            <HBox styleClass="input-field">
+                                <Label styleClass="input-icon" text="👤" />
+                                <TextField fx:id="lastNameField" promptText="Jean Dupont" HBox.hgrow="ALWAYS" />
+                            </HBox>
+                        </VBox>
+
+                        <!-- Email -->
+                        <VBox spacing="5">
+                            <Label styleClass="input-label" text="Email" />
+                            <HBox styleClass="input-field">
+                                <Label styleClass="input-icon" text="📧" />
+                                <TextField fx:id="email1Field" promptText="votre@email.com" HBox.hgrow="ALWAYS" />
+                            </HBox>
+                        </VBox>
+
+                        <!-- Password -->
+                        <VBox spacing="5">
+                            <Label styleClass="input-label" text="Mot de passe" />
+                            <HBox styleClass="input-field">
+                                <Label styleClass="input-icon" text="🔒" />
+                                <PasswordField fx:id="password1Field" onKeyReleased="#updatePasswordStrength" promptText="••••••••" HBox.hgrow="ALWAYS" />
+                                <Button fx:id="signupShowPassword" onAction="#toggleSignupPassword" styleClass="toggle-password" text="👁️" />
+                            </HBox>
+                            <ProgressBar fx:id="passwordStrength" maxWidth="Infinity" progress="0.0" />
+                            <Label fx:id="passwordStrengthText" styleClass="password-hint" text="Utilisez au moins 8 caractères avec des lettres et des chiffres" />
+                        </VBox>
+
+                        <!-- Confirm Password -->
+                        <VBox spacing="5">
+                            <Label styleClass="input-label" text="Confirmer le mot de passe" />
+                            <HBox styleClass="input-field">
+                                <Label styleClass="input-icon" text="🔒" />
+                                <PasswordField fx:id="confirmPasswordField" promptText="••••••••" HBox.hgrow="ALWAYS" />
+                            </HBox>
+                        </VBox>
+
+                        <VBox spacing="5">
+                            <Label styleClass="input-label" text="Rôle:" />
+                            <HBox styleClass="input-field">
+                                <ComboBox fx:id="roleComboBox" style="-fx-background-radius: 8; -fx-border-color: #81c784; -fx-border-radius: 8; -fx-padding: 8;"
+                                          GridPane.rowIndex="5" GridPane.columnIndex="1">
+                                    <items>
+                                        <FXCollections fx:factory="observableArrayList">
+                                            <String fx:value="admin" />
+                                            <String fx:value="fermier" />
+                                            <String fx:value="fournisseur" />
+                                            <String fx:value="client" />
+                                        </FXCollections>
+                                    </items>
+                                </ComboBox>
+                            </HBox>
+                        </VBox>
+
+
+                        <VBox spacing="5">
+                            <Label styleClass="input-label" text="Address" />
+                            <HBox styleClass="input-field">
+                                <Label styleClass="input-icon" text="🔒" />
+                                <TextField fx:id="addressField" promptText="Your Address" HBox.hgrow="ALWAYS" />
+                            </HBox>
+                        </VBox>
+
+                        <VBox spacing="5">
+                            <Label styleClass="input-label" text="Phone" />
+                            <HBox styleClass="input-field">
+                                <Label styleClass="input-icon" text="🔒" />
+                                <TextField fx:id="phoneField" promptText="Phone Number" HBox.hgrow="ALWAYS" />
+                            </HBox>
+                        </VBox>
+
+                        <VBox spacing="5">
+                            <Label styleClass="" text="Date" />
+                            <HBox styleClass="input-field">
+
+                                <DatePicker fx:id="birthDatePicker" promptText="Date..." HBox.hgrow="ALWAYS" />
+                            </HBox>
+                        </VBox>
+
+
+
+                        <!-- Terms and Conditions -->
+                        <HBox alignment="CENTER_LEFT" spacing="10">
+                            <CheckBox fx:id="termsCheckbox" styleClass="custom-checkbox" />
+                            <VBox>
+                                <HBox>
+                                    <Label styleClass="small-text" text="J'accepte les " />
+                                    <Hyperlink onAction="#showTerms" text="Conditions d'utilisation" />
+                                    <Label styleClass="small-text" text=" et la " />
+                                    <Hyperlink onAction="#showPrivacyPolicy" text="Politique de confidentialité" />
+                                </HBox>
+                            </VBox>
+                        </HBox>
+
+                        <!-- Register Button -->
+                        <Button onAction="#handleSignup" styleClass="primary-button" text="S'inscrire" />
+
+                        <!-- Toggle to Login -->
+                        <HBox alignment="CENTER">
+                            <Label styleClass="toggle-text" text="Déjà inscrit ? " />
+                            <Hyperlink onAction="#showLoginForm" text="Se connecter" />
+                        </HBox>
+
+
+                        <VBox fx:id="verificationVBox" alignment="CENTER" spacing="25" visible="false" prefWidth="550">
+                            <padding>
+                                <Insets top="50" right="50" bottom="50" left="50"/>
+                            </padding>
+
+
+
+                            <Text style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-fill: #388e3c; -fx-text-alignment: center;"
+                                  text="Vérification d'Email" />
+
+                            <Text style="-fx-font-size: 15px; -fx-fill: #555; -fx-text-alignment: center;"
+                                  wrappingWidth="450" textAlignment="CENTER"
+                                  text="Un code de vérification a été envoyé à votre adresse email. Veuillez l'entrer ci-dessous pour activer votre compte." />
+
+                            <VBox spacing="12" alignment="CENTER" maxWidth="350">
+                                <Label text="Code de vérification:" style="-fx-text-fill: #43a047; -fx-font-weight: bold; -fx-font-size: 16px;" />
+                                <TextField fx:id="verificationCodeField" style="-fx-background-radius: 8; -fx-border-color: #81c784; -fx-border-radius: 8; -fx-padding: 10; -fx-font-size: 14px;" />
+                            </VBox>
+
+                            <HBox spacing="20" alignment="CENTER">
+                                <Button text="Vérifier" onAction="#handleVerification"
+                                        style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 30; -fx-cursor: hand; -fx-font-size: 16px;" />
+                                <Button text="Renvoyer le code" onAction="#resendVerificationCode"
+                                        style="-fx-background-color: transparent; -fx-text-fill: #388e3c; -fx-border-color: #388e3c; -fx-border-radius: 10; -fx-padding: 10 20; -fx-cursor: hand; -fx-font-weight: bold; -fx-font-size: 16px;" />
+                                <Button text="Retour"
+                                        style="-fx-background-color: transparent; -fx-text-fill: #777; -fx-padding: 10 20; -fx-cursor: hand; -fx-font-size: 16px;" />
+                            </HBox>
+
+                            <Label fx:id="verificationMessageLabel" style="-fx-text-fill: #d32f2f; -fx-font-size: 14px; -fx-padding: 10 0;" />
+                        </VBox>
+
+
+                    </VBox>
+                </VBox>
+            </StackPane>
+        </VBox>
+    </HBox>
+</StackPane>

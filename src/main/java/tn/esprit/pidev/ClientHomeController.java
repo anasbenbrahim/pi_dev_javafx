@@ -27,7 +27,7 @@ public class ClientHomeController {
     private void navigerToLogin() {
         try {
             // Charger la page login
-            Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("LoginView.fxml"));
             Scene scene = new Scene(root);
 
             // Obtenir la scène actuelle
@@ -42,22 +42,5 @@ public class ClientHomeController {
         }
     }
 
-    @FXML
-    private void navigerToRegister() {
-        try {
-            // Charger la page login
-            Parent root = FXMLLoader.load(getClass().getResource("signup.fxml"));
-            Scene scene = new Scene(root);
 
-            // Obtenir la scène actuelle
-            Stage stage = (Stage) signupButton.getScene().getWindow();
-
-            // Changer la scène
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("Erreur lors du chargement de la page signup!");
-        }
-    }
 }

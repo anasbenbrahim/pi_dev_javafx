@@ -68,6 +68,36 @@ public class UserDAO {
         return false;
     }
 
+
+    /**
+     * Updates user profile information
+     * @param user The user object with updated information
+     * @return True if update was successful, false otherwise
+     */
+    public boolean updateProfile(User user) {
+        String query = "UPDATE user SET first_name = ?, last_name = ?, address = ?, phone_number = ?, specialite = ? WHERE id = ?";
+
+        try {
+            pst = connection.prepareStatement(query);
+            pst.setString(1, user.getFirstName());
+            pst.setString(2, user.getLastName());
+            pst.setString(3, user.getAddress());
+            pst.setString(4, user.getPhoneNumber());
+            pst.setString(5, user.getSpecialite());
+            pst.setInt(6, user.getId());
+
+            int rowsAffected = pst.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException ex) {
+            System.out.println("Error updating profile: " + ex.getMessage());
+            return false;
+        } finally {
+            closeResources();
+        }
+    }
+
+
+
     /**
      * Updates a user's password in the database
      * @param email The user's email

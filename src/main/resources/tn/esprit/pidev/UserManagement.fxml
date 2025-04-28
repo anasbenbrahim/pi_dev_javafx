@@ -8,6 +8,8 @@
 <?import javafx.scene.image.*?>
 
 <?import java.net.URL?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 <VBox xmlns="http://javafx.com/javafx/11.0.1"
       xmlns:fx="http://javafx.com/fxml/1"
       spacing="20"
@@ -22,65 +24,152 @@
     <!-- Titre principal -->
     <Text styleClass="page-title" text="Gestion des Utilisateurs" />
 
-    <!-- Carte de formulaire -->
-    <VBox styleClass="content-card" spacing="15">
-        <Text styleClass="card-title" text="Formulaire Utilisateur" />
 
-        <GridPane hgap="15" vgap="15">
-            <padding><Insets bottom="10" left="10" right="10" top="10"/></padding>
 
-            <!-- Première colonne -->
-            <Label text="ID Employé:" styleClass="form-label" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-            <TextField fx:id="idField" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="0" editable="false"/>
 
-            <Label text="Prénom:" styleClass="form-label" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-            <TextField fx:id="firstNameField" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
-            <Label text="Nom:" styleClass="form-label" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-            <TextField fx:id="lastNameField" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
-            <!-- Deuxième colonne -->
-            <Label text="Genre:" styleClass="form-label" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
-            <ComboBox fx:id="genderCombo" styleClass="form-combo" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
 
-            <Label text="Téléphone:" styleClass="form-label" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
-            <TextField fx:id="phoneField" styleClass="form-field" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
 
-            <Label text="Rôle:" styleClass="form-label" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
-            <ComboBox fx:id="roleCombo" styleClass="form-combo" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
+    <!-- User Management Form Section -->
+    <VBox styleClass="card">
 
-            <!-- Ligne pleine largeur -->
-            <Label text="Email:" styleClass="form-label" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
-            <TextField fx:id="emailField" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.columnSpan="3"/>
-        </GridPane>
+        <VBox styleClass="card-inner">
+            <VBox styleClass="card-header">
+            <Label styleClass="card-title" text="Formulaire Utilisateur" />
+            </VBox>
+            <GridPane hgap="15" vgap="15">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="33.33" />
+                    <ColumnConstraints percentWidth="33.33" />
+                    <ColumnConstraints percentWidth="33.33" />
+                </columnConstraints>
 
-        <!-- Boutons d'action -->
-        <HBox spacing="15" alignment="CENTER">
-            <Button text="Ajouter" styleClass="action-button" onAction="#handleAdd"/>
-            <Button text="Modifier" styleClass="action-button" onAction="#handleUpdate"/>
-            <Button text="Supprimer" styleClass="delete-button" onAction="#handleDelete"/>
-            <Button text="Réinitialiser" styleClass="secondary-button" onAction="#handleClear"/>
-        </HBox>
+                <!-- Row 1 -->
+                <VBox GridPane.columnIndex="0" GridPane.rowIndex="0">
+                    <Label styleClass="form-label" text="ID User" />
+                    <TextField fx:id="idField" styleClass="form-field"  GridPane.columnIndex="1" GridPane.rowIndex="0" editable="false" />
+                </VBox>
+
+                <VBox GridPane.columnIndex="1" GridPane.rowIndex="0">
+                    <Label styleClass="form-label" text="Genre" />
+                    <ComboBox fx:id="genderCombo" GridPane.columnIndex="3" GridPane.rowIndex="0" prefWidth="Infinity" styleClass="form-field">
+
+                    </ComboBox>
+                </VBox>
+
+                <VBox GridPane.columnIndex="2" GridPane.rowIndex="0">
+                    <Label styleClass="form-label" text="Prénom" />
+                    <TextField fx:id="firstNameField" styleClass="form-field" />
+                </VBox>
+
+                <!-- Row 2 -->
+                <VBox GridPane.columnIndex="0" GridPane.rowIndex="1">
+                    <Label styleClass="form-label" text="Téléphone" />
+                    <TextField fx:id="phoneField" styleClass="form-field" />
+                </VBox>
+
+                <VBox GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <Label styleClass="form-label" text="Nom" />
+                    <TextField fx:id="lastNameField" styleClass="form-field" />
+                </VBox>
+
+                <VBox GridPane.columnIndex="2" GridPane.rowIndex="1">
+                    <Label styleClass="form-label" text="Rôle" />
+                    <ComboBox fx:id="roleCombo"  GridPane.columnIndex="3" GridPane.rowIndex="2" prefWidth="Infinity" styleClass="form-field">
+
+                    </ComboBox>
+                </VBox>
+
+                <!-- Row 3 -->
+                <VBox GridPane.columnIndex="0" GridPane.columnSpan="3" GridPane.rowIndex="2">
+                    <Label styleClass="form-label" text="Email" />
+                    <TextField fx:id="emailField" styleClass="form-field" />
+                </VBox>
+                <rowConstraints>
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                </rowConstraints>
+            </GridPane>
+
+            <HBox spacing="10" styleClass="button-container">
+                <Button styleClass="primary-button" text="+" onAction="#handleAdd">
+                    <graphic>
+
+                    </graphic>
+                </Button>
+
+                <Button styleClass="primary-button" text="Update" onAction="#handleUpdate">
+                    <graphic>
+                    </graphic>
+                </Button>
+
+                <Button  styleClass="danger-button" text="Delete" onAction="#handleDelete">
+                    <graphic>
+
+                    </graphic>
+                </Button>
+
+                <Button  styleClass="secondary-button" text="Réinitialiser" onAction="#handleClear">
+                    <graphic>
+
+                    </graphic>
+                </Button>
+            </HBox>
+        </VBox>
     </VBox>
 
-    <!-- Liste des utilisateurs -->
-    <VBox styleClass="content-card" spacing="15">
-        <HBox alignment="CENTER_LEFT" spacing="10">
-            <Text styleClass="card-title" text="Liste des Utilisateurs" />
-        </HBox>
 
-        <!-- Barre de recherche et filtres -->
-        <HBox spacing="10" alignment="CENTER_LEFT">
-            <TextField fx:id="searchField" styleClass="search-field" promptText="Rechercher un utilisateur..."/>
-            <ComboBox fx:id="filterRoleCombo" styleClass="filter-combo" promptText="Filtrer par rôle"/>
-            <Button text="Actualiser" styleClass="secondary-button" onAction="#loadUsers"/>
-        </HBox>
 
-        <!-- Cartes des utilisateurs -->
-        <FlowPane fx:id="usersCardsContainer" hgap="15" vgap="15" prefWrapLength="800">
-            <padding><Insets bottom="10" left="10" right="10" top="10"/></padding>
-        </FlowPane>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Users List Section -->
+    <VBox styleClass="card">
+        <VBox styleClass="card-header">
+            <Label styleClass="card-title" text="Liste des Utilisateurs" />
+        </VBox>
+
+        <VBox styleClass="card-inner">
+            <HBox spacing="10" styleClass="search-filter-container">
+                <TextField fx:id="searchField" promptText="Rechercher un utilisateur..." styleClass="search-field" HBox.hgrow="ALWAYS" />
+
+                <ComboBox fx:id="filterRoleCombo" styleClass="form-field">
+
+                </ComboBox>
+
+                <Button styleClass="secondary-button" text="Actualiser" onAction="#loadUsers">
+                    <graphic>
+
+                    </graphic>
+                </Button>
+            </HBox>
+
+            <FlowPane fx:id="usersCardsContainer" hgap="15" styleClass="user-cards-container" vgap="15">
+                <!-- User cards will be added dynamically in the controller -->
+            </FlowPane>
+        </VBox>
     </VBox>
+
+
+
+
+
+
 
     <!-- Message d'état -->
     <Label fx:id="messageLabel" styleClass="status-message"/>

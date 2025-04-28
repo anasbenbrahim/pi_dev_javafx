@@ -1,0 +1,644 @@
+/* Main Colors and Variables */
+* {
+    -primary-color: #4CAF50;
+    -secondary-color: #FF9800;
+    -text-color: #1F2937;
+    -light-gray: #F9FAFB;
+    -medium-gray: #E5E7EB;
+    -dark-gray: #9CA3AF;
+    -error-color: #EF4444;
+    -success-color: #10B981;
+    -warning-color: #F59E0B;
+    -info-color: #3B82F6;
+    -hover : #edf7ed;
+}
+
+/* Base Styles */
+.root {
+    -fx-font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    -fx-font-size: 14px;
+    -fx-background-color: -light-gray;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    -fx-background-color: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);
+    -fx-border-width: 0 1px 0 0;
+    -fx-border-color: -medium-gray;
+}
+
+.logo-container {
+    -fx-border-width: 0 0 1px 0;
+    -fx-border-color: -medium-gray;
+    -fx-padding: 15px;
+}
+
+.logo-text {
+    -fx-font-family: "Comic Sans MS", cursive;
+    -fx-font-size: 20px;
+    -fx-text-fill: -primary-color;
+    -fx-font-weight: bold;
+}
+
+.user-profile {
+    -fx-border-width: 0 0 1px 0;
+    -fx-border-color: -medium-gray;
+    -fx-padding: 15px;
+}
+
+.user-avatar {
+    -fx-fill: -medium-gray;
+    -fx-stroke: none;
+}
+
+.user-name {
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+.user-role {
+    -fx-text-fill: -dark-gray;
+    -fx-font-size: 12px;
+}
+
+.sidebar-menu-container {
+    -fx-background-color: transparent;
+    -fx-padding: 10px 0;
+}
+
+.sidebar-menu-container .viewport {
+    -fx-background-color: transparent;
+}
+
+.sidebar-menu {
+    -fx-spacing: 20px;
+    -fx-padding: 10px;
+}
+
+.sidebar-menu-item {
+    -fx-background-color: transparent;
+    -fx-padding: 10px 15px;
+    -fx-cursor: hand;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+}
+
+.sidebar-menu-item:hover {
+    -fx-background-color: #edf7ed;
+    -fx-text-fill: -primary-color;
+    -fx-min-width: 216px; /* ou la largeur que vous souhaitez */
+    -fx-pref-width: 216px; /* alternative à min-width */
+    -fx-min-height: 50px; /* ou la largeur que vous souhaitez */
+    -fx-pref-height: 50px;
+}
+
+.sidebar-menu-item.active {
+    -fx-background-color: #edf7ed;
+    -fx-min-width: 216px; /* ou la largeur que vous souhaitez */
+    -fx-pref-width: 216px;
+    -fx-min-height: 50px; /* ou la largeur que vous souhaitez */
+    -fx-pref-height: 50px;
+
+}
+
+.menu-icon {
+    -fx-text-fill: -dark-gray;
+    -fx-min-width: 20px;
+}
+
+.active .menu-icon, .sidebar-menu-item:hover .menu-icon {
+    -fx-text-fill: -primary-color;
+}
+
+.menu-text {
+    -fx-text-fill: -text-color;
+}
+
+.active .menu-text, .sidebar-menu-item:hover .menu-text {
+    -fx-text-fill: -primary-color;
+    -fx-font-weight: bold;
+}
+
+.logout-button {
+    -fx-background-color: transparent;
+    -fx-padding: 10px 15px;
+    -fx-cursor: hand;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-border-width: 0 0 0 0;
+    -fx-border-color: -medium-gray;
+}
+
+.logout-button .menu-text {
+    -fx-text-fill: -error-color;
+}
+
+.logout-button:hover {
+    -fx-background-color: de-error-color, 95%;
+}
+
+/* Top Navigation */
+.top-nav {
+    -fx-background-color: white;
+    -fx-padding: 12px 20px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 5, 0, 0, 2);
+    -fx-alignment: center-left;
+}
+
+.icon-button {
+    -fx-background-color: transparent;
+    -fx-padding: 5px;
+    -fx-cursor: hand;
+    -fx-min-width: 32px;
+    -fx-min-height: 32px;
+    -fx-background-radius: 16px;
+}
+
+.icon-button:hover {
+    -fx-background-color: -light-gray;
+}
+
+.icon {
+    -fx-text-fill: -dark-gray;
+    -fx-font-size: 16px;
+}
+
+.small-icon {
+    -fx-text-fill: -dark-gray;
+    -fx-font-size: 12px;
+}
+
+.search-container {
+    -fx-background-color: -light-gray;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px 10px;
+    -fx-spacing: 5px;
+    -fx-alignment: center-left;
+    -fx-min-width: 250px;
+}
+
+.search-icon {
+    -fx-text-fill: -dark-gray;
+}
+
+.search-input {
+    -fx-background-color: transparent;
+    -fx-padding: 5px 0;
+    -fx-prompt-text-fill: -dark-gray;
+    -fx-text-fill: -text-color;
+}
+
+.notification-badge {
+    -fx-fill: -error-color;
+}
+
+.user-avatar-small {
+    -fx-fill: -medium-gray;
+    -fx-stroke: none;
+}
+
+/* Main Content */
+.main-content {
+    -fx-background-color: -light-gray;
+    -fx-padding: 0;
+}
+
+.main-content .viewport {
+    -fx-background-color: transparent;
+}
+
+.content-container {
+    -fx-padding: 20px;
+    -fx-spacing: 20px;
+}
+
+.page-header {
+    -fx-padding: 0 0 10px 0;
+}
+
+.page-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -text-color;
+}
+
+.page-subtitle {
+    -fx-font-size: 14px;
+    -fx-text-fill: -dark-gray;
+}
+
+/* Card Styles */
+.card {
+    -fx-background-color: white;
+    -fx-background-radius: 8px;
+    -fx-padding: 20px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 5, 0, 0, 0);
+    -fx-spacing: 15px;
+}
+
+.card-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -text-color;
+}
+
+/* Button Styles */
+.primary-button {
+    -fx-background-color: -primary-color;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 16px;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.primary-button:hover {
+    -fx-background-color: -primary-color, -10%;
+}
+
+.secondary-button {
+    -fx-background-color: white;
+    -fx-text-fill: -text-color;
+    -fx-border-color: -dark-gray;
+    -fx-border-width: 1px;
+    -fx-padding: 8px 16px;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.secondary-button:hover {
+    -fx-background-color: -light-gray;
+}
+
+.text-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: -primary-color;
+    -fx-font-weight: bold;
+    -fx-padding: 5px;
+    -fx-cursor: hand;
+}
+
+.text-button:hover {
+    -fx-text-fill: -primary-color, -10%;
+}
+
+/* Filter Buttons */
+.filter-button {
+    -fx-background-color: white;
+    -fx-text-fill: -text-color;
+    -fx-border-color: -medium-gray;
+    -fx-border-width: 1px;
+    -fx-padding: 5px 10px;
+    -fx-background-radius: 15px;
+    -fx-border-radius: 15px;
+    -fx-cursor: hand;
+}
+
+.filter-button:hover {
+    -fx-background-color: -light-gray;
+}
+
+.filter-button.active {
+    -fx-background-color: -primary-color;
+    -fx-text-fill: white;
+    -fx-border-color: -primary-color;
+}
+
+/* Stats Grid */
+.stats-grid {
+    -fx-padding: 0;
+}
+
+.stat-icon {
+    -fx-stroke: white;
+    -fx-stroke-width: 2px;
+}
+
+.green-bg {
+    -fx-fill: -primary-color;
+}
+
+.blue-bg {
+    -fx-fill: -info-color;
+}
+
+.yellow-bg {
+    -fx-fill: -warning-color;
+}
+
+.purple-bg {
+    -fx-fill: #9C27B0;
+}
+
+.stat-label {
+    -fx-text-fill: -dark-gray;
+    -fx-font-size: 12px;
+}
+
+.stat-value {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -text-color;
+}
+
+.stat-trend {
+    -fx-padding: 5px 0 0 0;
+}
+
+.trend-up {
+    -fx-text-fill: -success-color;
+    -fx-font-weight: bold;
+}
+
+.trend-down {
+    -fx-text-fill: -error-color;
+    -fx-font-weight: bold;
+}
+
+.trend-text {
+    -fx-text-fill: -dark-gray;
+    -fx-font-size: 12px;
+}
+
+/* Chart Styles */
+.charts-grid {
+    -fx-padding: 0;
+}
+
+.chart {
+    -fx-padding: 10px;
+    -fx-background-color: transparent;
+}
+
+.chart-series-line {
+    -fx-stroke: -primary-color;
+    -fx-stroke-width: 2px;
+}
+
+.chart-line-symbol {
+    -fx-background-color: -primary-color;
+}
+
+.chart-plot-background {
+    -fx-background-color: -light-gray, 50%;
+}
+
+.axis {
+    -fx-tick-label-fill: -dark-gray;
+    -fx-font-size: 10px;
+}
+
+.axis-label {
+    -fx-text-fill: -dark-gray;
+}
+
+.chart-pie {
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+}
+
+.chart-pie-label {
+    -fx-fill: -text-color;
+}
+
+.chart-legend {
+    -fx-background-color: transparent;
+}
+
+/* Tasks List */
+.tasks-grid {
+    -fx-padding: 0;
+}
+
+.tasks-list {
+    -fx-padding: 5px 0;
+}
+
+.task-item {
+    -fx-padding: 10px;
+    -fx-background-radius: 5px;
+    -fx-background-color: -light-gray;
+}
+
+.task-item.to-do {
+    -fx-border-color: -dark-gray;
+    -fx-border-width: 0 0 0 3px;
+}
+
+.task-item.in-progress {
+    -fx-border-color: -warning-color;
+    -fx-border-width: 0 0 0 3px;
+}
+
+.task-item.completed {
+    -fx-border-color: -success-color;
+    -fx-border-width: 0 0 0 3px;
+    -fx-opacity: 0.8;
+}
+
+.task-item.urgent {
+    -fx-border-color: -error-color;
+    -fx-border-width: 0 0 0 3px;
+}
+
+.task-checkbox {
+    -fx-padding: 0 5px 0 0;
+}
+
+.task-title {
+    -fx-font-weight: bold;
+    -fx-text-fill: -text-color;
+}
+
+.task-title.completed {
+    -fx-strikethrough: true;
+    -fx-opacity: 0.7;
+}
+
+.task-date {
+    -fx-text-fill: -dark-gray;
+    -fx-font-size: 12px;
+}
+
+.task-status {
+    -fx-font-size: 12px;
+    -fx-padding: 3px 8px;
+    -fx-background-radius: 10px;
+}
+
+.status-to-do {
+    -fx-text-fill: -dark-gray;
+    -fx-background-color: -dark-gray, 80%;
+}
+
+.status-in-progress {
+    -fx-text-fill: -warning-color;
+    -fx-background-color: -warning-color, 80%;
+}
+
+.status-completed {
+    -fx-text-fill: -success-color;
+    -fx-background-color: -success-color, 80%;
+}
+
+.status-urgent {
+    -fx-text-fill: -error-color;
+    -fx-background-color: -error-color, 80%;
+}
+
+/* Weather Section */
+.weather-container {
+    -fx-padding: 10px 0;
+    -fx-border-width: 0 0 1px 0;
+    -fx-border-color: -light-gray;
+}
+
+.weather-today {
+    -fx-padding: 5px 0;
+}
+
+.weather-day {
+    -fx-font-weight: bold;
+    -fx-text-fill: -text-color;
+}
+
+.weather-date {
+    -fx-text-fill: -dark-gray;
+    -fx-font-size: 12px;
+}
+
+.weather-icon {
+    -fx-font-size: 20px;
+}
+
+.weather-temp {
+    -fx-font-weight: bold;
+    -fx-text-fill: -text-color;
+    -fx-font-size: 18px;
+}
+
+.weather-details {
+    -fx-padding: 5px 0;
+}
+
+.weather-detail {
+    -fx-text-fill: -dark-gray;
+    -fx-font-size: 12px;
+}
+
+/* Events Section */
+.events-container {
+    -fx-padding: 10px 0;
+}
+
+.section-title {
+    -fx-font-weight: bold;
+    -fx-text-fill: -text-color;
+    -fx-padding: 5px 0;
+}
+
+.events-list {
+    -fx-padding: 5px 0;
+}
+
+.event-item {
+    -fx-padding: 5px 0;
+}
+
+.event-icon {
+    -fx-stroke: white;
+    -fx-stroke-width: 2px;
+}
+
+.event-title {
+    -fx-font-weight: bold;
+    -fx-text-fill: -text-color;
+}
+
+.event-date {
+    -fx-text-fill: -dark-gray;
+    -fx-font-size: 12px;
+}
+
+/* Table Styles */
+.cultures-table {
+    -fx-background-color: transparent;
+    -fx-border-color: -medium-gray;
+    -fx-border-width: 1px;
+    -fx-table-cell-border-color: transparent;
+}
+
+.table-view .column-header {
+    -fx-background-color: -light-gray;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-padding: 10px;
+}
+
+.table-view .table-row-cell {
+    -fx-background-color: white;
+    -fx-border-width: 0 0 1px 0;
+    -fx-border-color: -light-gray;
+}
+
+.table-view .table-row-cell {
+    -fx-background-color: -light-gray, 50%;
+}
+
+.table-row-cell {
+    -fx-background-color: -primary-color, 80%;
+}
+
+.table-footer {
+    -fx-padding: 15px 0 0 0;
+}
+
+.table-info {
+    -fx-text-fill: -dark-gray;
+    -fx-font-size: 12px;
+}
+
+.pagination-button {
+    -fx-background-color: white;
+    -fx-text-fill: -text-color;
+    -fx-border-color: -medium-gray;
+    -fx-border-width: 1px;
+    -fx-padding: 5px 10px;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.pagination-button:hover {
+    -fx-background-color: -light-gray;
+}
+
+.pagination-button.active {
+    -fx-background-color: -primary-color;
+    -fx-text-fill: white;
+    -fx-border-color: -primary-color;
+}
+
+/* Responsive Adjustments */
+@media screen and (max-width: 1000px) {
+    .sidebar {
+        -fx-pref-width: 200px;
+    }
+
+    .content-container {
+        -fx-padding: 15px;
+        -fx-spacing: 15px;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .stats-grid .column-constraints,
+    .charts-grid .column-constraints,
+    .tasks-grid .column-constraints {
+        -fx-percent-width: 100;
+    }
+}
+
+

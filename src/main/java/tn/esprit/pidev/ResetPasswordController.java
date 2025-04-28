@@ -77,7 +77,7 @@ public class ResetPasswordController {
             javafx.application.Platform.runLater(() -> {
                 try {
                     Thread.sleep(2000);
-                    Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
+                    Parent root = FXMLLoader.load(getClass().getResource("LoginView.fxml"));
                     Scene scene = new Scene(root);
                     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
@@ -96,7 +96,7 @@ public class ResetPasswordController {
     @FXML
     private void backToLogin(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("LoginView.fxml"));
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 

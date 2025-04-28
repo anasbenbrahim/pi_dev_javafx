@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="1000" minWidth="1840" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.pidev.AgriTechController">
+
+    <!-- Left Sidebar -->
+    <left>
+        <VBox fx:id="sidebar" prefWidth="240.0" styleClass="sidebar">
+            <!-- Logo -->
+            <HBox alignment="CENTER_LEFT" spacing="10" styleClass="logo-container">
+                <Label styleClass="logo-text" text="AgriConnect" />
+                <Button fx:id="closeSidebarBtn" onAction="#toggleSidebar" styleClass="icon-button" visible="false">
+                    <graphic>
+                        <Label styleClass="icon" text="✕" />
+                    </graphic>
+                </Button>
+                <padding>
+                    <Insets bottom="15" left="15" right="15" top="15" />
+                </padding>
+            </HBox>
+
+            <!-- User Profile -->
+            <HBox alignment="CENTER_LEFT" spacing="10" styleClass="user-profile">
+                <Circle radius="20" styleClass="user-avatar" />
+                <VBox>
+                    <Label styleClass="user-name" text="Jean Dupont" />
+                    <Label styleClass="user-role" text="Fermier" />
+                </VBox>
+                <padding>
+                    <Insets bottom="15" left="15" right="15" top="15" />
+                </padding>
+            </HBox>
+
+            <!-- Navigation Menu -->
+            <ScrollPane fitToWidth="true" styleClass="sidebar-menu-container">
+                <VBox styleClass="sidebar-menu">
+                    <Button alignment="CENTER" contentDisplay="CENTER" onAction="#showDashboard" styleClass="sidebar-menu-item,active">
+                        <graphic>
+                            <HBox alignment="CENTER_LEFT" spacing="10">
+                                <Label styleClass="menu-icon" text="⌂" />
+                                <Label styleClass="menu-text" text="Tableau de bord" />
+                            </HBox>
+                        </graphic>
+                    </Button>
+                    <Button onAction="#showUserManagement" styleClass="sidebar-menu-item">
+                        <graphic>
+                            <HBox alignment="CENTER_LEFT" spacing="10">
+                                <Label styleClass="menu-icon" text="🌱" />
+                                <Label styleClass="menu-text" text="Utilisateurs" />
+                            </HBox>
+                        </graphic>
+                    </Button>
+                    <Button onAction="#navigateToInventory" styleClass="sidebar-menu-item">
+                        <graphic>
+                            <HBox alignment="CENTER_LEFT" spacing="10">
+                                <Label styleClass="menu-icon" text="🏪" />
+                                <Label styleClass="menu-text" text="Inventaire" />
+                            </HBox>
+                        </graphic>
+                    </Button>
+                    <Button onAction="#navigateToOrders" styleClass="sidebar-menu-item">
+                        <graphic>
+                            <HBox alignment="CENTER_LEFT" spacing="10">
+                                <Label styleClass="menu-icon" text="🛒" />
+                                <Label styleClass="menu-text" text="Commandes" />
+                            </HBox>
+                        </graphic>
+                    </Button>
+                    <Button onAction="#navigateToCalendar" styleClass="sidebar-menu-item">
+                        <graphic>
+                            <HBox alignment="CENTER_LEFT" spacing="10">
+                                <Label styleClass="menu-icon" text="📅" />
+                                <Label styleClass="menu-text" text="Calendrier" />
+                            </HBox>
+                        </graphic>
+                    </Button>
+                    <Button onAction="#navigateToProfile" styleClass="sidebar-menu-item">
+                        <graphic>
+                            <HBox alignment="CENTER_LEFT" spacing="10">
+                                <Label styleClass="menu-icon" text="👤" />
+                                <Label styleClass="menu-text" text="Profil" />
+                            </HBox>
+                        </graphic>
+                    </Button>
+                    <Button onAction="#navigateToEmployees" styleClass="sidebar-menu-item">
+                        <graphic>
+                            <HBox alignment="CENTER_LEFT" spacing="10">
+                                <Label styleClass="menu-icon" text="👥" />
+                                <Label styleClass="menu-text" text="Employés" />
+                            </HBox>
+                        </graphic>
+                    </Button>
+                    <Button onAction="#navigateToReports" styleClass="sidebar-menu-item">
+                        <graphic>
+                            <HBox alignment="CENTER_LEFT" spacing="10">
+                                <Label styleClass="menu-icon" text="📊" />
+                                <Label styleClass="menu-text" text="Rapports" />
+                            </HBox>
+                        </graphic>
+                    </Button>
+                    <Button onAction="#navigateToSettings" styleClass="sidebar-menu-item">
+                        <graphic>
+                            <HBox alignment="CENTER_LEFT" spacing="10">
+                                <Label styleClass="menu-icon" text="⚙" />
+                                <Label styleClass="menu-text" text="Paramètres" />
+                            </HBox>
+                        </graphic>
+                    </Button>
+                </VBox>
+            </ScrollPane>
+
+            <!-- Logout Button -->
+            <Button onAction="#handleLogout" styleClass="logout-button">
+                <graphic>
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <Label styleClass="menu-icon" text="🚪" />
+                        <Label styleClass="menu-text" text="Déconnexion" />
+                    </HBox>
+                </graphic>
+            </Button>
+        </VBox>
+    </left>
+
+    <!-- Main Content -->
+    <center>
+        <VBox>
+            <!-- Top Navigation -->
+            <HBox styleClass="top-nav">
+                <HBox alignment="CENTER_LEFT" prefHeight="49.0" prefWidth="794.0" spacing="10" HBox.hgrow="ALWAYS">
+                    <Button fx:id="openSidebarBtn" onAction="#toggleSidebar" styleClass="icon-button">
+                        <graphic>
+                            <Label styleClass="icon" text="≡" />
+                        </graphic>
+                    </Button>
+                    <HBox styleClass="search-container">
+                        <Label styleClass="search-icon" text="🔍" />
+                        <TextField promptText="Rechercher..." styleClass="search-input" />
+                    </HBox>
+                </HBox>
+                <HBox alignment="CENTER_RIGHT" spacing="15">
+                    <Button styleClass="icon-button">
+                        <graphic>
+                            <StackPane>
+                                <Label styleClass="icon" text="🔔" />
+                                <Label fx:id="welcomeLabel" styleClass="welcome-text" text="Welcome, Admin" />
+                            </StackPane>
+                        </graphic>
+                    </Button>
+                    <Circle radius="16" styleClass="user-avatar-small" />
+                    <HBox alignment="CENTER" spacing="5">
+                        <Label text="FR" />
+                        <Label styleClass="small-icon" text="▼" />
+                    </HBox>
+                </HBox>
+                <padding>
+                    <Insets bottom="10" left="20" right="20" top="10" />
+                </padding>
+            </HBox>
+
+            <!-- Main Content Area -->
+            <ScrollPane fitToWidth="true" styleClass="main-content">
+                <VBox fx:id="dashboardPane" styleClass="content-container">
+                    <!-- Page Header -->
+                    <VBox styleClass="page-header">
+                        <Label styleClass="page-title" text="Tableau de bord" />
+                        <Label styleClass="page-subtitle" text="Bienvenue, Jean. Voici l'aperçu de votre exploitation agricole." />
+                    </VBox>
+
+                    <!-- Quick Actions -->
+                    <VBox styleClass="card">
+                        <HBox alignment="CENTER_LEFT" spacing="20">
+                            <Label styleClass="card-title" text="Actions rapides" />
+                            <HBox alignment="CENTER_RIGHT" spacing="10" HBox.hgrow="ALWAYS">
+                                <Button onAction="#createNewCulture" styleClass="primary-button">
+                                    <graphic>
+                                        <HBox alignment="CENTER" spacing="5">
+                                            <Label styleClass="button-icon" text="+" />
+                                            <Label styleClass="button-text" text="Nouvelle culture" />
+                                        </HBox>
+                                    </graphic>
+                                </Button>
+                                <Button onAction="#generateReport" styleClass="secondary-button">
+                                    <graphic>
+                                        <HBox alignment="CENTER" spacing="5">
+                                            <Label styleClass="button-icon" text="📋" />
+                                            <Label styleClass="button-text" text="Générer rapport" />
+                                        </HBox>
+                                    </graphic>
+                                </Button>
+                                <Button onAction="#scheduleTask" styleClass="secondary-button">
+                                    <graphic>
+                                        <HBox alignment="CENTER" spacing="5">
+                                            <Label styleClass="button-icon" text="📅" />
+                                            <Label styleClass="button-text" text="Planifier tâche" />
+                                        </HBox>
+                                    </graphic>
+                                </Button>
+                            </HBox>
+                        </HBox>
+                    </VBox>
+
+                    <!-- Stats Cards -->
+                    <GridPane hgap="15" styleClass="stats-grid" vgap="15">
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="25" />
+                            <ColumnConstraints percentWidth="25" />
+                            <ColumnConstraints percentWidth="25" />
+                            <ColumnConstraints percentWidth="25" />
+                        </columnConstraints>
+
+                        <!-- Active Cultures Card -->
+                        <VBox styleClass="card" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                            <HBox spacing="15">
+                                <Circle radius="25" styleClass="stat-icon,green-bg" />
+                                <VBox>
+                                    <Label styleClass="stat-label" text="Cultures actives" />
+                                    <Label styleClass="stat-value" text="12" />
+                                </VBox>
+                            </HBox>
+                            <HBox spacing="5" styleClass="stat-trend">
+                                <Label styleClass="trend-up" text="▲" />
+                                <Label styleClass="trend-up" text="8.2%" />
+                                <Label styleClass="trend-text" text="depuis le mois dernier" />
+                            </HBox>
+                        </VBox>
+
+                        <!-- Water Consumption Card -->
+                        <VBox styleClass="card" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                            <HBox spacing="15">
+                                <Circle radius="25" styleClass="stat-icon,blue-bg" />
+                                <VBox>
+                                    <Label styleClass="stat-label" text="Consommation d'eau" />
+                                    <Label styleClass="stat-value" text="2,430 L" />
+                                </VBox>
+                            </HBox>
+                            <HBox spacing="5" styleClass="stat-trend">
+                                <Label styleClass="trend-down" text="▼" />
+                                <Label styleClass="trend-down" text="3.1%" />
+                                <Label styleClass="trend-text" text="depuis la semaine dernière" />
+                            </HBox>
+                        </VBox>
+
+                        <!-- Pending Orders Card -->
+                        <VBox styleClass="card" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                            <HBox spacing="15">
+                                <Circle radius="25" styleClass="stat-icon,yellow-bg" />
+                                <VBox>
+                                    <Label styleClass="stat-label" text="Commandes en attente" />
+                                    <Label styleClass="stat-value" text="8" />
+                                </VBox>
+                            </HBox>
+                            <HBox spacing="5" styleClass="stat-trend">
+                                <Label styleClass="trend-up" text="▲" />
+                                <Label styleClass="trend-up" text="12.5%" />
+                                <Label styleClass="trend-text" text="depuis hier" />
+                            </HBox>
+                        </VBox>
+
+
+
+                        <!-- Monthly Revenue Card -->
+                        <VBox styleClass="card" GridPane.columnIndex="3" GridPane.rowIndex="0">
+                            <HBox spacing="15">
+                                <Circle radius="25" styleClass="stat-icon,purple-bg" />
+                                <VBox>
+                                    <Label styleClass="stat-label" text="Revenus du mois" />
+                                    <Label styleClass="stat-value" text="8,540 €" />
+                                </VBox>
+                            </HBox>
+                            <HBox spacing="5" styleClass="stat-trend">
+                                <Label styleClass="trend-up" text="▲" />
+                                <Label styleClass="trend-up" text="5.3%" />
+                                <Label styleClass="trend-text" text="depuis le mois dernier" />
+                            </HBox>
+                        </VBox>
+                        <rowConstraints>
+                            <RowConstraints />
+                        </rowConstraints>
+                    </GridPane>
+
+                    <!-- Charts Section -->
+                    <GridPane hgap="15" styleClass="charts-grid" vgap="15">
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="50" />
+                            <ColumnConstraints percentWidth="50" />
+                        </columnConstraints>
+
+                        <!-- Production Chart -->
+                        <VBox styleClass="card" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                            <HBox alignment="CENTER_LEFT" spacing="20">
+                                <Label styleClass="card-title" text="Production mensuelle" />
+                                <HBox alignment="CENTER_RIGHT" spacing="5" HBox.hgrow="ALWAYS">
+                                    <ToggleButton fx:id="yearToggle" onAction="#filterByYear" styleClass="filter-button" text="Année" />
+                                    <ToggleButton fx:id="monthToggle" onAction="#filterByMonth" styleClass="filter-button,active" text="Mois" />
+                                    <ToggleButton fx:id="weekToggle" onAction="#filterByWeek" styleClass="filter-button" text="Semaine" />
+                                </HBox>
+                            </HBox>
+                            <LineChart fx:id="productionChart" legendVisible="false">
+                                <xAxis>
+                                    <CategoryAxis label="Mois" tickLabelRotation="0" />
+                                </xAxis>
+                                <yAxis>
+                                    <NumberAxis label="Production (tonnes)" tickUnit="5" />
+                                </yAxis>
+                            </LineChart>
+                        </VBox>
+
+                        <!-- Revenue Chart -->
+                        <VBox styleClass="card" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                            <HBox alignment="CENTER_LEFT" spacing="20">
+                                <Label styleClass="card-title" text="Revenus par culture" />
+                                <HBox alignment="CENTER_RIGHT" spacing="5" HBox.hgrow="ALWAYS">
+                                    <ComboBox fx:id="yearSelector" promptText="2024" />
+                                </HBox>
+                            </HBox>
+                            <PieChart fx:id="revenueChart" legendSide="RIGHT" />
+                        </VBox>
+                        <rowConstraints>
+                            <RowConstraints />
+                        </rowConstraints>
+                    </GridPane>
+
+                    <!-- Tasks and Calendar Section -->
+                    <GridPane hgap="15" styleClass="tasks-grid" vgap="15">
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="66" />
+                            <ColumnConstraints percentWidth="34" />
+                        </columnConstraints>
+
+                        <!-- Recent Tasks -->
+                        <VBox styleClass="card" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                            <HBox alignment="CENTER_LEFT" spacing="20">
+                                <Label styleClass="card-title" text="Tâches récentes" />
+                                <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
+                                    <Button onAction="#showAllTasks" styleClass="text-button" text="Voir tout" />
+                                </HBox>
+                            </HBox>
+                            <VBox spacing="10" styleClass="tasks-list">
+                                <HBox alignment="CENTER_LEFT" spacing="10" styleClass="task-item,in-progress">
+                                    <CheckBox styleClass="task-checkbox" />
+                                    <VBox HBox.hgrow="ALWAYS">
+                                        <Label styleClass="task-title" text="Irrigation des parcelles de maïs" />
+                                        <Label styleClass="task-date" text="Échéance: 24 Avril 2025" />
+                                    </VBox>
+                                    <Label styleClass="task-status,status-in-progress" text="En cours" />
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" spacing="10" styleClass="task-item,to-do">
+                                    <CheckBox styleClass="task-checkbox" />
+                                    <VBox HBox.hgrow="ALWAYS">
+                                        <Label styleClass="task-title" text="Vérification des niveaux d'engrais" />
+                                        <Label styleClass="task-date" text="Échéance: 25 Avril 2025" />
+                                    </VBox>
+                                    <Label styleClass="task-status,status-to-do" text="À faire" />
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" spacing="10" styleClass="task-item,completed">
+                                    <CheckBox selected="true" styleClass="task-checkbox" />
+                                    <VBox HBox.hgrow="ALWAYS">
+                                        <Label styleClass="task-title,completed" text="Préparation des semis de tomates" />
+                                        <Label styleClass="task-date" text="Échéance: 22 Avril 2025" />
+                                    </VBox>
+                                    <Label styleClass="task-status,status-completed" text="Terminé" />
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" spacing="10" styleClass="task-item,urgent">
+                                    <CheckBox styleClass="task-checkbox" />
+                                    <VBox HBox.hgrow="ALWAYS">
+                                        <Label styleClass="task-title" text="Maintenance du tracteur" />
+                                        <Label styleClass="task-date" text="Échéance: 26 Avril 2025" />
+                                    </VBox>
+                                    <Label styleClass="task-status,status-urgent" text="Urgent" />
+                                </HBox>
+                            </VBox>
+                        </VBox>
+
+                        <!-- Weather and Calendar -->
+                        <VBox styleClass="card" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                            <HBox alignment="CENTER_LEFT" spacing="20">
+                                <Label styleClass="card-title" text="Météo et calendrier" />
+                                <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
+                                    <Button onAction="#showWeatherDetails" styleClass="text-button" text="Détails" />
+                                </HBox>
+                            </HBox>
+
+                            <!-- Weather Section -->
+                            <VBox styleClass="weather-container">
+                                <HBox alignment="CENTER_LEFT" spacing="15" styleClass="weather-today">
+                                    <VBox>
+                                        <Label styleClass="weather-day" text="Aujourd'hui" />
+                                        <Label styleClass="weather-date" text="24 Avril, Jeudi" />
+                                    </VBox>
+                                    <HBox alignment="CENTER_RIGHT" spacing="5" HBox.hgrow="ALWAYS">
+                                        <Label styleClass="weather-icon" text="☀" />
+                                        <Label styleClass="weather-temp" text="23°C" />
+                                    </HBox>
+                                </HBox>
+                                <HBox alignment="CENTER" spacing="20" styleClass="weather-details">
+                                    <Label styleClass="weather-detail" text="Humidité: 65%" />
+                                    <Label styleClass="weather-detail" text="Vent: 12 km/h" />
+                                </HBox>
+                            </VBox>
+
+                            <!-- Calendar Events -->
+                            <VBox styleClass="events-container">
+                                <Label styleClass="section-title" text="Événements à venir" />
+                                <VBox spacing="10" styleClass="events-list">
+                                    <HBox alignment="CENTER_LEFT" spacing="10" styleClass="event-item">
+                                        <Circle radius="15" styleClass="event-icon,green-bg" />
+                                        <VBox>
+                                            <Label styleClass="event-title" text="Livraison d'engrais" />
+                                            <Label styleClass="event-date" text="25 Avril, 10:00" />
+                                        </VBox>
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT" spacing="10" styleClass="event-item">
+                                        <Circle radius="15" styleClass="event-icon,purple-bg" />
+                                        <VBox>
+                                            <Label styleClass="event-title" text="Réunion coopérative" />
+                                            <Label styleClass="event-date" text="27 Avril, 14:30" />
+                                        </VBox>
+                                    </HBox>
+                                </VBox>
+                            </VBox>
+                        </VBox>
+                        <rowConstraints>
+                            <RowConstraints />
+                        </rowConstraints>
+                    </GridPane>
+
+                    <!-- Cultures Table -->
+                    <VBox styleClass="card">
+                        <HBox alignment="CENTER_LEFT" spacing="20">
+                            <Label styleClass="card-title" text="État des cultures" />
+                            <HBox alignment="CENTER_RIGHT" spacing="10" HBox.hgrow="ALWAYS">
+                                <HBox styleClass="search-container">
+                                    <Label styleClass="search-icon" text="🔍" />
+                                    <TextField promptText="Rechercher une culture" styleClass="search-input" />
+                                </HBox>
+                                <Button onAction="#filterCultures" styleClass="primary-button" text="Filtrer" />
+                            </HBox>
+                        </HBox>
+
+                        <TableView fx:id="culturesTable" styleClass="cultures-table">
+                            <columns>
+                                <TableColumn fx:id="cultureColumn" text="Culture" />
+                                <TableColumn fx:id="parcelColumn" text="Parcelle" />
+                                <TableColumn fx:id="seedDateColumn" text="Date de semis" />
+                                <TableColumn fx:id="statusColumn" text="Statut" />
+                                <TableColumn fx:id="progressColumn" text="Progression" />
+                                <TableColumn fx:id="actionsColumn" text="Actions" />
+                            </columns>
+                        </TableView>
+
+                        <HBox alignment="CENTER" spacing="150" styleClass="table-footer">
+                            <Label styleClass="table-info" text="Affichage de 1 à 4 sur 12 entrées" />
+                            <HBox alignment="CENTER" spacing="5">
+                                <Button onAction="#prevPage" styleClass="pagination-button" text="Précédent" />
+                                <Button onAction="#goToPage" styleClass="pagination-button,active" text="1" />
+                                <Button onAction="#goToPage" styleClass="pagination-button" text="2" />
+                                <Button onAction="#goToPage" styleClass="pagination-button" text="3" />
+                                <Button onAction="#nextPage" styleClass="pagination-button" text="Suivant" />
+                            </HBox>
+                        </HBox>
+                    </VBox>
+                </VBox>
+
+                <!-- User Management Pane -->
+                <VBox fx:id="userManagementPane" spacing="20" visible="false">
+                    <padding>
+                        <Insets bottom="20" left="20" right="20" top="20" />
+                    </padding>
+                    <fx:include fx:id="userManagementContent" source="UserManagement.fxml" />
+                </VBox>
+
+
+
+
+
+            </ScrollPane>
+        </VBox>
+    </center>
+
+</BorderPane>

@@ -77,7 +77,7 @@ public class ForgotPasswordController {
     @FXML
     private void backToLogin(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("LoginView.fxml"));
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 

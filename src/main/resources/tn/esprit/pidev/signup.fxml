@@ -11,7 +11,7 @@
 <?import javafx.collections.FXCollections?>
 <?import java.lang.String?>
 <?import javafx.scene.effect.DropShadow?>
-<StackPane xmlns="http://javafx.com/javafx"
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="1000" minWidth="1840" xmlns="http://javafx.com/javafx"
            xmlns:fx="http://javafx.com/fxml"
            fx:controller="tn.esprit.pidev.SignupController"
            style="-fx-background-color: #f0f8f0;"> <ImageView fx:id="BgImageView" fitWidth="1920" fitHeight="1080" preserveRatio="false">

@@ -210,3 +210,444 @@
     -fx-font-size: 14px;
     -fx-padding: 5 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+/* Main Styles */
+.root {
+    -fx-background-color: #f9fafb;
+    -fx-font-family: "Poppins", sans-serif;
+}
+
+/* Primary Colors */
+* {
+    -primary-color: #4CAF50;
+    -primary-light: rgba(76, 175, 80, 0.1);
+    -primary-dark: #3d8b40;
+    -secondary-color: #8BC34A;
+    -danger-color: #F44336;
+    -text-primary: #1f2937;
+    -text-secondary: #6b7280;
+    -text-light: #9ca3af;
+    -border-color: #e5e7eb;
+    -bg-light: #f9fafb;
+    -bg-card: #ffffff;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    -fx-background-color: -bg-card;
+    -fx-border-color: transparent -border-color transparent transparent;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 2, 0);
+}
+
+.logo-container {
+    -fx-padding: 16px;
+    -fx-border-color: transparent transparent -border-color transparent;
+    -fx-min-height: 64px;
+}
+
+.logo-text {
+    -fx-font-family: "Pacifico";
+    -fx-font-size: 22px;
+    -fx-fill: -primary-color;
+}
+
+.user-profile {
+    -fx-padding: 20px;
+    -fx-spacing: 8px;
+    -fx-border-color: transparent transparent -border-color transparent;
+}
+
+.profile-circle {
+    -fx-stroke: -border-color;
+    -fx-stroke-width: 1px;
+}
+
+.user-name {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -text-primary;
+    -fx-padding: 8px 0 2px 0;
+}
+
+.role-badge {
+    -fx-background-color: #f3f4f6;
+    -fx-background-radius: 100px;
+    -fx-padding: 4px 12px;
+    -fx-spacing: 4px;
+}
+
+.role-text {
+    -fx-text-fill: -text-secondary;
+    -fx-font-size: 12px;
+}
+
+.nav-container {
+    -fx-padding: 16px 0;
+    -fx-spacing: 4px;
+}
+
+.nav-header {
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -text-light;
+    -fx-padding: 8px 20px;
+    -fx-opacity: 0.8;
+}
+
+.nav-item {
+    -fx-padding: 12px 20px;
+    -fx-spacing: 12px;
+    -fx-alignment: center-left;
+    -fx-cursor: hand;
+}
+
+.nav-item:hover {
+    -fx-background-color: #f8f9fa;
+}
+
+.nav-item.active {
+    -fx-background-color: -primary-light;
+    -fx-border-color: transparent transparent transparent -primary-color;
+    -fx-border-width: 0 0 0 3px;
+}
+
+.nav-item.active .nav-icon,
+.nav-item.active .label {
+    -fx-text-fill: -primary-color;
+}
+
+.nav-icon {
+    -fx-text-fill: -text-secondary;
+    -fx-font-size: 16px;
+}
+
+.badge {
+    -fx-background-color: -primary-color;
+    -fx-background-radius: 100px;
+    -fx-text-fill: white;
+    -fx-padding: 2px 6px;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+}
+
+.logout-container {
+    -fx-padding: 16px;
+    -fx-border-color: -border-color transparent transparent transparent;
+}
+
+.logout-button {
+    -fx-background-color: transparent;
+    -fx-border-color: -border-color;
+    -fx-border-radius: 4px;
+    -fx-text-fill: -text-secondary;
+    -fx-padding: 8px 16px;
+    -fx-cursor: hand;
+    -fx-font-size: 14px;
+}
+
+.logout-button:hover {
+    -fx-background-color: #f8f9fa;
+    -fx-text-fill: -text-primary;
+}
+
+.icon-small {
+    -fx-font-size: 14px;
+}
+
+.icon-xs {
+    -fx-font-size: 10px;
+}
+
+/* Top Navigation */
+.top-nav {
+    -fx-padding: 16px 24px;
+    -fx-background-color: -bg-card;
+    -fx-border-color: transparent transparent -border-color transparent;
+    -fx-spacing: 16px;
+    -fx-alignment: center-left;
+}
+
+.icon-button {
+    -fx-background-color: transparent;
+    -fx-padding: 8px;
+    -fx-cursor: hand;
+    -fx-background-radius: 4px;
+}
+
+.icon-button:hover {
+    -fx-background-color: #f3f4f6;
+}
+
+.icon {
+    -fx-text-fill: -text-secondary;
+    -fx-font-size: 18px;
+}
+
+.search-container {
+    -fx-alignment: center-left;
+}
+
+.search-field {
+    -fx-background-color: #f3f4f6;
+    -fx-background-radius: 20px;
+    -fx-padding: 8px 16px;
+    -fx-prompt-text-fill: -text-light;
+    -fx-text-fill: -text-primary;
+    -fx-font-size: 14px;
+}
+
+.search-field:focused {
+    -fx-background-color: #edf2f7;
+    -fx-border-color: -primary-light;
+    -fx-border-width: 2px;
+    -fx-border-radius: 20px;
+}
+
+.lang-selector, .user-menu {
+    -fx-spacing: 6px;
+    -fx-alignment: center;
+    -fx-padding: 8px;
+    -fx-cursor: hand;
+    -fx-background-radius: 4px;
+}
+
+.lang-selector:hover, .user-menu:hover {
+    -fx-background-color: #f3f4f6;
+}
+
+.notification-badge {
+    -fx-fill: -danger-color;
+}
+
+/* Content Area */
+.content-container {
+    -fx-background-color: -bg-light;
+}
+
+.content-scroll {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.content-scroll > .viewport {
+    -fx-background-color: transparent;
+}
+
+.content-scroll .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-padding: 0 0 0 0;
+}
+
+.content {
+    -fx-padding: 24px;
+}
+
+/* Cards & Forms */
+.card {
+    -fx-background-color: -bg-card;
+    -fx-background-radius: 8px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 8, 0, 0, 2);
+    -fx-padding: 0;
+}
+
+.card-header {
+    -fx-padding: 16px 24px;
+    -fx-border-color: transparent transparent -border-color transparent;
+}
+
+.card-inner {
+    -fx-padding: 24px;
+    -fx-spacing: 20px;
+}
+
+.page-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -text-primary;
+    -fx-padding: 16px 24px;
+}
+
+.card-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -text-primary;
+    -fx-padding: 0 0 16px 0;
+}
+
+.form-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -text-secondary;
+    -fx-padding: 0 0 8px 0;
+}
+
+.form-field {
+    -fx-background-color: #f9fafb;
+    -fx-border-color: -border-color;
+    -fx-border-radius: 4px;
+    -fx-padding: 10px 16px;
+    -fx-font-size: 14px;
+    -fx-text-fill: -text-primary;
+}
+
+.form-field:focused {
+    -fx-border-color: -primary-color;
+    -fx-border-width: 2px;
+}
+
+.button-container {
+    -fx-padding: 16px 0 0 0;
+    -fx-alignment: center-left;
+}
+
+.primary-button {
+    -fx-background-color: -primary-color;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 16px;
+    -fx-background-radius: 4px;
+    -fx-cursor: hand;
+}
+
+.primary-button:hover {
+    -fx-background-color: -primary-dark;
+}
+
+.secondary-button {
+    -fx-background-color: #f3f4f6;
+    -fx-text-fill: -text-secondary;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 16px;
+    -fx-background-radius: 4px;
+    -fx-cursor: hand;
+}
+
+.secondary-button:hover {
+    -fx-background-color: #e5e7eb;
+}
+
+.danger-button {
+    -fx-background-color: -danger-color;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 16px;
+    -fx-background-radius: 4px;
+    -fx-cursor: hand;
+}
+
+.danger-button:hover {
+    -fx-background-color: #d32f2f;
+}
+
+/* User Cards */
+.search-filter-container {
+    -fx-padding: 0 0 16px 0;
+    -fx-alignment: center;
+}
+
+.user-cards-container {
+    -fx-padding: 8px;
+}
+
+/* Custom User Card for the FlowPane */
+.user-card {
+    -fx-background-color: -bg-card;
+    -fx-border-color: -border-color;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-pref-width: 300px;
+    -fx-max-width: 300px;
+    -fx-padding: 16px;
+    -fx-spacing: 12px;
+}
+
+.user-card:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 4);
+    -fx-border-color: -primary-light;
+}
+
+.user-card-header {
+    -fx-alignment: center-left;
+    -fx-spacing: 12px;
+}
+
+.user-card-name {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -text-primary;
+}
+
+.user-card-role {
+    -fx-font-size: 12px;
+    -fx-text-fill: -text-secondary;
+    -fx-padding: 2px 8px;
+    -fx-background-color: #f3f4f6;
+    -fx-background-radius: 4px;
+}
+
+.user-card-role.admin {
+    -fx-background-color: rgba(79, 70, 229, 0.1);
+    -fx-text-fill: #4f46e5;
+}
+
+.user-card-role.client {
+    -fx-background-color: rgba(16, 185, 129, 0.1);
+    -fx-text-fill: #10b981;
+}
+
+.user-card-info {
+    -fx-spacing: 8px;
+}
+
+.user-card-info-item {
+    -fx-alignment: center-left;
+    -fx-spacing: 8px;
+}
+
+.user-card-info-label {
+    -fx-font-size: 13px;
+    -fx-text-fill: -text-secondary;
+}
+
+.user-card-actions {
+    -fx-padding: 8px 0 0 0;
+    -fx-spacing: 8px;
+    -fx-alignment: center-right;
+}
+
+.user-card-button {
+    -fx-padding: 6px 12px;
+    -fx-font-size: 12px;
+    -fx-background-radius: 4px;
+    -fx-cursor: hand;
+}
+
+.user-card-edit {
+    -fx-background-color: rgba(79, 70, 229, 0.1);
+    -fx-text-fill: #4f46e5;
+    -fx-border-color: transparent;
+}
+
+.user-card-edit:hover {
+    -fx-background-color: rgba(79, 70, 229, 0.2);
+}
+
+.user-card-delete {
+    -fx-background-color: rgba(244, 67, 54, 0.1);
+    -fx-text-fill: -danger-color;
+    -fx-border-color: transparent;
+}
+
+.user-card-delete:hover {
+    -fx-background-color: rgba(244, 67, 54, 0.2);
+}

@@ -1,0 +1,264 @@
+/* Main Styling */
+.root {
+    -fx-font-family: 'Montserrat', sans-serif;
+    -fx-background-color: #f8fafc;
+}
+
+/* Colors */
+* {
+    -primary-color: #45A412;
+    -primary-light: #64B735;
+    -primary-dark: #2E7A0A;
+    -gray-100: #f3f4f6;
+    -gray-200: #e5e7eb;
+    -gray-300: #d1d5db;
+    -gray-400: #9ca3af;
+    -gray-500: #6b7280;
+    -gray-600: #4b5563;
+    -gray-700: #374151;
+    -gray-800: #1f2937;
+    -gray-900: #111827;
+}
+
+/* Layout */
+.main-container {
+    -fx-background-color: white;
+}
+
+.image-section {
+    -fx-pref-width: 700px;
+    -fx-pref-height: 600px;
+    -fx-background-color: white;
+}
+
+.image-overlay {
+    -fx-background-color: rgba(0, 0, 0, 0.4);
+    -fx-padding: 0px;
+    -fx-alignment: center;
+}
+
+.form-section {
+    -fx-background-color: white;
+    -fx-padding: 40px;
+}
+
+/* Logo */
+.logo-text-large {
+    -fx-font-size: 46px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.logo-text-small {
+    -fx-font-family: 'Pacifico';
+    -fx-font-size: 28px;
+    -fx-text-fill: -primary-color;
+}
+
+.subtitle-text {
+    -fx-font-size: 18px;
+    -fx-text-fill: white;
+    -fx-text-alignment: center;
+    -fx-wrap-text: true;
+    -fx-max-width: 400px;
+}
+
+/* Tabs */
+.tabs-container {
+    -fx-border-color: transparent transparent -gray-200 transparent;
+    -fx-border-width: 0 0 1px 0;
+    -fx-padding: 0 0 0 0;
+    -fx-spacing: 0;
+}
+
+.tab-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: -gray-500;
+    -fx-font-size: 14px;
+    -fx-font-weight: 500;
+    -fx-padding: 10px 20px;
+    -fx-cursor: hand;
+    -fx-pref-width: 150px;
+}
+
+.tab-active {
+    -fx-text-fill: #15B8A6;
+    -fx-border-color: transparent transparent #15B8A6 transparent;
+    -fx-border-width: 0 0 2px 0;
+}
+
+/* Forms */
+.form-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -gray-900;
+    -fx-padding: 0 0 10px 0;
+}
+
+.input-label {
+    -fx-font-size: 12px;
+    -fx-font-weight: 500;
+    -fx-text-fill: -gray-700;
+}
+
+.input-field {
+    -fx-background-color: white;
+    -fx-border-color: -gray-300;
+    -fx-border-width: 1px;
+    -fx-border-radius: 4px;
+    -fx-padding: 0;
+    -fx-spacing: 0;
+    -fx-alignment: center-left;
+}
+
+.input-field {
+    -fx-border-color: -primary-color;
+    -fx-effect: dropshadow(gaussian, rgba(69, 164, 18, 0.2), 4, 0, 0, 0);
+}
+
+.input-icon {
+    -fx-padding: 0 10px;
+    -fx-text-fill: -gray-500;
+    -fx-min-width: 40px;
+    -fx-alignment: center;
+}
+
+.input-field .text-field, .input-field .password-field {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 10px 0;
+    -fx-prompt-text-fill: -gray-400;
+}
+
+.toggle-password {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 0 10px;
+    -fx-cursor: hand;
+}
+
+/* Custom Checkbox */
+.custom-checkbox {
+    -fx-text-fill: -gray-600;
+    -fx-font-size: 12px;
+}
+
+.custom-checkbox .box {
+    -fx-background-color: white;
+    -fx-border-color: -gray-300;
+    -fx-border-radius: 3px;
+}
+
+.custom-checkbox:selected .box {
+    -fx-background-color: -primary-color;
+    -fx-border-color: -primary-color;
+}
+
+.custom-checkbox:selected .mark {
+    -fx-background-color: white;
+}
+
+/* Buttons */
+.primary-button {
+    -fx-background-color: -primary-color;
+    -fx-text-fill: white;
+    -fx-font-weight: 500;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-cursor: hand;
+}
+
+.primary-button:hover {
+    -fx-background-color: -primary-light;
+}
+
+.primary-button:pressed {
+    -fx-background-color: -primary-dark;
+}
+
+.social-button {
+    -fx-background-color: white;
+    -fx-border-color: -gray-300;
+    -fx-text-fill: -gray-800;
+    -fx-font-size: 13px;
+    -fx-padding: 8px 15px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-cursor: hand;
+}
+
+.social-button:hover {
+    -fx-background-color: -gray-100;
+}
+
+/* Divider */
+.divider {
+    -fx-padding: 10px 0;
+}
+
+.divider .line {
+    -fx-border-color: -gray-200;
+    -fx-border-width: 0.5px;
+}
+
+.divider-text {
+    -fx-text-fill: -gray-500;
+    -fx-font-size: 12px;
+    -fx-padding: 0 10px;
+}
+
+/* Password Strength */
+.password-strength-indicator {
+    -fx-pref-height: 4px;
+    -fx-background-color: -gray-100;
+    -fx-background-radius: 2px;
+}
+
+.password-strength-indicator .bar {
+    -fx-background-radius: 2px;
+}
+
+.password-weak .bar {
+    -fx-background-color: #ef4444;
+}
+
+.password-medium .bar {
+    -fx-background-color: #f59e0b;
+}
+
+.password-strong .bar {
+    -fx-background-color: #10b981;
+}
+
+.password-hint {
+    -fx-font-size: 11px;
+    -fx-text-fill: -gray-500;
+}
+
+/* Hyperlinks */
+.hyperlink {
+    -fx-text-fill: -primary-color;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+    -fx-underline: false;
+    -fx-font-size: 12px;
+    -fx-font-weight: 500;
+    -fx-cursor: hand;
+}
+
+.hyperlink:hover {
+    -fx-underline: true;
+}
+
+/* Small Text */
+.small-text {
+    -fx-font-size: 12px;
+    -fx-text-fill: -gray-600;
+}
+
+.toggle-text {
+    -fx-font-size: 12px;
+    -fx-text-fill: -gray-600;
+}

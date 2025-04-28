@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="background-image" stylesheets="@styles/clientHome.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.pidev.ClientHomeController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="1000" minWidth="1840" styleClass="background-image" stylesheets="@styles/clientHome.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.pidev.ClientHomeController">
     <top>
         <HBox alignment="CENTER" prefHeight="81.0" prefWidth="1279.0" stylesheets="@styles/clientHome.css" BorderPane.alignment="CENTER">
             <children>
@@ -44,14 +44,8 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
                 </Button>
-                <Button fx:id="signupButton" mnemonicParsing="false" onAction="#navigerToRegister" prefHeight="61.0" prefWidth="115.0" styleClass="transparent-button" stylesheets="@styles/clientHome.css" text="Register" textFill="WHITE" HBox.hgrow="NEVER">
-                    <font>
-                        <Font name="Andalus" size="20.0" />
-                    </font>
-                    <HBox.margin>
-                        <Insets right="20.0" />
-                    </HBox.margin>
-                </Button>
+
+
             </children>
             <BorderPane.margin>
                 <Insets />
@@ -82,7 +76,7 @@
                 </Label>
                 <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="60.0">
                     <children>
-                        <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="170.0" stylesheets="@styles/clientHome.css" text="Join" textFill="WHITE">
+                        <Button mnemonicParsing="false" onAction="#navigerToLogin" prefHeight="60.0" prefWidth="170.0" stylesheets="@styles/clientHome.css" text="Join" textFill="WHITE">
                             <font>
                                 <Font name="Andalus" size="24.0" />
                             </font>
