@@ -25,9 +25,11 @@ public class OfferController {
     @FXML private Spinner<Integer> nb_placesSpinner;
     @FXML private Button updateButton;
     @FXML private Button deleteButton;
+    @FXML private TextField searchField;
 
     private OfferService offerService;
     private final ObservableList<Offer> offers = FXCollections.observableArrayList();
+    private final ObservableList<Offer> filteredOffers = FXCollections.observableArrayList();
     private Offer selectedOffer;
 
     @FXML
@@ -38,6 +40,7 @@ public class OfferController {
             setupSpinner();
             loadOffers();
             setupTableSelection();
+            setupSearchListener();
 
             // Initialize buttons as disabled
             updateButton.setDisable(true);
@@ -64,15 +67,46 @@ public class OfferController {
         nb_placesSpinner.setValueFactory(valueFactory);
     }
 
+    private void setupSearchListener() {
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filterOffers(newValue);
+        });
+    }
+
+    private void filterOffers(String searchText) {
+        if (searchText == null || searchText.isEmpty()) {
+            offerTable.setItems(offers);
+            return;
+        }
+
+        String lowerCaseSearch = searchText.toLowerCase();
+        filteredOffers.clear();
+        
+        for (Offer offer : offers) {
+            if (offer.getNom() != null && offer.getNom().toLowerCase().contains(lowerCaseSearch) ||
+                offer.getDomain() != null && offer.getDomain().toLowerCase().contains(lowerCaseSearch) ||
+                offer.getDescription() != null && offer.getDescription().toLowerCase().contains(lowerCaseSearch)) {
+                filteredOffers.add(offer);
+            }
+        }
+        
+        offerTable.setItems(filteredOffers);
+    }
+
+    @FXML
+    private void handleSearch() {
+        filterOffers(searchField.getText());
+    }
+
+    @FXML
+    private void handleClearSearch() {
+        searchField.clear();
+        offerTable.setItems(offers);
+    }
+
     private void loadOffers() {
         try {
-            // Default values for pagination/sorting
-            int limit = 100; // Show 100 records by default
-            int offset = 0; // Start from first record
-            String sortField = "date_offer"; // Default sort by date
-            boolean ascending = false; // Newest first
-
-            offers.setAll(offerService.getAllOffers(limit, offset, sortField, ascending));
+            offers.setAll(offerService.getAllOffers(100, 0, "date_offer", false));
             offerTable.setItems(offers);
         } catch (Exception e) {
             showAlert("Error", "Failed to load offers: " + e.getMessage());

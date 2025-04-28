@@ -47,6 +47,12 @@
                 style="-fx-base: #f39c12; -fx-min-width: 80;"/>
     </HBox>
 
+    <HBox spacing="10" style="-fx-padding: 0 0 10 0;">
+        <TextField fx:id="searchField" promptText="Search offers..." HBox.hgrow="ALWAYS"/>
+        <Button text="Search" onAction="#handleSearch" style="-fx-base: #3498db;"/>
+        <Button text="Clear" onAction="#handleClearSearch" style="-fx-base: #f39c12;"/>
+    </HBox>
+
     <TableView fx:id="offerTable" style="-fx-padding: 5;">
         <columns>
             <TableColumn fx:id="idColumn" text="ID" prefWidth="50">

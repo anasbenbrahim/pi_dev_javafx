@@ -10,45 +10,54 @@ import java.util.List;
 import java.util.Map;
 
 public class DemandeService implements AutoCloseable {
-    private final Connection connection;
+    private Connection connection;
 
     public DemandeService() throws SQLException {
         this.connection = DatabaseConnection.getInstance();
-        this.connection.setAutoCommit(false); // Enable transaction management
+        this.connection.setAutoCommit(false);
     }
 
     // CREATE with transaction handling and SMS notification
     public void createDemande(Demande demande) throws SQLException {
         String sql = "INSERT INTO demande (offer_id, service, date_demande, cv_file_name, phone_number) VALUES (?, ?, ?, ?, ?)";
 
-        try (PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            pstmt.setInt(1, demande.getOffer_id());
-            pstmt.setString(2, demande.getService());
-            pstmt.setDate(3, Date.valueOf(demande.getDate_demande()));
-            pstmt.setString(4, demande.getCv_file_name());
-            pstmt.setString(5, demande.getPhone_number());
-
-            pstmt.executeUpdate();
-
-            try (ResultSet rs = pstmt.getGeneratedKeys()) {
-                if (rs.next()) {
-                    demande.setId(rs.getInt(1));
-                }
+        try {
+            if (connection == null || connection.isClosed()) {
+                connection = DatabaseConnection.getInstance();
+                connection.setAutoCommit(false);
             }
-            connection.commit();
 
-            // Get offer details for the SMS message
-            String offerName = getOfferName(demande.getOffer_id());
-            
-            // Send SMS confirmation with offer name
-            String smsMessage = String.format(
-                "Thank you for applying to '%s'! Your application has been received. Reference ID: %d",
-                offerName,
-                demande.getId()
-            );
-            TwilioService.sendSMS(demande.getPhone_number(), smsMessage);
+            try (PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+                pstmt.setInt(1, demande.getOffer_id());
+                pstmt.setString(2, demande.getService());
+                pstmt.setDate(3, Date.valueOf(demande.getDate_demande()));
+                pstmt.setString(4, demande.getCv_file_name());
+                pstmt.setString(5, demande.getPhone_number());
+
+                pstmt.executeUpdate();
+
+                try (ResultSet rs = pstmt.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        demande.setId(rs.getInt(1));
+                    }
+                }
+                connection.commit();
+
+                // Get offer details for the SMS message
+                String offerName = getOfferName(demande.getOffer_id());
+                
+                // Send SMS confirmation with offer name
+                String smsMessage = String.format(
+                    "Thank you for applying to '%s'! Your application has been received. Reference ID: %d",
+                    offerName,
+                    demande.getId()
+                );
+                TwilioService.sendSMS(demande.getPhone_number(), smsMessage);
+            }
         } catch (SQLException e) {
-            connection.rollback();
+            if (connection != null) {
+                connection.rollback();
+            }
             throw e;
         }
     }
@@ -233,8 +242,14 @@ public class DemandeService implements AutoCloseable {
 
     @Override
     public void close() throws SQLException {
-        if (connection != null && !connection.isClosed()) {
-            connection.close();
+        if (connection != null) {
+            try {
+                connection.commit(); // Commit any pending transactions
+                DatabaseConnection.releaseConnection(connection);
+            } catch (SQLException e) {
+                connection.rollback();
+                throw e;
+            }
         }
     }
     public List<Demande> getDemandesWithinPeriod(LocalDate startDate, LocalDate endDate) throws SQLException {

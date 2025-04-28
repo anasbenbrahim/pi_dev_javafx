@@ -8,35 +8,44 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OfferService implements AutoCloseable {
-    private final Connection connection;
+    private Connection connection;
 
     public OfferService() throws SQLException {
         this.connection = DatabaseConnection.getInstance();
-        this.connection.setAutoCommit(false); // Enable transaction management
+        this.connection.setAutoCommit(false);
     }
 
     // CREATE with transaction handling
     public boolean createOffer(Offer offer) throws SQLException {
         String sql = "INSERT INTO offer (nom, domain, date_offer, description, nb_places) VALUES (?, ?, ?, ?, ?)";
 
-        try (PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            pstmt.setString(1, offer.getNom());
-            pstmt.setString(2, offer.getDomain());
-            pstmt.setDate(3, Date.valueOf(offer.getDate_offer()));
-            pstmt.setString(4, offer.getDescription());
-            pstmt.setInt(5, offer.getNb_places());
-
-            int affectedRows = pstmt.executeUpdate();
-
-            try (ResultSet rs = pstmt.getGeneratedKeys()) {
-                if (rs.next()) {
-                    offer.setId(rs.getInt(1));
-                }
+        try {
+            if (connection == null || connection.isClosed()) {
+                connection = DatabaseConnection.getInstance();
+                connection.setAutoCommit(false);
             }
-            connection.commit();
-            return affectedRows > 0;
+
+            try (PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+                pstmt.setString(1, offer.getNom());
+                pstmt.setString(2, offer.getDomain());
+                pstmt.setDate(3, Date.valueOf(offer.getDate_offer()));
+                pstmt.setString(4, offer.getDescription());
+                pstmt.setInt(5, offer.getNb_places());
+
+                int affectedRows = pstmt.executeUpdate();
+
+                try (ResultSet rs = pstmt.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        offer.setId(rs.getInt(1));
+                    }
+                }
+                connection.commit();
+                return affectedRows > 0;
+            }
         } catch (SQLException e) {
-            connection.rollback();
+            if (connection != null) {
+                connection.rollback();
+            }
             throw e;
         }
     }
@@ -301,8 +310,14 @@ public class OfferService implements AutoCloseable {
 
     @Override
     public void close() throws SQLException {
-        if (connection != null && !connection.isClosed()) {
-            connection.close();
+        if (connection != null) {
+            try {
+                connection.commit(); // Commit any pending transactions
+                DatabaseConnection.releaseConnection(connection);
+            } catch (SQLException e) {
+                connection.rollback();
+                throw e;
+            }
         }
     }
 

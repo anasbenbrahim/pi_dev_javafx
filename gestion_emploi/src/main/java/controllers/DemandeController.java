@@ -33,10 +33,12 @@ public class DemandeController {
     @FXML private Button updateButton;
     @FXML private Button deleteButton;
     @FXML private Button viewPDFButton;
+    @FXML private TextField searchField;
 
     private DemandeService demandeService;
     private OfferService offerService;
     private final ObservableList<Demande> demandes = FXCollections.observableArrayList();
+    private final ObservableList<Demande> filteredDemandes = FXCollections.observableArrayList();
     private final ObservableList<Offer> offers = FXCollections.observableArrayList();
     private Demande selectedDemande;
 
@@ -47,8 +49,9 @@ public class DemandeController {
             offerService = new OfferService();
             setupTableColumns();
             loadOffers();
-            loadDemandes();  // Now with pagination
+            loadDemandes();
             setupTableSelection();
+            setupSearchListener();
             date_demandePicker.setValue(LocalDate.now());
 
             // Initialize buttons as disabled
@@ -78,10 +81,8 @@ public class DemandeController {
         }
     }
 
-
     private void loadDemandes() {
         try {
-            // Show first 100 records (adjust as needed)
             demandes.setAll(demandeService.getAllDemandes(100, 0));
             demandeTable.setItems(demandes);
         } catch (Exception e) {
@@ -354,5 +355,42 @@ public class DemandeController {
         if (offerService != null) {
             try { offerService.close(); } catch (Exception ignored) {}
         }
+    }
+
+    private void setupSearchListener() {
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filterDemandes(newValue);
+        });
+    }
+
+    private void filterDemandes(String searchText) {
+        if (searchText == null || searchText.isEmpty()) {
+            demandeTable.setItems(demandes);
+            return;
+        }
+
+        String lowerCaseSearch = searchText.toLowerCase();
+        filteredDemandes.clear();
+        
+        for (Demande demande : demandes) {
+            if (demande.getService() != null && demande.getService().toLowerCase().contains(lowerCaseSearch) ||
+                demande.getPhone_number() != null && demande.getPhone_number().toLowerCase().contains(lowerCaseSearch) ||
+                demande.getCv_file_name() != null && demande.getCv_file_name().toLowerCase().contains(lowerCaseSearch)) {
+                filteredDemandes.add(demande);
+            }
+        }
+        
+        demandeTable.setItems(filteredDemandes);
+    }
+
+    @FXML
+    private void handleSearch() {
+        filterDemandes(searchField.getText());
+    }
+
+    @FXML
+    private void handleClearSearch() {
+        searchField.clear();
+        demandeTable.setItems(demandes);
     }
 }
