@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="tn.esprit.pidev.Controller.ProduitFormController"
+            style="-fx-background-color: #f5f9f0;">
+
+    <!-- En-tête agricole -->
+    <top>
+        <HBox style="-fx-background-color: #4a8c24; -fx-padding: 15;" alignment="CENTER">
+            <ImageView fitHeight="40" fitWidth="40" preserveRatio="true">
+
+            </ImageView>
+            <Label text="Formulaire Produit Agricole"
+                   style="-fx-text-fill: white; -fx-font-size: 20; -fx-font-weight: bold;">
+                <padding>
+                    <Insets top="10" right="0" bottom="0" left="10"/>
+                </padding>
+            </Label>
+        </HBox>
+    </top>
+
+    <!-- Contenu central avec effet de terre cultivée -->
+    <center>
+        <GridPane hgap="15" vgap="15" alignment="CENTER"
+                  style="-fx-background-color: #f5f9f0;">
+            <padding>
+                <Insets top="20" right="30" bottom="20" left="30"/>
+            </padding>
+
+            <!-- Section gauche - Formulaire -->
+            <VBox spacing="15" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                <!-- Rangée 1 -->
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Nom:" style="-fx-font-weight: bold; -fx-text-fill: #3d5c1e;" minWidth="100"/>
+                    <TextField fx:id="nomField" style="-fx-background-radius: 5;" promptText="Ex: Blé dur"/>
+                </HBox>
+
+                <!-- Rangée 2 -->
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Image:" style="-fx-font-weight: bold; -fx-text-fill: #3d5c1e;" minWidth="100"/>
+                    <HBox spacing="5">
+                        <TextField fx:id="imageField" style="-fx-background-radius: 5 0 0 5;" promptText="URL image"/>
+                        <Button text="Parcourir" onAction="#handleUploadImage"
+                                style="-fx-background-color: #6b9e3a; -fx-text-fill: white; -fx-background-radius: 0 5 5 0;"/>
+                    </HBox>
+                </HBox>
+
+                <!-- Image Preview -->
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Aperçu:" style="-fx-font-weight: bold; -fx-text-fill: #3d5c1e;" minWidth="100"/>
+                    <ImageView fx:id="imagePreview" fitHeight="150" fitWidth="200" preserveRatio="true"/>
+                </HBox>
+
+                <!-- Rangée 3 -->
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Prix:" style="-fx-font-weight: bold; -fx-text-fill: #3d5c1e;" minWidth="100"/>
+                    <TextField fx:id="prixField" style="-fx-background-radius: 5;" promptText="Ex: 12.50"/>
+                </HBox>
+
+                <!-- Rangée 4 -->
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Quantité:" style="-fx-font-weight: bold; -fx-text-fill: #3d5c1e;" minWidth="100"/>
+                    <TextField fx:id="quantiteField" style="-fx-background-radius: 5;" promptText="Ex: 100kg"/>
+                </HBox>
+
+                <!-- Rangée 5 -->
+                <HBox spacing="10" alignment="TOP_LEFT">
+                    <Label text="Description:" style="-fx-font-weight: bold; -fx-text-fill: #3d5c1e;" minWidth="100"/>
+                    <TextArea fx:id="descrArea" style="-fx-background-radius: 5;" wrapText="true"
+                              promptText="Description du produit..." prefRowCount="3"/>
+                </HBox>
+            </VBox>
+
+            <!-- Section droite - Champs supplémentaires -->
+            <VBox spacing="15" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                <!-- Rangée 6 -->
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="ID Utilisateur:" style="-fx-font-weight: bold; -fx-text-fill: #3d5c1e;" minWidth="100"/>
+                    <TextField fx:id="userIdField" style="-fx-background-radius: 5;" promptText="ID"/>
+                </HBox>
+
+                <!-- Rangée 7 -->
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Catégorie:" style="-fx-font-weight: bold; -fx-text-fill: #3d5c1e;" minWidth="100"/>
+                    <ComboBox fx:id="categoryCombo" style="-fx-background-radius: 5; -fx-pref-width: 200;"
+                              promptText="Sélectionnez..."/>
+                </HBox>
+
+                <!-- Rangée 8 -->
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Statut:" style="-fx-font-weight: bold; -fx-text-fill: #3d5c1e;" minWidth="100"/>
+                    <ComboBox fx:id="statusCombo" style="-fx-background-radius: 5; -fx-pref-width: 200;"
+                              promptText="Sélectionnez..."/>
+                </HBox>
+
+                <!-- Boutons avec style agricole -->
+                <HBox spacing="20" alignment="CENTER" style="-fx-padding: 20 0 0 0;">
+                    <Button text="Enregistrer" onAction="#handleSave"
+                            style="-fx-background-color: #4a8c24; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 8 20;"/>
+                    <Button text="Annuler" onAction="#handleCancel"
+                            style="-fx-background-color: #a3a3a3; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 8 20;"/>
+                </HBox>
+            </VBox>
+        </GridPane>
+    </center>
+
+    <!-- Pied de page champêtre -->
+    <bottom>
+        <HBox alignment="CENTER" style="-fx-background-color: #e8f4d8; -fx-padding: 10;">
+            <Label text=" 2023 AgroGestion - Tous droits réservés"
+                   style="-fx-text-fill: #5a7c3b; -fx-font-style: italic;"/>
+        </HBox>
+    </bottom>
+</BorderPane>

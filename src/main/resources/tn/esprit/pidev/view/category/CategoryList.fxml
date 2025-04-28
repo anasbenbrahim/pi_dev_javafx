@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.effect.*?>
+
+<VBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="tn.esprit.pidev.Controller.CategoryController"
+      spacing="15" style="-fx-background-color: #f8faf5;">
+
+    <!-- En-tête agricole -->
+    <HBox style="-fx-background-color: linear-gradient(to right, #4a8c24, #6b9e3a); -fx-padding: 15;"
+          alignment="CENTER" spacing="10">
+        <ImageView fitHeight="40" fitWidth="40" preserveRatio="true">
+            
+        </ImageView>
+        <Label text="Gestion des Catégories Agricoles"
+               style="-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;"/>
+
+        <Region HBox.hgrow="ALWAYS"/>
+
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <TextField promptText="Rechercher catégorie..." style="-fx-background-radius: 20; -fx-prompt-text-fill: #a3c292;"/>
+            <Button text="Filtrer" style="-fx-background-color: #3d5c1e; -fx-text-fill: white; -fx-background-radius: 20;"/>
+        </HBox>
+    </HBox>
+
+    <!-- Barre d'outils -->
+    <HBox spacing="15" alignment="CENTER_LEFT" style="-fx-padding: 10; -fx-background-color: #e8f4d8;">
+        <Button text="Ajouter Catégorie" onAction="#handleAddCategory"
+                style="-fx-background-color: #4a8c24; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 8 15;">
+            <graphic>
+                <ImageView fitHeight="16" fitWidth="16">
+
+                </ImageView>
+            </graphic>
+        </Button>
+
+        <Button text="Modifier" onAction="#handleEditCategory"
+                style="-fx-background-color: #f0ad4e; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 8 15;">
+            <graphic>
+                <ImageView fitHeight="16" fitWidth="16">
+
+                </ImageView>
+            </graphic>
+        </Button>
+
+        <Button text="Supprimer" onAction="#handleDeleteCategory"
+                style="-fx-background-color: #d9534f; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 8 15;">
+            <graphic>
+                <ImageView fitHeight="16" fitWidth="16">
+
+                </ImageView>
+            </graphic>
+        </Button>
+
+        <Region HBox.hgrow="ALWAYS"/>
+
+        <Label text="Total Catégories: " style="-fx-font-weight: bold; -fx-text-fill: #3d5c1e;"/>
+        <Label text="12" style="-fx-font-weight: bold; -fx-text-fill: #4a8c24;"/>
+    </HBox>
+
+    <!-- Table des catégories -->
+    <TableView fx:id="categoryTable" VBox.vgrow="ALWAYS" style="-fx-background-color: white; -fx-background-radius: 5;">
+        <columns>
+            <TableColumn fx:id="idColumn" text="ID" prefWidth="75"/>
+            <TableColumn fx:id="nameColumn" text="Nom" prefWidth="200"/>
+            <TableColumn fx:id="typeColumn" text="Type" prefWidth="200"/>
+        </columns>
+        <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+        </columnResizePolicy>
+    </TableView>
+
+    <!-- Pied de page -->
+    <HBox alignment="CENTER" style="-fx-background-color: #e8f4d8; -fx-padding: 10;">
+        <Label text=" 2023 AgroStock - Système de Gestion Agricole"
+               style="-fx-text-fill: #5a7c3b; -fx-font-style: italic;"/>
+    </HBox>
+</VBox>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.collections.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="tn.esprit.pidev.Controller.CategoryFormController"
+            style="-fx-background-color: #f8faf5;">
+
+    <!-- En-tête agricole -->
+    <top>
+        <HBox style="-fx-background-color: linear-gradient(to right, #4a8c24, #6b9e3a); -fx-padding: 15;"
+              alignment="CENTER" spacing="10">
+            <ImageView fitHeight="40" fitWidth="40" preserveRatio="true">
+            </ImageView>
+            <Label text="Nouvelle Catégorie Agricole"
+                   style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;"/>
+        </HBox>
+    </top>
+
+    <!-- Contenu central -->
+    <center>
+        <GridPane hgap="20" vgap="20" alignment="CENTER"
+                  style="-fx-background-color: #f8faf5; -fx-padding: 30;">
+            <padding><Insets top="20" right="40" bottom="20" left="40"/></padding>
+
+            <!-- Champ Nom -->
+            <VBox spacing="5" GridPane.columnIndex="0" GridPane.rowIndex="0"
+                  style="-fx-padding: 0 0 10 0;">
+                <Label text="Nom de la catégorie:"
+                       style="-fx-font-weight: bold; -fx-text-fill: #3d5c1e;"/>
+                <TextField fx:id="nameField"
+                           style="-fx-background-radius: 5; -fx-border-color: #c1e1a6; -fx-border-radius: 5; -fx-pref-width: 300;"
+                           promptText="Ex: Céréales, Légumes..."/>
+            </VBox>
+
+            <!-- Champ Type -->
+            <VBox spacing="5" GridPane.columnIndex="0" GridPane.rowIndex="1"
+                  style="-fx-padding: 0 0 20 0;">
+                <Label text="Type de culture:"
+                       style="-fx-font-weight: bold; -fx-text-fill: #3d5c1e;"/>
+                <ComboBox fx:id="typeCombo"
+                          style="-fx-background-radius: 5; -fx-border-color: #c1e1a6; -fx-border-radius: 5; -fx-pref-width: 300;"
+                          promptText="Sélectionnez un type">
+                </ComboBox>
+            </VBox>
+
+            <!-- Boutons -->
+            <HBox spacing="20" alignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                <Button text="Enregistrer" onAction="#handleSave"
+                        style="-fx-background-color: #4a8c24; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10 25;">
+                    <graphic>
+                        <ImageView fitHeight="16" fitWidth="16">
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+                <Button text="Annuler" onAction="#handleCancel"
+                        style="-fx-background-color: #a3a3a3; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10 25;">
+                    <graphic>
+                        <ImageView fitHeight="16" fitWidth="16">
+                        </ImageView>
+                    </graphic>
+                </Button>
+            </HBox>
+        </GridPane>
+    </center>
+
+    <!-- Pied de page -->
+    <bottom>
+        <HBox alignment="CENTER" style="-fx-background-color: #e8f4d8; -fx-padding: 10;">
+            <Label text=" 2023 AgroGestion - Tous droits réservés"
+                   style="-fx-text-fill: #5a7c3b; -fx-font-style: italic;"/>
+        </HBox>
+    </bottom>
+</BorderPane>

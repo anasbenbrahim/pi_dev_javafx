@@ -1,0 +1,99 @@
+package tn.esprit.pidev.Service;
+
+import tn.esprit.pidev.Model.Produit;
+import tn.esprit.pidev.Database.Database;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class ProductService {
+
+    // Method to add a product
+    public void addProduit(Produit p) throws SQLException {
+        String query = "INSERT INTO produit (user_id, category_id, nomprod, image, prix, quantite, descr, status) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        // Don't close the connection here, let the caller do it
+        try (Connection conn = Database.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setInt(1, p.getUserId());
+            ps.setInt(2, p.getCategoryId());
+            ps.setString(3, p.getNomprod());
+            ps.setString(4, p.getImage());
+            ps.setDouble(5, p.getPrix());
+            ps.setInt(6, p.getQuantite());
+            ps.setString(7, p.getDescr());
+            ps.setInt(8, p.getStatus());
+
+            ps.executeUpdate();
+        }
+    }
+
+    // Method to get all products
+    public List<Produit> getAllProduits() throws SQLException {
+        List<Produit> produits = new ArrayList<>();
+        String query = "SELECT * FROM produit";
+
+        // Keep the connection open for multiple operations
+        try (Connection conn = Database.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Produit p = new Produit();
+                mapResultSetToProduit(rs, p);
+                produits.add(p);
+            }
+        }
+        return produits;
+    }
+
+    // Method to update a product
+    public void updateProduit(Produit p) throws SQLException {
+        String query = "UPDATE produit SET "
+                + "nomprod = ?, image = ?, prix = ?, quantite = ?, descr = ?, status = ? "
+                + "WHERE id = ?";
+
+        // Keep the connection open for multiple operations
+        try (Connection conn = Database.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setString(1, p.getNomprod());
+            ps.setString(2, p.getImage());
+            ps.setDouble(3, p.getPrix());
+            ps.setInt(4, p.getQuantite());
+            ps.setString(5, p.getDescr());
+            ps.setInt(6, p.getStatus());
+            ps.setInt(7, p.getId());
+
+            ps.executeUpdate();
+        }
+    }
+
+    // Method to delete a product
+    public void deleteProduit(int id) throws SQLException {
+        String query = "DELETE FROM produit WHERE id = ?";
+
+        // Keep the connection open for multiple operations
+        try (Connection conn = Database.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        }
+    }
+
+    // Helper method to map result set to product object
+    private void mapResultSetToProduit(ResultSet rs, Produit p) throws SQLException {
+        p.setId(rs.getInt("id"));
+        p.setUserId(rs.getInt("user_id"));
+        p.setCategoryId(rs.getInt("category_id"));
+        p.setNomprod(rs.getString("nomprod"));
+        p.setImage(rs.getString("image"));
+        p.setPrix(rs.getDouble("prix"));
+        p.setQuantite(rs.getInt("quantite"));
+        p.setDescr(rs.getString("descr"));
+        p.setStatus(rs.getInt("status"));
+    }
+}
