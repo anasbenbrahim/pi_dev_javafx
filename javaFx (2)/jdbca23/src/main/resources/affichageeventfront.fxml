@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.chart.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="esprit.tn.controllers.AfficherEventfrontController"
+            prefHeight="600.0" prefWidth="1000.0"
+            style="-fx-background-color: linear-gradient(to bottom right, #2c3e50, #3498db);">
+
+    <HBox spacing="20" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" 
+          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        
+        <!-- Section gauche : Liste des événements -->
+        <VBox spacing="20" HBox.hgrow="ALWAYS" style="-fx-padding: 20;">
+            <HBox alignment="CENTER" style="-fx-background-color: white; -fx-padding: 20;">
+                <effect>
+                    <DropShadow color="rgba(0,0,0,0.1)" radius="10" spread="0.1"/>
+                </effect>
+                <Text text="Découvrez nos Événements"
+                      style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-fill: #2c3e50;"/>
+            </HBox>
+
+            <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" 
+                      style="-fx-background: transparent; -fx-background-color: transparent;">
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
+                <FlowPane fx:id="cardsContainer" hgap="20" vgap="20"
+                          style="-fx-background-color: transparent;">
+                    <padding>
+                        <Insets top="10" right="10" bottom="10" left="10"/>
+                    </padding>
+                </FlowPane>
+            </ScrollPane>
+
+            <Button text="Retour au Menu" onAction="#retourMenu"
+                    style="-fx-background-color: #34495e; -fx-text-fill: white; -fx-padding: 10 20; -fx-background-radius: 5;">
+                <font>
+                    <Font size="14"/>
+                </font>
+                <cursor>
+                    <Cursor fx:constant="HAND"/>
+                </cursor>
+            </Button>
+            
+            <Button fx:id="btnRecommender" text="Voir la recommandation" onAction="#showReservationRecommendation" style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-padding: 10 20; -fx-background-radius: 5;"/>
+            
+            <Label fx:id="labelMostRecommended" text="" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2ecc71;" />
+            
+            <Label fx:id="labelPrediction" text="" style="-fx-font-size: 14px; -fx-text-fill: #2980b9;" />
+            
+            <!-- SUPPRESSION LineChart prédiction des réservations -->
+            
+            <Button text="Réserver" onAction="#ajouterReservation"
+                    style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 20; -fx-background-radius: 5;">
+                <cursor>
+                    <Cursor fx:constant="HAND"/>
+                </cursor>
+            </Button>
+        </VBox>
+
+        <!-- Section droite : Formulaire de réservation -->
+        <VBox fx:id="formContainer" spacing="20" minWidth="300" maxWidth="400"
+              style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10;">
+            <effect>
+                <DropShadow color="rgba(0,0,0,0.1)" radius="10" spread="0.1"/>
+            </effect>
+            
+            <Label text="Réservation" style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+            
+            <Label fx:id="selectedEventLabel" style="-fx-font-size: 16; -fx-text-fill: #34495e;"/>
+            
+            <VBox spacing="10">
+                <Label text="Nom" style="-fx-text-fill: #7f8c8d;"/>
+                <TextField fx:id="nomField" promptText="Entrez votre nom"
+                          style="-fx-background-radius: 5;"/>
+            </VBox>
+            
+            <VBox spacing="10">
+                <Label text="Prénom" style="-fx-text-fill: #7f8c8d;"/>
+                <TextField fx:id="prenomField" promptText="Entrez votre prénom"
+                          style="-fx-background-radius: 5;"/>
+            </VBox>
+            
+            <VBox spacing="10">
+                <Label text="Date" style="-fx-text-fill: #7f8c8d;"/>
+                <DatePicker fx:id="dateField" promptText="Sélectionnez une date"
+                           style="-fx-background-radius: 5;"/>
+            </VBox>
+
+            <!-- QR Code affiché après réservation -->
+            <ImageView fx:id="qrImageView" fitWidth="200" fitHeight="200" visible="false"
+                       style="-fx-alignment: center;"/>
+            
+            <HBox spacing="10" alignment="CENTER">
+                <Button text="Réserver" onAction="#ajouterReservation"
+                        style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 20; -fx-background-radius: 5;">
+                    <cursor>
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
+                </Button>
+                <Button text="Annuler" onAction="#annulerReservation"
+                        style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 20; -fx-background-radius: 5;">
+                    <cursor>
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
+                </Button>
+            </HBox>
+        </VBox>
+    </HBox>
+</AnchorPane>

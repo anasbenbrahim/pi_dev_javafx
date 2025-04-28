@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="500.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="esprit.tn.controllers.ModifierEventController"
+            style="-fx-background-color: #f4f4f4;">
+
+    <VBox spacing="10" layoutX="50" layoutY="20" prefWidth="500">
+        <Text text="Modifier un Événement"
+              style="-fx-fill: #2a5058; -fx-font-weight: bold; -fx-font-size: 18px;"/>
+
+        <GridPane hgap="10" vgap="10">
+            <columnConstraints>
+                <ColumnConstraints prefWidth="100" halignment="RIGHT"/>
+                <ColumnConstraints prefWidth="300"/>
+            </columnConstraints>
+
+            <!-- Nom Field -->
+            <Label text="Nom:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <TextField fx:id="nomField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+            <!-- Description Field -->
+            <Label text="Description:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <TextArea fx:id="descrField" GridPane.rowIndex="1" GridPane.columnIndex="1"
+                      prefRowCount="3" wrapText="true"/>
+
+            <!-- Date Field -->
+            <Label text="Date:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <DatePicker fx:id="dateField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+            <!-- Type Field -->
+            <Label text="Type:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <TextField fx:id="typeField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+            <!-- Photo Field -->
+            <Label text="Photo (URL):" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+            <TextField fx:id="photoField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+        </GridPane>
+
+        <!-- Error Label -->
+        <Label fx:id="errorLabel" style="-fx-text-fill: red; -fx-font-weight: bold;"/>
+
+        <!-- Button -->
+        <Button text="Modifier" onAction="#modifierEvent"
+                style="-fx-background-color: #FFA500; -fx-text-fill: white; -fx-font-weight: bold;"/>
+    </VBox>
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+</AnchorPane>

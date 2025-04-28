@@ -1,0 +1,118 @@
+package esprit.tn.entities;
+
+import java.sql.Date;
+import java.util.Objects;
+
+public class Reservation {
+    private int id;
+    private String nom;
+    private String prenom;
+    private Date date;
+    private int eventId;
+    private String event;  // Changed from CharSequence to String for simplicity
+
+    public Reservation() {
+    }
+
+    public Reservation(int id, String nom, String prenom, Date date, int eventId) {
+        this.id = id;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.date = date;
+        this.eventId = eventId;
+    }
+
+    public Reservation(int eventId) {
+        this.eventId = eventId;
+    }
+
+    public Reservation(String nom, String prenom, Date date, int eventId) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.date = date;
+        this.eventId = eventId;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public int getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(int eventId) {
+        this.eventId = eventId;
+    }
+
+    public String getEvent() {
+        return event != null ? event : "";
+    }
+
+    public void setEvent(String event) {
+        this.event = event;
+    }
+
+    // This overload allows setting event with an int
+    public void setEvent(int eventId) {
+        this.eventId = eventId;
+        this.event = String.valueOf(eventId);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Reservation that = (Reservation) o;
+        return id == that.id &&
+                eventId == that.eventId &&
+                Objects.equals(nom, that.nom) &&
+                Objects.equals(prenom, that.prenom) &&
+                Objects.equals(date, that.date);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nom, prenom, date, eventId);
+    }
+
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", prenom='" + prenom + '\'' +
+                ", date=" + date +
+                ", eventId=" + eventId +
+                ", event='" + event + '\'' +
+                '}';
+    }
+}

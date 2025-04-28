@@ -1,0 +1,33 @@
+/* Calendar styling */
+.calendar-cell {
+    -fx-background-color: white;
+    -fx-border-color: #dddddd;
+    -fx-border-radius: 4px;
+    -fx-padding: 5px;
+    -fx-min-width: 95px;
+    -fx-min-height: 70px;
+    -fx-pref-width: 95px;
+}
+
+.calendar-cell-empty {
+    -fx-min-width: 95px;
+    -fx-min-height: 70px;
+    -fx-pref-width: 95px;
+}
+
+.calendar-header {
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-min-width: 95px;
+    -fx-pref-width: 95px;
+    -fx-padding: 8px 0px;
+    -fx-text-fill: #555555;
+}
+
+.calendar-reservation {
+    -fx-background-color: #e6f7ff;
+    -fx-padding: 2px 4px;
+    -fx-background-radius: 3px;
+    -fx-font-size: 10px;
+    -fx-text-fill: #0066cc;
+}

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.collections.*?>
+<?import javafx.scene.image.ImageView?>
+
+<AnchorPane prefHeight="550.0" prefWidth="700.0"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="esprit.tn.controllers.AjouterEventController"
+            style="-fx-background-color: linear-gradient(to bottom right, #f5f7fa, #e4e8f0);">
+
+   <!-- Main Container -->
+   <VBox alignment="TOP_CENTER" spacing="20" layoutX="50" layoutY="40" prefWidth="600">
+      <!-- Header with subtle shadow -->
+      <Text text="Ajouter un Événement"
+            style="-fx-fill: #2c3e50; -fx-font-weight: bold; -fx-font-size: 28px;">
+         <effect>
+            <DropShadow color="rgba(0,0,0,0.1)" radius="5" spread="0.3"/>
+         </effect>
+      </Text>
+
+      <!-- Form Card with shadow -->
+      <GridPane hgap="15" vgap="20"
+                style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 30; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);">
+         <columnConstraints>
+            <ColumnConstraints prefWidth="120" halignment="RIGHT"/>
+            <ColumnConstraints prefWidth="350"/>
+         </columnConstraints>
+
+         <!-- Form Fields -->
+         <!-- Nom Field -->
+         <Label text="Nom:" style="-fx-text-fill: #34495e; -fx-font-size: 14px; -fx-font-weight: bold;" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+         <TextField fx:id="nomField" style="-fx-background-radius: 5; -fx-border-color: #bdc3c7; -fx-border-radius: 5; -fx-padding: 8; -fx-font-size: 14px;" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+         <!-- Description Field -->
+         <Label text="Description:" style="-fx-text-fill: #34495e; -fx-font-size: 14px; -fx-font-weight: bold;" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+         <TextArea fx:id="descrField" style="-fx-background-radius: 5; -fx-border-color: #bdc3c7; -fx-border-radius: 5; -fx-padding: 8; -fx-font-size: 14px;" GridPane.rowIndex="1" GridPane.columnIndex="1" prefRowCount="3" wrapText="true"/>
+
+         <!-- Date Field -->
+         <Label text="Date:" style="-fx-text-fill: #34495e; -fx-font-size: 14px; -fx-font-weight: bold;" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+         <DatePicker fx:id="dateField" style="-fx-background-radius: 5; -fx-border-color: #bdc3c7; -fx-border-radius: 5; -fx-padding: 8; -fx-font-size: 14px;" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+         <!-- Type Field -->
+         <Label text="Type:" style="-fx-text-fill: #34495e; -fx-font-size: 14px; -fx-font-weight: bold;" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+         <ComboBox fx:id="typeField" promptText="Choisir le type..." GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+         <!-- Photo Field - Modifié pour le téléchargement de fichier -->
+         <Label text="Photo:" style="-fx-text-fill: #34495e; -fx-font-size: 14px; -fx-font-weight: bold;" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+         <HBox spacing="10" GridPane.rowIndex="4" GridPane.columnIndex="1">
+            <Button text="Choisir une image" onAction="#choisirImage"
+                    style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-background-radius: 5; -fx-padding: 8 15;">
+               <cursor>
+                  <Cursor fx:constant="HAND"/>
+               </cursor>
+            </Button>
+            <Label fx:id="nomFichierLabel" text="Aucun fichier sélectionné"
+                   style="-fx-text-fill: #7f8c8d; -fx-font-size: 13px;"/>
+         </HBox>
+
+         <!-- Aperçu de l'image (optionnel) -->
+         <Label text="Aperçu:" style="-fx-text-fill: #34495e; -fx-font-size: 14px; -fx-font-weight: bold;" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+         <ImageView fx:id="imagePreview" fitWidth="150" fitHeight="150" preserveRatio="true"
+                    style="-fx-border-color: #bdc3c7; -fx-border-radius: 5;"
+                    GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+      </GridPane>
+
+      <!-- Error Message -->
+      <Label fx:id="errorLabel" style="-fx-text-fill: #e74c3c; -fx-font-weight: bold; -fx-font-size: 14px;" alignment="CENTER"/>
+
+      <!-- Action Buttons -->
+      <HBox alignment="CENTER" spacing="30">
+         <Button text="Ajouter" onAction="#ajouterEvent"
+                 style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-background-radius: 5; -fx-padding: 10 30; -fx-effect: dropshadow(three-pass-box, rgba(46,204,113,0.3), 5, 0, 0, 1);">
+            <cursor>
+               <Cursor fx:constant="HAND"/>
+            </cursor>
+         </Button>
+         <Button text="Afficher Liste" onAction="#afficherListe"
+                 style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-background-radius: 5; -fx-padding: 10 30; -fx-effect: dropshadow(three-pass-box, rgba(52,152,219,0.3), 5, 0, 0, 1);">
+            <cursor>
+               <Cursor fx:constant="HAND"/>
+            </cursor>
+         </Button>
+      </HBox>
+   </VBox>
+
+   <padding>
+      <Insets top="40" right="50" bottom="40" left="50"/>
+   </padding>
+</AnchorPane>

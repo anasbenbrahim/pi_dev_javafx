@@ -1,0 +1,20 @@
+# Pour générer un PDF et un QR code en JavaFX, ajoute ces dépendances dans ton build.gradle ou pom.xml :
+# - ZXing (core et javase) pour le QR code
+# - Apache PDFBox pour le PDF
+#
+# Exemple Maven :
+# <dependency>
+#   <groupId>com.google.zxing</groupId>
+#   <artifactId>core</artifactId>
+#   <version>3.4.1</version>
+# </dependency>
+# <dependency>
+#   <groupId>com.google.zxing</groupId>
+#   <artifactId>javase</artifactId>
+#   <version>3.4.1</version>
+# </dependency>
+# <dependency>
+#   <groupId>org.apache.pdfbox</groupId>
+#   <artifactId>pdfbox</artifactId>
+#   <version>2.0.29</version>
+# </dependency>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.Cursor?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="esprit.tn.controllers.AjouterReservationController"
+            prefHeight="400.0" prefWidth="600.0"
+            style="-fx-background-color: linear-gradient(to bottom right, #2c3e50, #3498db);">
+
+    <VBox spacing="20" alignment="CENTER" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
+          AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+
+        <padding>
+            <Insets top="20" right="40" bottom="20" left="40"/>
+        </padding>
+
+        <Label text="Nouvelle Réservation" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="24"/>
+            </font>
+        </Label>
+
+        <Label fx:id="eventLabel" textFill="WHITE">
+            <font>
+                <Font name="System" size="16"/>
+            </font>
+        </Label>
+
+        <VBox spacing="10" style="-fx-background-color: white; -fx-background-radius: 10;" maxWidth="400">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+
+            <TextField fx:id="nomField" promptText="Nom">
+                <font>
+                    <Font size="14"/>
+                </font>
+            </TextField>
+
+            <TextField fx:id="prenomField" promptText="Prénom">
+                <font>
+                    <Font size="14"/>
+                </font>
+            </TextField>
+
+            <DatePicker fx:id="dateField" promptText="Date de réservation">
+                <VBox.margin>
+                    <Insets top="5" bottom="5"/>
+                </VBox.margin>
+            </DatePicker>
+
+            <HBox spacing="10" alignment="CENTER">
+                <Button text="Réserver" onAction="#ajouterReservation"
+                        style="-fx-background-color: #2ecc71; -fx-text-fill: white;">
+                    <font>
+                        <Font size="14"/>
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
+                </Button>
+
+                <Button text="Annuler" onAction="#annuler"
+                        style="-fx-background-color: #e74c3c; -fx-text-fill: white;">
+                    <font>
+                        <Font size="14"/>
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
+                </Button>
+            </HBox>
+        </VBox>
+    </VBox>
+</AnchorPane>

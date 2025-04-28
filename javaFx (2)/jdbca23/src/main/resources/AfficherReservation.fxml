@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.Cursor?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="esprit.tn.controllers.AfficherReservationController"
+            prefHeight="600.0" prefWidth="800.0"
+            style="-fx-background-color: linear-gradient(to bottom right, #2c3e50, #3498db);">
+
+    <VBox spacing="20" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
+          AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+
+        <padding>
+            <Insets top="20" right="20" bottom="20" left="20"/>
+        </padding>
+
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <Label text="Liste des Réservations" textFill="WHITE">
+                <font>
+                    <Font name="System Bold" size="24"/>
+                </font>
+            </Label>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <Button text="Nouvelle Réservation" onAction="#ajouterReservation"
+                    style="-fx-background-color: #2ecc71; -fx-text-fill: white;">
+                <font>
+                    <Font size="14"/>
+                </font>
+                <cursor>
+                    <Cursor fx:constant="HAND"/>
+                </cursor>
+            </Button>
+
+            <Button text="Retour" onAction="#retourMenu"
+                    style="-fx-background-color: #34495e; -fx-text-fill: white;">
+                <font>
+                    <Font size="14"/>
+                </font>
+                <cursor>
+                    <Cursor fx:constant="HAND"/>
+                </cursor>
+            </Button>
+        </HBox>
+
+        <TableView fx:id="reservationTable" VBox.vgrow="ALWAYS" style="-fx-background-radius: 10;">
+            <columns>
+
+                <TableColumn fx:id="nomColumn" text="Nom" prefWidth="150"/>
+                <TableColumn fx:id="prenomColumn" text="Prénom" prefWidth="150"/>
+                <TableColumn fx:id="dateColumn" text="Date" prefWidth="150"/>
+                <TableColumn fx:id="actionsColumn" text="Actions" prefWidth="200"/>
+            </columns>
+        </TableView>
+    </VBox>
+</AnchorPane>

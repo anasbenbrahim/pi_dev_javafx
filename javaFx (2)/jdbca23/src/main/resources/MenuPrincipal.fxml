@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="esprit.tn.controllers.MenuPrincipalController"
+            style="-fx-background-color: #f5f7fa;">
+
+    <VBox spacing="20" alignment="CENTER" AnchorPane.topAnchor="20" AnchorPane.rightAnchor="20"
+          AnchorPane.bottomAnchor="20" AnchorPane.leftAnchor="20">
+
+        <Text text="Menu Principal"
+              style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-fill: #2c3e50;"/>
+
+        <Button text="Ajouter un événement"
+                onAction="#navigateToAjouterEvent"
+                style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold;"/>
+
+        <Button text="Afficher les événements"
+                onAction="#navigateToAfficherEvent"
+                style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-weight: bold;"/>
+    </VBox>
+</AnchorPane>
