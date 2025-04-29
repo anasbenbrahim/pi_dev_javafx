@@ -7,8 +7,8 @@ import com.twilio.type.PhoneNumber;
 
 public class TwilioService {
     // Remplacez par vos identifiants Twilio
-    public static final String ACCOUNT_SID = "ACb100a3fccaa0ebb9efdd20d824812460";
-    public static final String AUTH_TOKEN = "c4dc490a2e2957a9e735f397c0f16f52";
+    public static final String ACCOUNT_SID = System.getenv("TWILIO_ACCOUNT_SID");
+    public static final String AUTH_TOKEN = System.getenv("TWILIO_AUTH_TOKEN");
     public static final String TWILIO_PHONE_NUMBER = "+15096001049"; // Votre numéro Twilio
 
     static {
