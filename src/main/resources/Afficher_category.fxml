@@ -42,7 +42,7 @@
                 </padding>
                 <Button fx:id="btn_dashboard" onAction="#nav_dashboard" styleClass="menu-button" text="Dashboard" />
                 <Button fx:id="btn_equipement" onAction="#nav_equipement" styleClass="menu-button" text="Équipements" />
-                <Button styleClass="menu-button primary" text="Catégories" />
+                <Button styleClass="menu-button " text="Catégories" />
                 <Button styleClass="menu-button" text="Paramètres" />
             </VBox>
         </VBox>
@@ -78,7 +78,7 @@
 
                 <!-- Action Buttons -->
                 <HBox spacing="15">
-                    <Button fx:id="bouton_ajouter" onAction="#btn_ajouter" styleClass="action-button" text="Ajouter" />
+                    <Button fx:id="bouton_ajouter" onAction="#btn_ajouter" styleClass="secondary-button" text="Ajouter" />
                     <Button fx:id="bouton_modifier" onAction="#btn_modifier" styleClass="secondary-button" text="Modifier" />
                     <Button fx:id="bouton_supprimer" onAction="#btn_supprimer" styleClass="secondary-button" text="Supprimer" />
                 </HBox>

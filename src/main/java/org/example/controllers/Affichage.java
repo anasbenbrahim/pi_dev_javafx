@@ -167,4 +167,17 @@ public class Affichage {
         stage.setScene(scene);
         stage.show();
     }
+
+    public void nav_front(ActionEvent event) throws IOException {
+        loadScene(event,"/front.fxml");
+    }
+
+    public void nav_stat(ActionEvent event) throws IOException {
+        loadScene(event,"/statestiques.fxml");
+    }
+
+    public void nav_devis(ActionEvent event)throws IOException {
+        loadScene(event,"/afficher_demande_devis.fxml");
+
+    }
 }

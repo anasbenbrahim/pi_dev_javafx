@@ -6,14 +6,14 @@ public class ReponseDevis {
     private int fournisseur_id;
     private int fermier_id;
     private String reponse;
-    private boolean etat;
+    private int etat;
     private Double prix;
 
     public ReponseDevis() {
         super();
     }
 
-    public ReponseDevis(int devis, int fournisseur_id, int fermier_id, String reponse, boolean etat,double prix) {
+    public ReponseDevis(int devis, int fournisseur_id, int fermier_id, String reponse, int etat,double prix) {
         this.devis_id = devis;
         this.fournisseur_id = fournisseur_id;
         this.fermier_id = fermier_id;
@@ -63,12 +63,12 @@ public class ReponseDevis {
         this.reponse = reponse;
     }
 
-    public boolean getEtat() {
+    public int getEtat() {
 
         return etat;
     }
 
-    public void setEtat(boolean etat) {
+    public void setEtat(int etat) {
 
         this.etat = etat;
     }

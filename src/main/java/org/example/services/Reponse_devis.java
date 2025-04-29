@@ -17,18 +17,14 @@ public class Reponse_devis implements Service<ReponseDevis>{
     @Override
     public void ajouter(ReponseDevis reponse) {
         String req="insert into reponse_devis (devis_id,fournisseur_id,fermier_id,reponse,etat,prix) values (?,?,?,?,?,?)";
-        int etat;
-        if(reponse.getEtat()==true)
-            etat=1;
-        else
-            etat=0;
+
         try{
             PreparedStatement ps = connection.prepareStatement(req);
             ps.setInt(1,reponse.getDevis());
             ps.setInt(2,2);
             ps.setInt(3,1);
             ps.setString(4,reponse.getReponse());
-            ps.setInt(5,etat);
+            ps.setInt(5,reponse.getEtat());
             ps.setDouble(6,reponse.getPrix());
             ps.executeUpdate();
         }catch (SQLException e){
@@ -52,16 +48,12 @@ public class Reponse_devis implements Service<ReponseDevis>{
 
     @Override
     public void modifier(ReponseDevis reponseDevis) {
-        int etat;
-        if(reponseDevis.getEtat()==true)
-            etat=1;
-        else
-            etat=0;
+
         String req="update reponse_devis set reponse=?, etat=? ,prix=?  where id=?";
         try{
             PreparedStatement ps = connection.prepareStatement(req);
             ps.setString(1,reponseDevis.getReponse());
-            ps.setInt(2,etat);
+            ps.setInt(2,reponseDevis.getEtat());
             ps.setDouble(3,reponseDevis.getPrix());
             ps.setInt(4,reponseDevis.getId());
             ps.executeUpdate();
@@ -84,11 +76,7 @@ public class Reponse_devis implements Service<ReponseDevis>{
                 reponse.setPrix(rs.getDouble("prix"));
                 reponse.setFermier_id(1);
                 reponse.setFournisseur_id(2);
-                int etat=rs.getInt("etat");
-                if(etat==1)
-                    reponse.setEtat(true);
-                else
-                    reponse.setEtat(false);
+                reponse.setEtat(rs.getInt("etat"));
                 list.add(reponse);
             }
             return list;

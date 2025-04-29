@@ -9,7 +9,7 @@
 <?import java.lang.String?>
 <VBox xmlns="http://javafx.com/javafx/22.0.1"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="org.example.controllers.ReponseDevis"
+      fx:controller="org.example.controllers.Reponse_devis_service"
       stylesheets="@style.css"
       spacing="25"
       styleClass="form-container"

@@ -281,6 +281,46 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 2, 2);
 }
 
+/* Chat specific styles */
+.text-area {
+    -fx-font-size: 14px;
+    -fx-font-family: 'Segoe UI', Arial, sans-serif;
+    -fx-background-insets: 5;
+    -fx-padding: 10;
+}
+
+.text-area .content {
+    -fx-background-color: white;
+    -fx-background-radius: 5;
+}
+
+/* Message input container */
+.message-input-container {
+    -fx-padding: 15 0 0 0;
+}
+
+/* Active nav button highlight */
+.nav-button.active {
+    -fx-background-color: rgba(255,255,255,0.15);
+    -fx-border-width: 0 0 0 3;
+    -fx-border-color: white;
+    -fx-border-radius: 0;
+    -fx-background-radius: 0 6 6 0;
+    -fx-padding: 12 20 12 17; /* Adjust for border */
+}
+
+/* Responsive adjustments */
+@media (max-width: 800px) {
+    .sidebar {
+        -fx-pref-width: 180;
+        -fx-min-width: 180;
+    }
+
+    .app-title {
+        -fx-font-size: 16px;
+    }
+}
+
 /* ========== RESPONSIVE ADJUSTMENTS ========== */
 @media (max-width: 1024px) {
     .product-card {

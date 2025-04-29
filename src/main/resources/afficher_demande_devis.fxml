@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox stylesheets="@style.css" xmlns="http://javafx.com/javafx/22.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.AfficherDemandeDevis">
+<VBox stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.AfficherDemandeDevis">
     <stylesheets>
         <URL value="@style.css" />
     </stylesheets>
@@ -47,10 +47,10 @@
                 <padding>
                     <Insets top="30" />
                 </padding>
-                <Button onAction="#navDashboard" styleClass="menu-button" text="Tableau de bord" />
-                <Button onAction="#navDevisList" styleClass="menu-button primary" text="Liste des devis" />
-                <Button onAction="#navClients" styleClass="menu-button" text="Clients" />
-                <Button onAction="#navEquipements" styleClass="menu-button" text="Équipements" />
+                <Button fx:id="stats" onAction="#nav_stats" styleClass="menu-button" text="Tableau de bord" />
+                <Button onAction="#navDevisList" styleClass="menu-button " text="Liste des devis" />
+                <Button fx:id="btn_front" onAction="#navClients" styleClass="menu-button" text="Clients" />
+                <Button fx:id="btn_equipement" onAction="#navEquipements" styleClass="menu-button" text="Équipements" />
             </VBox>
         </VBox>
 

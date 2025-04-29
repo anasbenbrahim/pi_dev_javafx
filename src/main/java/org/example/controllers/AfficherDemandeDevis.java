@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.example.models.Devis;
@@ -42,16 +43,52 @@ public class AfficherDemandeDevis {
     private Scene scene;
 
     @FXML
-    void initialize () {
+    void initialize() {
         try {
-            // Set up cell value factories
+            // Configuration des colonnes
             idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
             clientColumn.setCellValueFactory(new PropertyValueFactory<>("fermier_id"));
             propositionColumn.setCellValueFactory(new PropertyValueFactory<>("proposition"));
             quantiteColumn.setCellValueFactory(new PropertyValueFactory<>("quantite"));
+
+            // Configuration du clic sur une ligne
+            setupTableRowClickHandler();
+
+            // Rafraîchissement des données
             refreshTable();
         } catch (Exception e) {
             showAlert("Erreur", e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
+
+    private void setupTableRowClickHandler() {
+        devisTable.setRowFactory(tv -> {
+            TableRow<Devis> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 1 && !row.isEmpty()) {
+                    Devis selectedDevis = row.getItem();
+                    openReponseDevisWindow(selectedDevis);
+                }
+            });
+            return row;
+        });
+    }
+
+    private void openReponseDevisWindow(Devis devis) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/reponse_devis.fxml"));
+            Parent root = loader.load();
+
+            Reponse_devis_service controller = loader.getController();
+            controller.initData(devis);
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Réponse au Devis #" + devis.getId());
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Erreur", "Impossible d'ouvrir la fenêtre de réponse", Alert.AlertType.ERROR);
         }
     }
 
@@ -62,8 +99,19 @@ public class AfficherDemandeDevis {
             ObservableList<Devis> observableList = FXCollections.observableList(list);
             devisTable.setItems(observableList);
         } catch (Exception e) {
-            showAlert("Data Loading Error", e.getMessage(), Alert.AlertType.ERROR);
+            showAlert("Erreur de chargement", e.getMessage(), Alert.AlertType.ERROR);
         }
+    }
+
+    @FXML
+    private void handleRepondreDevis(ActionEvent event) {
+        Devis devisSelectionne = devisTable.getSelectionModel().getSelectedItem();
+
+        if (devisSelectionne == null) {
+            showAlert("Aucun devis sélectionné", "Veuillez sélectionner un devis à répondre", Alert.AlertType.WARNING);
+            return;
+        }
+        openReponseDevisWindow(devisSelectionne);
     }
 
     private void showAlert(String title, String message, Alert.AlertType alertType) {
@@ -83,78 +131,56 @@ public class AfficherDemandeDevis {
 
     @FXML
     public void initData(Devis devis) {
-        this.devis=devis;
-    }
-
-    @FXML
-    private void handleRepondreDevis(ActionEvent event) {
-        Devis devisSelectionne = devisTable.getSelectionModel().getSelectedItem();
-
-        if (devisSelectionne == null) {
-            showAlert("Aucun devis sélectionné", "Veuillez sélectionner un devis à répondre", Alert.AlertType.WARNING);
-            return;
-        }
-
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ReponseDevis.fxml"));
-            Parent root = loader.load();
-
-            // Passer le devis sélectionné au contrôleur
-            ReponseDevis controller = loader.getController();
-            controller.initData(devisSelectionne);
-
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Réponse au Devis #" + devisSelectionne.getId());
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            showAlert("Erreur", "Impossible d'ouvrir la fenêtre de réponse", Alert.AlertType.ERROR);
-        }
+        this.devis = devis;
     }
 
     @FXML
     public void navDashboard(ActionEvent event) throws IOException {
-        loadScene(event,"/Afficher.fxml");
+        loadScene(event, "/Afficher.fxml");
     }
 
     @FXML
     public void navDevisList(ActionEvent event) throws IOException {
-        loadScene(event,"/afficher_demande_devis.fxml");
-
+        //loadScene(event, "/afficher_demande_devis.fxml");
     }
 
     @FXML
     public void navClients(ActionEvent event) throws IOException {
-        loadScene(event,"/front.fxml");
-
+        loadScene(event, "/front.fxml");
     }
 
     @FXML
     public void navEquipements(ActionEvent event) {
-        // Navigation implementation
+        // Implémentation de navigation
     }
 
     public void btn_filtre(ActionEvent event) {
+        // Implémentation du filtre
     }
 
     public void recherche(KeyEvent keyEvent) {
+        // Implémentation de la recherche
     }
 
+    @FXML
     public void btn_xl(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Save Excel File");
+        fileChooser.setTitle("Enregistrer le fichier Excel");
         fileChooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter("Excel Files", "*.xlsx"));
+                new FileChooser.ExtensionFilter("Fichiers Excel", "*.xlsx"));
         File file = fileChooser.showSaveDialog(devisTable.getScene().getWindow());
 
         if (file != null) {
             ExportExcel.ExcelExporter.exportToExcel(devisTable, file.getAbsolutePath());
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Export Successful");
+            alert.setTitle("Export réussi");
             alert.setHeaderText(null);
-            alert.setContentText("Data exported to Excel successfully!");
+            alert.setContentText("Données exportées vers Excel avec succès !");
             alert.showAndWait();
         }
+    }
+
+    public void nav_stats(ActionEvent event) throws IOException {
+        loadScene(event,"/statestiques.fxml");
     }
 }

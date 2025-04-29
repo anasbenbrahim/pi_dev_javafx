@@ -15,6 +15,7 @@ import org.example.models.Equipements;
 import org.example.models.Devis;
 
 import org.example.services.Service_devis;
+import org.example.services.Service_equipement;
 
 import java.io.IOException;
 
@@ -28,6 +29,9 @@ public class AjoutDevis {
     private Button ajout_devis;
 
     @FXML
+    private Button stats;
+
+    @FXML
     private TextField champs_quantite;
 
     @FXML
@@ -39,6 +43,13 @@ public class AjoutDevis {
         this.equipement=equip;
     }
 
+    private void loadScene(ActionEvent event, String fxmlPath) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
 
     public void ajout_devis(ActionEvent event) throws IOException {
         Service_devis service_devis=new Service_devis();
@@ -54,8 +65,17 @@ public class AjoutDevis {
         root= FXMLLoader.load(getClass().getResource("/ajout_devis.fxml"));
 
         //AjoutDevis controller=root.getController();
-
+        int quantite_test=Integer.parseInt(champs_quantite.getText());
         devis.setEquipement_id(equipement.getId());
+        if(quantite_test>equipement.getQuantite()){
+            Alert al=new Alert(Alert.AlertType.ERROR);
+            al.setTitle("Erreur_de demande");
+            al.setContentText("Cette quantite n'est pas disponible ");
+            al.showAndWait();
+            return;
+        }
+        //Service_equipement service_equipement=new Service_equipement();
+
         devis.setQuantite(Integer.parseInt(champs_quantite.getText()));
         devis.setProposition(champs_proposition.getText());
         try {
@@ -73,6 +93,15 @@ public class AjoutDevis {
             al.showAndWait();
             System.out.println(e.getMessage());
         }
+    }
+    @FXML
+    void navDashboard(ActionEvent event) throws IOException {
+        loadScene(event,"/Affichage.fxml");
+    }
+
+    @FXML
+    void navClients(ActionEvent event) throws IOException {
+        loadScene(event,"/front.fxml");
     }
 
 }

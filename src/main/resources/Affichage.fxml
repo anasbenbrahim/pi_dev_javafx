@@ -47,15 +47,23 @@
                 <Button fx:id="ajout"
                         text="Ajouter"
                         onAction="#nav_ajouter"
-                        styleClass="menu-button primary"/>
+                        styleClass="menu-button "/>
                 <Button fx:id="supprimer"
                         text="Supprimer"
                         onAction="#nav_supprimer"
                         styleClass="menu-button"/>
                 <Button fx:id="btn_modifier"
-                        text="Modifier"
-                        onAction="#nav_modifier"
+                        text="Statestique"
+                        onAction="#nav_stat"
                         styleClass="menu-button"/>
+                <Button fx:id="btn_front"
+                        text="Client"
+                        onAction="#nav_front"
+                        styleClass="menu-button"/>
+                <Button fx:id="btn_devis"
+                        text="Liste Devis"
+                        onAction="#nav_devis"
+                        styleClass="menu-button "/>
             </VBox>
         </VBox>
 

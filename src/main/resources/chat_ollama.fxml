@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.Insets?>
+
+<HBox xmlns="http://javafx.com/javafx/22.0.1"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.controllers.ChatOllama"
+      stylesheets="@front-style.css"
+      styleClass="main-container"
+      prefHeight="600.0" prefWidth="900.0">
+
+    <!-- Sidebar de navigation -->
+    <VBox styleClass="sidebar"
+          minWidth="220" maxWidth="250"
+          prefWidth="230"
+          HBox.hgrow="NEVER">
+        <padding>
+            <Insets top="20" right="15" bottom="20" left="15"/>
+        </padding>
+
+        <!-- Logo / Titre -->
+        <VBox alignment="CENTER" spacing="10" styleClass="logo-section">
+            <padding>
+                <Insets bottom="30"/>
+            </padding>
+
+            <Label text="Ollama Chat" styleClass="app-title"/>
+        </VBox>
+
+        <!-- Menu de navigation -->
+        <VBox spacing="10" styleClass="menu-section" VBox.vgrow="ALWAYS">
+            <padding>
+                <Insets top="30"/>
+            </padding>
+            <Button text="Dashboard"
+                    styleClass="nav-button"
+                    onAction="#navDashboard"/>
+            <Button text="Liste des produits"
+                    styleClass="nav-button "
+                    onAction="#navClient"/>
+        </VBox>
+    </VBox>
+
+    <!-- Contenu principal -->
+    <VBox styleClass="content-container shadow-md"
+          HBox.hgrow="ALWAYS"
+          spacing="15">
+        <padding>
+            <Insets top="30" right="30" bottom="30" left="30"/>
+        </padding>
+
+        <!-- Titre -->
+        <Label text="Chat avec Ollama" styleClass="title-large"
+               style="-fx-alignment: center; -fx-padding: 0 0 20 0;"/>
+
+        <!-- Zone de réponse du chat -->
+        <TextArea fx:id="responseArea" styleClass="text-area shadow-sm"
+                  editable="false" wrapText="true"
+                  VBox.vgrow="ALWAYS"
+                  prefHeight="400"/>
+
+        <!-- Zone de saisie et bouton -->
+        <HBox spacing="15" alignment="CENTER" styleClass="shadow-sm">
+            <TextField fx:id="messageField" styleClass="form-field"
+                       promptText="Tapez votre message ici..."
+                       HBox.hgrow="ALWAYS"/>
+            <Button fx:id="sendButton" styleClass="button"
+                    text="Envoyer"
+                    onAction="#sendMessage"
+                    prefWidth="100"/>
+        </HBox>
+    </VBox>
+</HBox>

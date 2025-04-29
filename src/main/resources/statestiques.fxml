@@ -7,43 +7,97 @@
 <?import javafx.geometry.Insets?>
 <?import java.net.URL?>
 
-<BorderPane xmlns="http://javafx.com/javafx/22.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.statestiques">
-    <top>
-        <VBox alignment="CENTER" spacing="10" style="-fx-background-color: #f5f5f5;">
-            <Label text="Equipment Statistics Dashboard" style="-fx-font-size: 20px; -fx-font-weight: bold;">
-                <padding>
-                    <Insets top="10" bottom="10"/>
-                </padding>
-            </Label>
-            <Separator BorderPane.alignment="CENTER"/>
-        </VBox>
-    </top>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<HBox xmlns="http://javafx.com/javafx/22.0.1" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.controllers.statestiques" stylesheets="@style.css">
 
-    <center>
-        <TabPane tabClosingPolicy="UNAVAILABLE">
+    <!-- Sidebar Menu -->
+    <VBox styleClass="sidebar" minWidth="200" maxWidth="300" prefWidth="242" HBox.hgrow="NEVER">
+        <padding>
+            <Insets top="20.0" right="15.0" bottom="20.0" left="15.0"/>
+        </padding>
+
+        <!-- Logo Section -->
+        <VBox alignment="CENTER" spacing="10" styleClass="logo-section">
+            <padding>
+                <Insets bottom="30"/>
+            </padding>
+            <ImageView fx:id="logo" fitHeight="80.0" fitWidth="80.0" styleClass="logo">
+                <image>
+                    <Image url="@logo-app.png" />
+                </image>
+            </ImageView>
+            <Label text="Gestion Équipements" styleClass="app-title" />
+        </VBox>
+
+        <!-- Menu Buttons -->
+        <VBox spacing="15" styleClass="menu-section" VBox.vgrow="ALWAYS">
+            <padding>
+                <Insets top="30"/>
+            </padding>
+            <Button text="Dashboard"
+                    onAction="#navDashboard"
+                    styleClass="menu-button"/>
+            <Button text="Statistiques"
+                    onAction="#navStats"
+                    styleClass="menu-button "/>
+            <Button text="Équipements"
+                    onAction="#navEquipements"
+                    styleClass="menu-button"/>
+            <Button text="Clients"
+                    onAction="#navClients"
+                    styleClass="menu-button"/>
+        </VBox>
+    </VBox>
+
+    <!-- Main Content Area -->
+    <VBox styleClass="content-container" HBox.hgrow="ALWAYS">
+        <!-- Page Header with Refresh Controls -->
+        <HBox styleClass="page-header" alignment="CENTER" prefHeight="80.0">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+            <Label text="Equipment Statistics Dashboard" styleClass="page-title" HBox.hgrow="ALWAYS"/>
+
+            <HBox spacing="10" alignment="CENTER_RIGHT">
+                <Button fx:id="refreshButton" text="Refresh" styleClass="nav-button"/>
+                <Button fx:id="exportButton" text="Export" styleClass="nav-button"/>
+                <Label fx:id="lastUpdatedLabel" styleClass="last-updated-label"/>
+            </HBox>
+        </HBox>
+
+        <!-- Summary Stats -->
+        <VBox fx:id="summaryStatsContainer" styleClass="summary-stats">
+            <padding>
+                <Insets top="10" right="20" bottom="10" left="20"/>
+            </padding>
+        </VBox>
+
+        <!-- Tab Content -->
+        <TabPane tabClosingPolicy="UNAVAILABLE" styleClass="content-tab" VBox.vgrow="ALWAYS">
             <tabs>
                 <Tab text="Category Distribution">
                     <content>
-                        <VBox spacing="10" alignment="CENTER">
+                        <VBox spacing="10" alignment="CENTER" VBox.vgrow="ALWAYS">
                             <padding>
                                 <Insets top="10" right="10" bottom="10" left="10"/>
                             </padding>
-                            <PieChart fx:id="categoryPieChart" title="Equipment by Category" legendSide="RIGHT"
-                                      style="-fx-font-size: 14px;" prefWidth="600" prefHeight="400">
-                            </PieChart>
-                            <Label text="Shows the proportion of equipment items in each category"/>
+                            <PieChart fx:id="categoryPieChart" title="Equipment by Category"
+                                      legendSide="RIGHT" styleClass="chart" VBox.vgrow="ALWAYS"/>
+                            <Label text="Shows the proportion of equipment items in each category" styleClass="chart-description"/>
                         </VBox>
                     </content>
                 </Tab>
 
                 <Tab text="Quantity by Category">
                     <content>
-                        <VBox spacing="10" alignment="CENTER">
+                        <VBox spacing="10" alignment="CENTER" VBox.vgrow="ALWAYS">
                             <padding>
                                 <Insets top="10" right="10" bottom="10" left="10"/>
                             </padding>
                             <BarChart fx:id="quantityBarChart" title="Total Quantity by Category"
-                                      style="-fx-font-size: 14px;" prefWidth="600" prefHeight="400">
+                                      styleClass="chart" VBox.vgrow="ALWAYS">
                                 <xAxis>
                                     <CategoryAxis label="Category" />
                                 </xAxis>
@@ -51,25 +105,22 @@
                                     <NumberAxis label="Total Quantity" />
                                 </yAxis>
                             </BarChart>
-                            <Label text="Shows the total available quantity for each equipment category"/>
+                            <Label text="Shows the total available quantity for each equipment category" styleClass="chart-description"/>
                         </VBox>
                     </content>
                 </Tab>
 
                 <Tab text="Combined View">
                     <content>
-                        <VBox spacing="20" alignment="CENTER">
+                        <VBox spacing="20" alignment="CENTER" VBox.vgrow="ALWAYS">
                             <padding>
                                 <Insets top="10" right="10" bottom="10" left="10"/>
                             </padding>
-                            <HBox spacing="20" alignment="CENTER">
+                            <HBox spacing="20" alignment="CENTER" HBox.hgrow="ALWAYS">
                                 <PieChart fx:id="pieChartCompact" title="Category Distribution"
-                                          legendSide="BOTTOM" style="-fx-font-size: 12px;"
-                                          prefWidth="400" prefHeight="300">
-                                </PieChart>
-
+                                          legendSide="BOTTOM" styleClass="chart" HBox.hgrow="ALWAYS"/>
                                 <BarChart fx:id="barChartCompact" title="Quantity by Category"
-                                          style="-fx-font-size: 12px;" prefWidth="400" prefHeight="300">
+                                          styleClass="chart" HBox.hgrow="ALWAYS">
                                     <xAxis>
                                         <CategoryAxis label="Category" />
                                     </xAxis>
@@ -78,40 +129,11 @@
                                     </yAxis>
                                 </BarChart>
                             </HBox>
-                            <Label text="Compact view showing both category distribution and quantity statistics"/>
-                        </VBox>
-                    </content>
-                </Tab>
-
-                <Tab text="Summary">
-                    <content>
-                        <VBox spacing="10" alignment="TOP_LEFT">
-                            <padding>
-                                <Insets top="20" right="20" bottom="20" left="20"/>
-                            </padding>
-                            <Label text="Equipment Summary Statistics" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
-                            <VBox fx:id="summaryStatsContainer" spacing="8">
-                                <!-- Statistics will be populated by controller -->
-                            </VBox>
+                            <Label text="Compact view showing both category distribution and quantity statistics" styleClass="chart-description"/>
                         </VBox>
                     </content>
                 </Tab>
             </tabs>
         </TabPane>
-    </center>
-
-    <bottom>
-        <HBox alignment="CENTER" spacing="20" style="-fx-background-color: #f5f5f5;">
-            <padding>
-                <Insets top="10" right="10" bottom="10" left="10"/>
-            </padding>
-            <Button text="Refresh Data" fx:id="refreshButton" style="-fx-font-size: 14px;"/>
-            <Button text="Export to PDF" fx:id="exportButton" style="-fx-font-size: 14px;"/>
-            <Label fx:id="lastUpdatedLabel" style="-fx-font-style: italic;"/>
-        </HBox>
-    </bottom>
-
-    <stylesheets>
-        <URL value="@/style.css" />
-    </stylesheets>
-</BorderPane>
+    </VBox>
+</HBox>

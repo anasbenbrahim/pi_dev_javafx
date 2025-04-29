@@ -37,8 +37,6 @@
          <VBox spacing="15" styleClass="menu-section">
             <Button fx:id="btn_categorie" text="Catégorie" onAction="#nav_categorie" styleClass="menu-button" maxWidth="Infinity"/>
             <Button fx:id="navigate_affichage" text="Affichage" onAction="#nav_affichage" styleClass="menu-button" maxWidth="Infinity"/>
-            <Button fx:id="navigate_ajout" text="Ajouter" onAction="#nav_ajout" styleClass="menu-button" maxWidth="Infinity"/>
-            <Button fx:id="navigate_modifier" text="Modifier" onAction="#nav_modifier" styleClass="menu-button" maxWidth="Infinity"/>
             <VBox VBox.vgrow="ALWAYS"/> <!-- Spacer to push buttons up -->
          </VBox>
       </VBox>

@@ -43,7 +43,6 @@
             <Button fx:id="btn_categorie" text="Catégorie" onAction="#nav_categorie" styleClass="menu-button"/>
             <Button fx:id="navigate_affichage" text="Affichage" onAction="#nav_affichage" styleClass="menu-button"/>
             <Button fx:id="navigate_supprimer" text="Supprimer" onAction="#nav_supprimer" styleClass="menu-button"/>
-            <Button fx:id="navigate_modifier" text="Modifier" onAction="#nav_modifier" styleClass="menu-button"/>
          </VBox>
       </VBox>
 

@@ -92,16 +92,23 @@ public class Supprimer {
         }
     }
 
-    public void nav_categorie(ActionEvent event) {
+    public void nav_categorie(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/Afficher_category.fxml"));
+        stage=(Stage)((Node)event.getSource()).getScene().getWindow();
+        scene=new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
-    public void nav_affichage(ActionEvent event) {
+    public void nav_affichage(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/Affichage.fxml"));
+        stage=(Stage)((Node)event.getSource()).getScene().getWindow();
+        scene=new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
-    public void nav_ajout(ActionEvent event) {
-    }
 
-    public void nav_modifier(ActionEvent event) {
 
-    }
+
 }

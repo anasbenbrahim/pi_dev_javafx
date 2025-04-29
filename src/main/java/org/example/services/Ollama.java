@@ -1,5 +1,6 @@
 package org.example.services;
 
+import org.example.utils.Database;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -10,16 +11,40 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.sql.*;
 
 public class Ollama {
     private String model;
     private String text;
+    private Connection connection = Database.getInstance().getConnection();
 
     public Ollama(String model, String text) throws IOException {
         this.model = model;
         this.text = text;
     }
-    public void generate()throws IOException{
+    public void ajouter(String text) throws IOException {
+        String req="insert into chat_ai (question) values (?)";
+        try{
+            PreparedStatement ps= connection.prepareStatement(req);
+            ps.setString(1, text);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public String afficher(){
+        String req="select last(question) from chat_ai ";
+        try{
+            Statement ps= connection.createStatement();
+            ResultSet res=ps.executeQuery(req);
+            String resultat=res.getString("question");
+            return resultat;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String generate()throws IOException{
         URL url =new URL("http://localhost:11434/api/generate");
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
@@ -49,6 +74,8 @@ public class Ollama {
         System.out.println(result);
 
         conn.disconnect();
+        return result;
+
     }
 
 }

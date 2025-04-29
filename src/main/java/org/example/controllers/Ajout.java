@@ -179,17 +179,6 @@ public class Ajout {
         }
     }
 
-
-
-
-    @FXML
-    public void nav_modifier(ActionEvent event)throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/Modifier.fxml"));
-        stage=(Stage)((Node)event.getSource()).getScene().getWindow();
-        scene=new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
     @FXML
     void nav_affichage(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/Affichage.fxml"));

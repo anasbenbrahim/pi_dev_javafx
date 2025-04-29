@@ -47,6 +47,11 @@
                     <ImageView fitHeight="16" fitWidth="16" />
                 </graphic>
             </Button>
+            <Button fx:id="btn_chatOllama" onAction="#nav_llama" styleClass="refresh-btn primary-button" text="Chater avec Ollama">
+                <graphic>
+                    <ImageView fitHeight="16" fitWidth="16" />
+                </graphic>
+            </Button>
         </VBox>
     </left>
 
