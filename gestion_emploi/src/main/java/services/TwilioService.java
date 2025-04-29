@@ -9,8 +9,8 @@ import org.slf4j.LoggerFactory;
 public class TwilioService {
     private static final Logger logger = LoggerFactory.getLogger(TwilioService.class);
     
-    private static final String ACCOUNT_SID = "TWILIO_SID";
-    private static final String AUTH_TOKEN = "TWILIO_AUTH_TOKEN";
+    private static final String ACCOUNT_SID = "AC1b488c77120707d2879f94152980d342";
+    private static final String AUTH_TOKEN = "b4ace90e65a0878c1004150c2098da82";
     private static final String TWILIO_PHONE_NUMBER = "+12708106626";
 
     static {

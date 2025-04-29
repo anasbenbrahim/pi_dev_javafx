@@ -13,13 +13,14 @@ import models.Offer;
 import models.Demande;
 import services.OfferService;
 import services.DemandeService;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javafx.scene.Node;
+import javafx.event.ActionEvent;
 
 public class MainController {
     @FXML
@@ -339,5 +340,24 @@ public class MainController {
     // Interface for child controllers if needed
     public interface ChildController {
         void setMainController(MainController mainController);
+    }
+
+    @FXML
+    private void openFrontOffice(ActionEvent event) {
+        try {
+            // Load the front office view
+            FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("/com/example/gestion_emploi/Views/front-office-view.fxml")
+            );
+            Parent root = loader.load();
+            
+            // Get current stage and set new scene
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+            
+        } catch (Exception e) {
+            showError("Navigation Error", "Could not open front office: " + e.getMessage(), e);
+        }
     }
 }

@@ -12,7 +12,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import services.PDFViewerService;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;

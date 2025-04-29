@@ -13,7 +13,6 @@ import models.Offer;
 import models.Demande;
 import services.OfferService;
 import services.DemandeService;
-
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -133,7 +132,7 @@ public class CalendarController {
         }
     }
 
-    private void updateCalendar() {
+    public void updateCalendar() {
         try {
             // Clear previous calendar
             calendarGrid.getChildren().clear();

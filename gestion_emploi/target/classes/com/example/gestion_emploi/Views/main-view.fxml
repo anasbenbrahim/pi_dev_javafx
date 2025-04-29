@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 
 <BorderPane xmlns="http://javafx.com/javafx/17"
@@ -36,6 +37,10 @@
             <Button text="Statistics"
                     onAction="#showStatisticsView"
                     style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold; -fx-min-width: 200; -fx-min-height: 40;"/>
+                    
+            <Button text="Front Office"
+                    onAction="#openFrontOffice"
+                    style="-fx-background-color: #e67e22; -fx-text-fill: white; -fx-font-weight: bold; -fx-min-width: 200; -fx-min-height: 40;"/>
                     
             <Separator style="-fx-background-color: #7f8c8d;" />
             

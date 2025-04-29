@@ -3,6 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.*?>
 
 <BorderPane xmlns="http://javafx.com/javafx/17"
       xmlns:fx="http://javafx.com/fxml/1"
@@ -23,18 +24,37 @@
     <center>
         <VBox spacing="20" alignment="CENTER" style="-fx-padding: 20;">
             <Label text="Demands per Offer" style="-fx-font-size: 20; -fx-font-weight: bold;"/>
-            <Pane fx:id="statisticsPane" prefHeight="400" prefWidth="700" VBox.vgrow="ALWAYS" />
+            
+            <TabPane fx:id="chartTabPane">
+                <tabs>
+                    <Tab text="Bar Chart" closable="false">
+                        <BarChart fx:id="barChart">
+                            <xAxis>
+                                <CategoryAxis label="Offers"/>
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis label="Number of Demands"/>
+                            </yAxis>
+                        </BarChart>
+                    </Tab>
+                    <Tab text="Pie Chart" closable="false">
+                        <PieChart fx:id="pieChart" />
+                    </Tab>
+                </tabs>
+            </TabPane>
+            
             <HBox spacing="20" alignment="CENTER">
                 <Button text="Refresh Statistics" onAction="#refreshStatistics" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-size: 14px;"/>
                 <Button text="Show Detailed Report" onAction="#showDetailedReport" style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-size: 14px;"/>
                 <Button text="Export Statistics" onAction="#exportStatistics" style="-fx-background-color: #9b59b6; -fx-text-fill: white; -fx-font-size: 14px;"/>
+                <Button text="Export to PDF" onAction="#exportToPDF" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-size: 14px;"/>
             </HBox>
         </VBox>
     </center>
     
     <bottom>
         <HBox spacing="10" alignment="CENTER" style="-fx-padding: 10; -fx-background-color: #f5f5f5;">
-            <Label text="Circle size represents the number of demands for each offer" />
+            <Label text="Click on chart segments to see detailed information" />
         </HBox>
     </bottom>
 </BorderPane>

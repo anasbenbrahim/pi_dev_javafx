@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FrontOfficeController" spacing="10" style="-fx-background-color: #f5f5f5;">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Text text="Front Office" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+    
+    <Separator/>
+    
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Search:"/>
+        <TextField fx:id="searchField" promptText="Search offers..." prefWidth="300"/>
+        <Button text="Search" onAction="#handleSearch"/>
+        <Button text="Clear" onAction="#handleClearSearch"/>
+    </HBox>
+    
+    <TableView fx:id="offersTable" prefHeight="300">
+        <columns>
+            <TableColumn fx:id="titleColumn" text="Title" prefWidth="200"/>
+            <TableColumn fx:id="domainColumn" text="Domain" prefWidth="150"/>
+            <TableColumn fx:id="descriptionColumn" text="Description" prefWidth="300"/>
+            <TableColumn fx:id="dateColumn" text="Date" prefWidth="150"/>
+            <TableColumn fx:id="actionsColumn" text="Actions" prefWidth="200"/>
+        </columns>
+    </TableView>
+    
+    <VBox fx:id="demandForm" spacing="10" style="-fx-background-color: #ffffff; -fx-padding: 15; -fx-border-color: #cccccc; -fx-border-width: 1;">
+        <Text text="Submit Demand" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+        
+        <GridPane hgap="10" vgap="10">
+            <Label text="Service:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <TextField fx:id="serviceField" GridPane.rowIndex="0" GridPane.columnIndex="1" GridPane.columnSpan="2"/>
+            
+            <Label text="Description:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <TextArea fx:id="descriptionField" GridPane.rowIndex="1" GridPane.columnIndex="1" GridPane.columnSpan="2" prefRowCount="3"/>
+            
+            <Label text="Contact:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <TextField fx:id="contactField" GridPane.rowIndex="2" GridPane.columnIndex="1" GridPane.columnSpan="2"/>
+            
+            <Label text="CV File:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <HBox GridPane.rowIndex="3" GridPane.columnIndex="1" spacing="5">
+                <TextField fx:id="cvFileField" editable="false" HBox.hgrow="ALWAYS"/>
+                <Button text="Browse" onAction="#handleBrowseFile"/>
+            </HBox>
+        </GridPane>
+        
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <Button text="Submit" onAction="#handleSubmitDemand" style="-fx-background-color: #2ecc71; -fx-text-fill: white;"/>
+            <Button text="Cancel" onAction="#handleCancelDemand" style="-fx-background-color: #e74c3c; -fx-text-fill: white;"/>
+        </HBox>
+    </VBox>
+    
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="Back to Main Menu" onAction="#goBackToMain" style="-fx-background-color: #34495e; -fx-text-fill: white;"/>
+    </HBox>
+</VBox> 

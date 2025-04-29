@@ -4,6 +4,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.Node;
+import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
@@ -15,13 +17,48 @@ import javafx.stage.Stage;
 import models.Offer;
 import services.OfferService;
 import services.DemandeService;
-
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.input.MouseEvent;
+import javafx.geometry.Side;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.properties.UnitValue;
+import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.layout.element.Image;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.image.WritableImage;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import javax.imageio.ImageIO;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.io.IOException;
 import java.util.*;
+import com.itextpdf.barcodes.BarcodeQRCode;
+import com.itextpdf.barcodes.qrcode.EncodeHintType;
+import com.itextpdf.barcodes.qrcode.ErrorCorrectionLevel;
+import com.itextpdf.kernel.colors.ColorConstants;
+import com.itextpdf.layout.properties.HorizontalAlignment;
+import java.util.Base64;
+import java.nio.charset.StandardCharsets;
 
 public class StatisticsController {
     @FXML
-    private Pane statisticsPane;
+    private BarChart<String, Number> barChart;
+    
+    @FXML
+    private PieChart pieChart;
+
+    @FXML
+    private TabPane chartTabPane;
 
     private OfferService offerService;
     private DemandeService demandeService;
@@ -48,6 +85,15 @@ public class StatisticsController {
             offerService = new OfferService();
             demandeService = new DemandeService();
             
+            // Initialize charts
+            barChart.setAnimated(true);
+            barChart.setTitle("Demands per Offer");
+            barChart.setLegendVisible(false);
+            
+            pieChart.setAnimated(true);
+            pieChart.setTitle("Distribution of Demands");
+            pieChart.setLegendSide(Side.RIGHT);
+            
             // Load statistics
             refreshStatistics();
         } catch (Exception e) {
@@ -58,9 +104,6 @@ public class StatisticsController {
     @FXML
     private void refreshStatistics() {
         try {
-            // Clear previous statistics
-            statisticsPane.getChildren().clear();
-            
             // Get counts of demands per offer
             Map<Integer, Integer> demandsPerOffer = demandeService.countDemandsPerOffer();
             
@@ -69,9 +112,113 @@ public class StatisticsController {
                 return;
             }
             
-            drawStatisticsCircles(demandsPerOffer);
+            updateCharts(demandsPerOffer);
         } catch (Exception e) {
             showError("Statistics Error", "Failed to load statistics: " + e.getMessage());
+        }
+    }
+    
+    private void updateCharts(Map<Integer, Integer> demandsPerOffer) throws Exception {
+        // Sort offers by demand count (descending)
+        List<Map.Entry<Integer, Integer>> sortedEntries = new ArrayList<>(demandsPerOffer.entrySet());
+        sortedEntries.sort(Map.Entry.<Integer, Integer>comparingByValue().reversed());
+        
+        // Prepare data for charts
+        XYChart.Series<String, Number> barSeries = new XYChart.Series<>();
+        ObservableList<PieChart.Data> pieData = FXCollections.observableArrayList();
+        
+        int totalDemands = demandsPerOffer.values().stream().mapToInt(Integer::intValue).sum();
+        
+        for (Map.Entry<Integer, Integer> entry : sortedEntries) {
+            int offerId = entry.getKey();
+            int count = entry.getValue();
+            
+            Offer offer = offerService.getOfferBasicInfoById(offerId);
+            if (offer == null) continue;
+            
+            String offerName = offer.getNom().length() > 15 ? 
+                offer.getNom().substring(0, 12) + "..." : 
+                offer.getNom();
+            
+            // Add data to bar chart
+            barSeries.getData().add(new XYChart.Data<>(offerName, count));
+            
+            // Add data to pie chart
+            double percentage = (double) count / totalDemands * 100;
+            PieChart.Data slice = new PieChart.Data(
+                String.format("%s (%.1f%%)", offerName, percentage), 
+                count
+            );
+            pieData.add(slice);
+        }
+        
+        // Update bar chart
+        barChart.getData().clear();
+        barChart.getData().add(barSeries);
+        
+        // Style bar chart
+        barChart.getData().forEach(series -> {
+            series.getData().forEach(data -> {
+                data.getNode().setStyle("-fx-bar-fill: #3498db;");
+                
+                // Add hover effect
+                data.getNode().setOnMouseEntered(event -> {
+                    data.getNode().setStyle("-fx-bar-fill: #2980b9;");
+                    showTooltip(data, event);
+                });
+                data.getNode().setOnMouseExited(event -> {
+                    data.getNode().setStyle("-fx-bar-fill: #3498db;");
+                    hideTooltip();
+                });
+            });
+        });
+        
+        // Update pie chart
+        pieChart.setData(pieData);
+        
+        // Style pie chart
+        pieData.forEach(data -> {
+            data.getNode().setOnMouseEntered(event -> {
+                data.getNode().setStyle("-fx-pie-color: derive(" + data.getNode().getStyle() + ", -20%);");
+                showTooltip(data, event);
+            });
+            data.getNode().setOnMouseExited(event -> {
+                data.getNode().setStyle("");
+                hideTooltip();
+            });
+        });
+    }
+    
+    private Tooltip currentTooltip;
+    
+    private void showTooltip(XYChart.Data<String, Number> data, MouseEvent event) {
+        String tooltipText = String.format("%s\nDemands: %d", 
+            data.getXValue(), data.getYValue().intValue());
+        showTooltipHelper(tooltipText, event);
+    }
+    
+    private void showTooltip(PieChart.Data data, MouseEvent event) {
+        String tooltipText = String.format("%s\nDemands: %.0f", 
+            data.getName(), data.getPieValue());
+        showTooltipHelper(tooltipText, event);
+    }
+    
+    private void showTooltipHelper(String text, MouseEvent event) {
+        if (currentTooltip != null) {
+            currentTooltip.hide();
+        }
+        currentTooltip = new Tooltip(text);
+        currentTooltip.show(
+            ((Node)event.getSource()).getScene().getWindow(),
+            event.getScreenX() + 10,
+            event.getScreenY() + 10
+        );
+    }
+    
+    private void hideTooltip() {
+        if (currentTooltip != null) {
+            currentTooltip.hide();
+            currentTooltip = null;
         }
     }
     
@@ -215,102 +362,241 @@ public class StatisticsController {
         }
     }
     
-    private void drawStatisticsCircles(Map<Integer, Integer> demandsPerOffer) throws Exception {
-        // Find the maximum count to scale circles properly
-        int maxCount = demandsPerOffer.values().stream()
-            .mapToInt(Integer::intValue)
-            .max()
-            .orElse(1);
+    @FXML
+    private void exportToPDF() {
+        try {
+            // Get demands per offer data first
+            Map<Integer, Integer> demandsPerOffer = demandeService.countDemandsPerOffer();
+            
+            if (demandsPerOffer.isEmpty()) {
+                showMessage("No Data", "There is no statistical data available to export.");
+                return;
+            }
+
+            // Create file chooser
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Save PDF Report");
+            fileChooser.getExtensionFilters().add(
+                new ExtensionFilter("PDF Files", "*.pdf")
+            );
+            fileChooser.setInitialFileName("statistics_report_" + 
+                LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss")) + ".pdf");
+            
+            // Show save dialog
+            File file = fileChooser.showSaveDialog(chartTabPane.getScene().getWindow());
+            if (file == null) return;
+
+            // Create PDF document
+            PdfWriter writer = new PdfWriter(file);
+            PdfDocument pdf = new PdfDocument(writer);
+            Document document = new Document(pdf);
+
+            // Add title with animation effect
+            Paragraph title = new Paragraph("Statistics Report")
+                .setFontSize(24)
+                .setTextAlignment(com.itextpdf.layout.properties.TextAlignment.CENTER)
+                .setBold()
+                .setMarginBottom(20);
+            document.add(title);
+            
+            // Add timestamp with fade effect
+            document.add(new Paragraph("Generated on: " + 
+                LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                .setTextAlignment(com.itextpdf.layout.properties.TextAlignment.RIGHT)
+                .setFontSize(10)
+                .setItalic()
+                .setMarginBottom(30));
+
+            // Add bar chart with animation effect
+            document.add(new Paragraph("Demands per Offer - Bar Chart")
+                .setFontSize(16)
+                .setBold()
+                .setMarginTop(20)
+                .setTextAlignment(com.itextpdf.layout.properties.TextAlignment.LEFT));
+            
+            // Animate the bar chart before capturing
+            animateBarChart();
+            WritableImage barChartImage = barChart.snapshot(new SnapshotParameters(), null);
+            ByteArrayOutputStream barChartBytes = new ByteArrayOutputStream();
+            ImageIO.write(SwingFXUtils.fromFXImage(barChartImage, null), "png", barChartBytes);
+            Image barChartPdfImage = new Image(ImageDataFactory.create(barChartBytes.toByteArray()));
+            barChartPdfImage.setWidth(UnitValue.createPercentValue(100));
+            document.add(barChartPdfImage);
+
+            // Add pie chart with animation effect
+            document.add(new Paragraph("Demands Distribution - Pie Chart")
+                .setFontSize(16)
+                .setBold()
+                .setMarginTop(20)
+                .setTextAlignment(com.itextpdf.layout.properties.TextAlignment.LEFT));
+            
+            // Animate the pie chart before capturing
+            animatePieChart();
+            WritableImage pieChartImage = pieChart.snapshot(new SnapshotParameters(), null);
+            ByteArrayOutputStream pieChartBytes = new ByteArrayOutputStream();
+            ImageIO.write(SwingFXUtils.fromFXImage(pieChartImage, null), "png", pieChartBytes);
+            Image pieChartPdfImage = new Image(ImageDataFactory.create(pieChartBytes.toByteArray()));
+            pieChartPdfImage.setWidth(UnitValue.createPercentValue(100));
+            document.add(pieChartPdfImage);
+
+            // Add QR Code
+            document.add(new Paragraph("View Statistics Summary")
+                .setFontSize(14)
+                .setBold()
+                .setMarginTop(20)
+                .setTextAlignment(com.itextpdf.layout.properties.TextAlignment.CENTER));
+
+            String qrContent = generateQRCodeContent(demandsPerOffer);
+            BarcodeQRCode qrCode = new BarcodeQRCode(qrContent);
+            
+            Map<EncodeHintType, Object> hints = new HashMap<>();
+            hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
+            
+            Image qrCodeImage = new Image(qrCode.createFormXObject(ColorConstants.BLACK, pdf));
+            qrCodeImage.setWidth(150);
+            qrCodeImage.setHeight(150);
+            qrCodeImage.setHorizontalAlignment(HorizontalAlignment.CENTER);
+            qrCodeImage.setMarginTop(10);
+            qrCodeImage.setMarginBottom(10);
+            document.add(qrCodeImage);
+
+            document.add(new Paragraph("Scan this QR code with your phone's camera to view the statistics summary")
+                .setFontSize(10)
+                .setItalic()
+                .setTextAlignment(com.itextpdf.layout.properties.TextAlignment.CENTER)
+                .setMarginBottom(20));
+
+            // Close document
+            document.close();
+
+            showMessage("Export Successful", 
+                "Statistics have been successfully exported to PDF:\n" + file.getAbsolutePath());
+
+        } catch (Exception e) {
+            showError("Export Error", "Failed to export statistics to PDF: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+    private String generateQRCodeContent(Map<Integer, Integer> demandsPerOffer) throws Exception {
+        StringBuilder textBuilder = new StringBuilder();
         
-        // Base radius for circles
-        final double baseRadius = 40;
-        final double maxRadius = 80;
+        // Add header
+        textBuilder.append("STATISTICS REPORT\n");
+        textBuilder.append("================\n\n");
         
-        // Sort offers by demand count (descending)
+        // Add total demands
+        int totalDemands = demandsPerOffer.values().stream().mapToInt(Integer::intValue).sum();
+        textBuilder.append("Total Number of Demands: ").append(totalDemands).append("\n\n");
+        
+        // Add timestamp
+        textBuilder.append("Report Generated: ")
+                  .append(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                  .append("\n\n");
+        
+        // Sort offers by demand count
         List<Map.Entry<Integer, Integer>> sortedEntries = new ArrayList<>(demandsPerOffer.entrySet());
         sortedEntries.sort(Map.Entry.<Integer, Integer>comparingByValue().reversed());
         
-        // Get the width and height of the pane
-        double width = statisticsPane.getWidth();
-        double height = statisticsPane.getHeight();
+        // Add top offers
+        textBuilder.append("TOP OFFERS ANALYSIS\n");
+        textBuilder.append("------------------\n\n");
         
-        // If width or height is 0 (not yet rendered), use default values
-        if (width <= 0) width = 700;
-        if (height <= 0) height = 400;
-        
-        // Calculate positions for the circles - arrange in a spiral pattern
-        int totalCircles = Math.min(sortedEntries.size(), 12); // Limit to 12 circles
-        
-        // Calculate center of the pane
-        double centerX = width / 2;
-        double centerY = height / 2;
-        
-        // Draw circles
-        for (int i = 0; i < totalCircles; i++) {
-            Map.Entry<Integer, Integer> entry = sortedEntries.get(i);
-            int offerId = entry.getKey();
-            int count = entry.getValue();
+        int count = 0;
+        for (Map.Entry<Integer, Integer> entry : sortedEntries) {
+            if (count >= 5) break;
             
-            // Get offer details
-            Offer offer = offerService.getOfferBasicInfoById(offerId);
+            Offer offer = offerService.getOfferBasicInfoById(entry.getKey());
             if (offer == null) continue;
             
-            // Calculate circle size based on count relative to max count
-            double ratio = (double) count / maxCount;
-            double radius = baseRadius + (maxRadius - baseRadius) * ratio;
+            double percentage = (double) entry.getValue() / totalDemands * 100;
             
-            // Calculate position - arrange in a circle formation
-            double angle = 2 * Math.PI * i / totalCircles;
-            double distance = 180; // Distance from center
-            double x = centerX + Math.cos(angle) * distance;
-            double y = centerY + Math.sin(angle) * distance;
+            textBuilder.append("Offer: ").append(offer.getNom()).append("\n");
+            textBuilder.append("Domain: ").append(offer.getDomain()).append("\n");
+            textBuilder.append("Number of Demands: ").append(entry.getValue()).append("\n");
+            textBuilder.append("Percentage of Total: ").append(String.format("%.1f%%", percentage)).append("\n");
+            textBuilder.append("------------------\n");
             
-            // Create and add circle
-            Circle circle = new Circle(x, y, radius);
-            circle.setFill(CIRCLE_COLORS[i % CIRCLE_COLORS.length]);
-            circle.setOpacity(0.8);
-            circle.setStroke(Color.WHITE);
-            circle.setStrokeWidth(2);
+            count++;
+        }
+        
+        return textBuilder.toString();
+    }
+    
+    private void animateBarChart() {
+        // Reset animation
+        barChart.setAnimated(false);
+        barChart.setAnimated(true);
+        
+        // Add hover effect animation
+        for (XYChart.Series<String, Number> series : barChart.getData()) {
+            for (XYChart.Data<String, Number> data : series.getData()) {
+                Node node = data.getNode();
+                node.setStyle("-fx-bar-fill: #3498db;");
+                
+                // Add hover animation
+                node.setOnMouseEntered(event -> {
+                    node.setStyle("-fx-bar-fill: #2980b9;");
+                    node.setScaleX(1.05);
+                    node.setScaleY(1.05);
+                });
+                
+                node.setOnMouseExited(event -> {
+                    node.setStyle("-fx-bar-fill: #3498db;");
+                    node.setScaleX(1.0);
+                    node.setScaleY(1.0);
+                });
+            }
+        }
+    }
+
+    private void animatePieChart() {
+        // Reset animation
+        pieChart.setAnimated(false);
+        pieChart.setAnimated(true);
+        
+        // Add hover effect animation
+        for (PieChart.Data data : pieChart.getData()) {
+            Node node = data.getNode();
             
-            // Add tooltip to circle
-            Tooltip tooltip = new Tooltip(offer.getNom() + "\nDomain: " + offer.getDomain() + "\nDemands: " + count);
-            Tooltip.install(circle, tooltip);
+            // Add hover animation
+            node.setOnMouseEntered(event -> {
+                node.setScaleX(1.1);
+                node.setScaleY(1.1);
+                node.setStyle("-fx-pie-color: derive(" + node.getStyle() + ", -20%);");
+            });
             
-            // Add text with count inside circle
-            Text countText = new Text(String.valueOf(count));
-            countText.setFill(Color.WHITE);
-            countText.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
-            countText.setX(x - countText.getLayoutBounds().getWidth() / 2);
-            countText.setY(y + countText.getLayoutBounds().getHeight() / 4);
+            node.setOnMouseExited(event -> {
+                node.setScaleX(1.0);
+                node.setScaleY(1.0);
+                node.setStyle("");
+            });
+        }
+    }
+
+    private Node getCalendarView() {
+        try {
+            // Load the calendar view
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/gestion_emploi/Views/calendar-view.fxml"));
+            Parent calendarRoot = loader.load();
             
-            // Add label below with offer name
-            Text nameText = new Text(offer.getNom().length() > 12 ? 
-                                     offer.getNom().substring(0, 12) + "..." : 
-                                     offer.getNom());
-            nameText.setTextAlignment(TextAlignment.CENTER);
-            nameText.setWrappingWidth(100);
-            nameText.setStyle("-fx-font-weight: bold;");
-            nameText.setX(x - 50);
-            nameText.setY(y + radius + 20);
+            // Get the calendar controller
+            CalendarController calendarController = loader.getController();
             
-            // Add label for domain
-            Text domainText = new Text(offer.getDomain());
-            domainText.setTextAlignment(TextAlignment.CENTER);
-            domainText.setWrappingWidth(100);
-            domainText.setStyle("-fx-font-style: italic; -fx-font-size: 11px;");
-            domainText.setX(x - 50);
-            domainText.setY(y + radius + 40);
+            // Update the calendar view
+            calendarController.updateCalendar();
             
-            statisticsPane.getChildren().addAll(circle, countText, nameText, domainText);
+            return calendarRoot;
+        } catch (Exception e) {
+            System.err.println("Error loading calendar view: " + e.getMessage());
+            return null;
         }
     }
     
     private void showNoDataMessage() {
-        Text noDataText = new Text("No statistics data available");
-        noDataText.setStyle("-fx-font-size: 18px;");
-        noDataText.setX(statisticsPane.getWidth() / 2 - 100);
-        noDataText.setY(statisticsPane.getHeight() / 2);
-        statisticsPane.getChildren().add(noDataText);
+        barChart.getData().clear();
+        pieChart.getData().clear();
+        showMessage("No Data", "No statistics data available");
     }
     
     @FXML
@@ -321,7 +607,7 @@ public class StatisticsController {
             Parent root = loader.load();
             
             // Get current stage
-            Stage stage = (Stage) statisticsPane.getScene().getWindow();
+            Stage stage = (Stage) barChart.getScene().getWindow();
             
             // Set the scene
             Scene scene = new Scene(root);
@@ -350,7 +636,7 @@ public class StatisticsController {
             Parent root = loader.load();
             
             // Get current stage and set new scene
-            Stage stage = (Stage) statisticsPane.getScene().getWindow();
+            Stage stage = (Stage) barChart.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
             
