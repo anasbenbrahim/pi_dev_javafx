@@ -13,6 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import tn.esprit.pidev.Model.User;
+import tn.esprit.pidev.Service.TwilioService;
 import tn.esprit.pidev.Service.UserDAO;
 
 import java.awt.*;
@@ -104,21 +105,67 @@ public class UserManagementController implements Initializable {
         Label emailLabel = new Label("Email: " + user.getEmail());
         Label roleLabel = new Label("Rôles: " + String.join(", ", user.getRoles()));
         Label phoneLabel = new Label("Tél: " + user.getPhoneNumber());
+        Label statusLabel = new Label("Statut: " + (user.isBanned() ? "Banni" : "Actif"));
+        statusLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: " + (user.isBanned() ? "#dc3545" : "#28a745") + ";");
 
         // Boutons d'action
         HBox buttonsBox = new HBox(5);
-        Button editBtn = new Button("Modifier");
+        Button editBtn = new Button("Edit");
         editBtn.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
         editBtn.setOnAction(e -> fillFormWithUser(user));
 
-        Button deleteBtn = new Button("Supprimer");
+        Button deleteBtn = new Button("Delete");
         deleteBtn.setStyle("-fx-background-color: #f44336; -fx-text-fill: white;");
         deleteBtn.setOnAction(e -> deleteUser(user));
 
-        buttonsBox.getChildren().addAll(editBtn, deleteBtn);
-        card.getChildren().addAll(nameLabel, idLabel, emailLabel, roleLabel, phoneLabel, buttonsBox);
+        // Bouton Ban/Unban dynamique
+        Button banUnbanBtn;
+        if (user.isBanned()) {
+            banUnbanBtn = new Button("Unban");
+            banUnbanBtn.setStyle("-fx-background-color: #007bff; -fx-text-fill: white;");
+            banUnbanBtn.setOnAction(e -> unbanUser(user));
+        } else {
+            banUnbanBtn = new Button("Ban");
+            banUnbanBtn.setStyle("-fx-background-color: #dc3545; -fx-text-fill: white;");
+            banUnbanBtn.setOnAction(e -> banUser(user));
+        }
+
+        buttonsBox.getChildren().addAll(editBtn, deleteBtn, banUnbanBtn);
+        card.getChildren().addAll(nameLabel, idLabel, emailLabel, roleLabel, phoneLabel, statusLabel, buttonsBox);
 
         return card;
+    }
+
+    private void banUser(User user) {
+        if (userDAO.banUser(user.getId())) {
+            showMessage("Utilisateur banni avec succès", "green");
+            // Recharger uniquement la carte de cet utilisateur au lieu de tout recharger
+            refreshUserCard(user);
+        } else {
+            showMessage("Erreur lors du bannissement", "red");
+        }
+    }
+
+    private void unbanUser(User user) {
+        if (userDAO.unbanUser(user.getId())) {
+            showMessage("Utilisateur débanni avec succès", "green");
+            // Recharger uniquement la carte de cet utilisateur au lieu de tout recharger
+            refreshUserCard(user);
+        } else {
+            showMessage("Erreur lors du débannissement", "red");
+        }
+    }
+
+    // Méthode pour rafraîchir uniquement la carte d'un utilisateur spécifique
+    private void refreshUserCard(User user) {
+        // Trouver l'index de l'utilisateur dans la liste
+        int index = usersList.indexOf(user);
+        if (index >= 0) {
+            // Mettre à jour l'utilisateur dans la liste
+            usersList.set(index, userDAO.getUserById(user.getId()));
+            // Recréer la carte
+            usersCardsContainer.getChildren().set(index, createUserCard(usersList.get(index)));
+        }
     }
 
     private void fillFormWithUser(User user) {
@@ -140,6 +187,7 @@ public class UserManagementController implements Initializable {
         }
     }
 
+
     @FXML
     private void handleAdd() {
         if (validateForm()) {
@@ -148,12 +196,44 @@ public class UserManagementController implements Initializable {
             user.setPassword(generatedPassword);
 
             if (userDAO.addUser(user)) {
-                sendPasswordByWhatsApp(user.getPhoneNumber(), generatedPassword);
-                showMessage("Utilisateur ajouté. Mot de passe envoyé par WhatsApp.", "green");
-                loadUsers();
-                clearForm();
+                // Envoi du mot de passe par SMS/WhatsApp et email
+                try {
+                    // Formatage du numéro avec l'indicatif +216
+                    String formattedPhoneNumber = formatPhoneNumber(user.getPhoneNumber());
+
+                    // Envoi par SMS
+                    TwilioService.sendSMS(formattedPhoneNumber,
+                            "Votre compte a été créé. Email: " + user.getEmail() +
+                                    ", Mot de passe: " + generatedPassword);
+
+                    showMessage("Utilisateur ajouté. Mot de passe envoyé.", "green");
+                    loadUsers();
+                    clearForm();
+                } catch (Exception e) {
+                    showMessage("Utilisateur ajouté mais échec d'envoi du mot de passe: " + e.getMessage(), "orange");
+                }
             }
         }
+    }
+
+    // Méthode pour formater le numéro de téléphone
+    private String formatPhoneNumber(String phoneNumber) {
+        // Supprimer tous les caractères non numériques
+        String digitsOnly = phoneNumber.replaceAll("[^0-9]", "");
+
+        // Si le numéro commence déjà par 216, on ajoute juste le +
+        if (digitsOnly.startsWith("216")) {
+            return "+" + digitsOnly;
+        }
+
+        // Si le numéro a 8 chiffres (sans indicatif), on ajoute +216
+        if (digitsOnly.length() == 8) {
+            return "+216" + digitsOnly;
+        }
+
+        // Pour les autres formats, retourner le numéro original avec +216
+        // (Vous pouvez ajouter d'autres règles de formatage si nécessaire)
+        return "+216" + digitsOnly;
     }
 
     private void sendPasswordByWhatsApp(String phoneNumber, String password) {

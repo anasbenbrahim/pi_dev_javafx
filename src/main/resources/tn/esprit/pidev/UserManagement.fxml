@@ -3,9 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.image.*?>
+
 
 <?import java.net.URL?>
 <?import javafx.collections.FXCollections?>

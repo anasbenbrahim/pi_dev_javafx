@@ -1,193 +1,271 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="Infinity" maxWidth="Infinity" minHeight="Infinity" minWidth="Infinity" prefHeight="700.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.pidev.ProfileController">
+<AnchorPane prefHeight="856.0" prefWidth="717.0" style="-fx-background-color: linear-gradient(to bottom, #f0f8e8, #ffffff);" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.pidev.ProfileController">
     <children>
-        <VBox layoutX="50.0" layoutY="50.0" prefHeight="600.0" prefWidth="700.0">
+        <!-- Background with farm/agriculture imagery -->
+        <StackPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <HBox alignment="CENTER_LEFT" prefHeight="80.0" prefWidth="700.0">
-                    <children>
-                        <Label text="User Profile" textFill="#2c3e50">
-                            <font>
-                                <Font name="System Bold" size="24.0" />
-                            </font>
-                        </Label>
-                        <Button fx:id="goBackButton" mnemonicParsing="false"  style="-fx-background-color: #3498db;" text="Back to Dashboard" textFill="WHITE">
-                            <HBox.margin>
-                                <Insets left="400.0" />
-                            </HBox.margin>
-                        </Button>
-                    </children>
-                </HBox>
-                <Separator prefWidth="200.0" />
-                <HBox alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="700.0" spacing="20.0">
-                    <children>
-                        <ImageView fx:id="profileImageView" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
-                        <VBox alignment="CENTER_LEFT" prefHeight="120.0" prefWidth="550.0">
-                            <children>
-                                <Button fx:id="uploadPhotoButton" mnemonicParsing="false" onAction="#handleUploadPhoto" style="-fx-background-color: #2ecc71;" text="Upload New Photo" textFill="WHITE" />
-                                <Label text="Upload a professional photo. Recommended size: 200x200 pixels">
-                                    <VBox.margin>
-                                        <Insets top="10.0" />
-                                    </VBox.margin>
-                                    <font>
-                                        <Font size="12.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                        </VBox>
-                    </children>
-                    <VBox.margin>
-                        <Insets top="20.0" />
-                    </VBox.margin>
-                </HBox>
-                <Label text="Personal Information" textFill="#2c3e50">
-                    <font>
-                        <Font name="System Bold" size="16.0" />
-                    </font>
-                    <VBox.margin>
-                        <Insets top="20.0" />
-                    </VBox.margin>
-                </Label>
-                <Separator prefWidth="200.0">
-                    <VBox.margin>
-                        <Insets bottom="10.0" />
-                    </VBox.margin>
-                </Separator>
-                <HBox prefHeight="40.0" prefWidth="700.0" spacing="20.0">
-                    <children>
-                        <VBox prefHeight="40.0" prefWidth="340.0">
-                            <children>
-                                <Label text="First Name" />
-                                <TextField fx:id="firstNameField" />
-                            </children>
-                        </VBox>
-                        <VBox prefHeight="40.0" prefWidth="340.0">
-                            <children>
-                                <Label text="Last Name" />
-                                <TextField fx:id="lastNameField" />
-                            </children>
-                        </VBox>
-                    </children>
-                </HBox>
-                <HBox layoutX="10.0" layoutY="260.0" prefHeight="40.0" prefWidth="700.0" spacing="20.0">
-                    <children>
-                        <VBox prefHeight="40.0" prefWidth="340.0">
-                            <children>
-                                <Label text="Email" />
-                                <TextField fx:id="emailField" editable="false" />
-                            </children>
-                        </VBox>
-                        <VBox prefHeight="40.0" prefWidth="340.0">
-                            <children>
-                                <Label text="Phone Number" />
-                                <TextField fx:id="phoneNumberField" />
-                            </children>
-                        </VBox>
-                    </children>
-                    <VBox.margin>
-                        <Insets top="10.0" />
-                    </VBox.margin>
-                </HBox>
-                <VBox prefHeight="40.0" prefWidth="340.0">
-                    <children>
-                        <Label text="Address" />
-                        <TextField fx:id="addressField" />
-                    </children>
-                    <VBox.margin>
-                        <Insets top="10.0" />
-                    </VBox.margin>
-                </VBox>
-                <VBox prefHeight="40.0" prefWidth="340.0">
-                    <children>
-                        <Label fx:id="specialiteLabel" text="Specialization (Doctors only)" />
-                        <TextField fx:id="specialiteField" />
-                    </children>
-                    <VBox.margin>
-                        <Insets top="10.0" />
-                    </VBox.margin>
-                </VBox>
-                <Button fx:id="updateProfileButton" mnemonicParsing="false" onAction="#handleUpdateProfile" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #2ecc71;" text="Update Profile" textFill="WHITE">
-                    <VBox.margin>
-                        <Insets top="20.0" />
-                    </VBox.margin>
-                </Button>
-                <Label text="Change Password" textFill="#2c3e50">
-                    <font>
-                        <Font name="System Bold" size="16.0" />
-                    </font>
-                    <VBox.margin>
-                        <Insets top="30.0" />
-                    </VBox.margin>
-                </Label>
-                <Separator prefWidth="200.0">
-                    <VBox.margin>
-                        <Insets bottom="10.0" />
-                    </VBox.margin>
-                </Separator>
-                <HBox prefHeight="40.0" prefWidth="700.0" spacing="20.0">
-                    <children>
-                        <VBox prefHeight="40.0" prefWidth="340.0">
-                            <children>
-                                <Label text="Current Password" />
-                                <PasswordField fx:id="currentPasswordField" />
-                            </children>
-                        </VBox>
-                    </children>
-                </HBox>
-                <HBox layoutX="10.0" layoutY="470.0" prefHeight="40.0" prefWidth="700.0" spacing="20.0">
-                    <children>
-                        <VBox prefHeight="40.0" prefWidth="340.0">
-                            <children>
-                                <Label text="New Password" />
-                                <PasswordField fx:id="newPasswordField" />
-                            </children>
-                        </VBox>
-                        <VBox prefHeight="40.0" prefWidth="340.0">
-                            <children>
-                                <Label text="Confirm New Password" />
-                                <PasswordField fx:id="confirmPasswordField" />
-                            </children>
-                        </VBox>
-                    </children>
-                    <VBox.margin>
-                        <Insets top="10.0" />
-                    </VBox.margin>
-                </HBox>
-                <Button fx:id="changePasswordButton" mnemonicParsing="false" onAction="#handleChangePassword" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #3498db;" text="Change Password" textFill="WHITE">
-                    <VBox.margin>
-                        <Insets top="20.0" />
-                    </VBox.margin>
-                </Button>
-                <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="700.0" spacing="20.0">
-                    <children>
-                        <Label fx:id="errorLabel" textFill="RED">
-                            <font>
-                                <Font size="14.0" />
-                            </font>
-                        </Label>
-                        <Label fx:id="successLabel" textFill="#2ecc71">
-                            <font>
-                                <Font size="14.0" />
-                            </font>
-                        </Label>
-                    </children>
-                    <VBox.margin>
-                        <Insets top="10.0" />
-                    </VBox.margin>
-                </HBox>
+                <ImageView fitHeight="600.0" fitWidth="800.0" opacity="0.1" preserveRatio="true">
+
+                </ImageView>
+      
+              <!-- Main Content -->
+              <VBox prefHeight="856.0" prefWidth="776.0" spacing="10.0" style="-fx-background-color: white; -fx-background-radius: 10px;" styleClass="content-container">
+                  <effect>
+                      <DropShadow color="#00000033" height="10.0" radius="4.5" width="10.0" />
+                  </effect>
+                  <padding>
+                      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                  </padding>
+                  <children>
+                      <!-- Profile Header -->
+                      <HBox alignment="CENTER_LEFT" prefHeight="150.0" spacing="20.0">
+                          <children>
+                              <VBox alignment="CENTER_LEFT">
+                                  <children>
+                                      <Label text="Farmer Profile" textFill="#2c3e50">
+                                          <font>
+                                              <Font name="System Bold" size="24.0" />
+                                          </font>
+                                      </Label>
+                                      <Label text="Manage your account information and settings" textFill="#7f8c8d">
+                                          <font>
+                                              <Font size="14.0" />
+                                          </font>
+                                      </Label>
+      
+                                  </children>
+                              </VBox>
+                          </children>
+                      </HBox>
+      
+                      <!-- Personal Information Section -->
+                      <HBox alignment="CENTER_LEFT" style="-fx-padding: 5 0 5 0;">
+                          <children>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+
+                        </ImageView>
+                              <Label text="Personal Information" textFill="#4CAF50">
+                                  <font>
+                                      <Font name="System Bold" size="16.0" />
+                                  </font>
+                                  <HBox.margin>
+                                      <Insets left="10.0" />
+                                  </HBox.margin>
+                              </Label>
+                          </children>
+                      </HBox>
+                      <Separator style="-fx-background-color: #4CAF50;">
+                          <VBox.margin>
+                              <Insets bottom="10.0" />
+                          </VBox.margin>
+                      </Separator>
+      
+                      <!-- First Name & Last Name -->
+                      <HBox prefHeight="60.0" spacing="20.0">
+                          <children>
+                              <VBox prefHeight="60.0" prefWidth="340.0">
+                                  <children>
+                                      <Label text="First Name" textFill="#555555">
+                                          <font>
+                                              <Font size="12.0" />
+                                          </font>
+                                      </Label>
+                                      <TextField fx:id="firstNameField" style="-fx-background-radius: 5; -fx-border-color: #dcdcdc; -fx-border-radius: 5;" />
+                                  </children>
+                              </VBox>
+                              <VBox prefHeight="60.0" prefWidth="340.0">
+                                  <children>
+                                      <Label text="Last Name" textFill="#555555">
+                                          <font>
+                                              <Font size="12.0" />
+                                          </font>
+                                      </Label>
+                                      <TextField fx:id="lastNameField" style="-fx-background-radius: 5; -fx-border-color: #dcdcdc; -fx-border-radius: 5;" />
+                                  </children>
+                              </VBox>
+                          </children>
+                      </HBox>
+      
+                      <!-- Email & Phone -->
+                      <HBox prefHeight="60.0" spacing="20.0">
+                          <children>
+                              <VBox prefHeight="60.0" prefWidth="340.0">
+                                  <children>
+                                      <Label text="Email" textFill="#555555">
+                                          <font>
+                                              <Font size="12.0" />
+                                          </font>
+                                      </Label>
+                                      <TextField fx:id="emailField" editable="false" style="-fx-background-radius: 5; -fx-border-color: #dcdcdc; -fx-border-radius: 5; -fx-background-color: #f5f5f5;" />
+                                  </children>
+                              </VBox>
+                              <VBox prefHeight="60.0" prefWidth="340.0">
+                                  <children>
+                                      <Label text="Phone Number" textFill="#555555">
+                                          <font>
+                                              <Font size="12.0" />
+                                          </font>
+                                      </Label>
+                                      <TextField fx:id="phoneNumberField" style="-fx-background-radius: 5; -fx-border-color: #dcdcdc; -fx-border-radius: 5;" />
+                                  </children>
+                              </VBox>
+                          </children>
+                      </HBox>
+      
+                      <!-- Address -->
+                      <VBox prefHeight="60.0">
+                          <children>
+                              <Label text="Farm Address" textFill="#555555">
+                                  <font>
+                                      <Font size="12.0" />
+                                  </font>
+                              </Label>
+                              <TextField fx:id="addressField" style="-fx-background-radius: 5; -fx-border-color: #dcdcdc; -fx-border-radius: 5;" />
+                          </children>
+                      </VBox>
+      
+                      <!-- Specialization -->
+                      <VBox prefHeight="60.0">
+                          <children>
+                              <Label fx:id="specialiteLabel" text="Agricultural Specialization" textFill="#555555">
+                                  <font>
+                                      <Font size="12.0" />
+                                  </font>
+                              </Label>
+                              <TextField fx:id="specialiteField" style="-fx-background-radius: 5; -fx-border-color: #dcdcdc; -fx-border-radius: 5;" />
+                          </children>
+                      </VBox>
+      
+                      <!-- Update Profile Button -->
+                      <Button fx:id="updateProfileButton" mnemonicParsing="false" onAction="#handleUpdateProfile" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #4CAF50; -fx-background-radius: 20;" text="Update Profile" textFill="WHITE">
+                          <font>
+                              <Font name="System Bold" size="14.0" />
+                          </font>
+                          <VBox.margin>
+                              <Insets top="10.0" />
+                          </VBox.margin>
+                          <graphic>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+
+                        </ImageView>
+                          </graphic>
+                      </Button>
+            
+                    <!-- Password Section -->
+                    <VBox prefHeight="73.0" prefWidth="740.0" spacing="10.0" style="-fx-background-color: white; -fx-background-radius: 10px;" styleClass="content-container">
+                        <effect>
+                            <DropShadow color="#00000033" height="10.0" radius="4.5" width="10.0" />
+                        </effect>
+                        <padding>
+                            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                        </padding>
+                        <children>
+                            <!-- Password Header -->
+                            <HBox alignment="CENTER_LEFT" style="-fx-padding: 5 0 5 0;">
+                                <children>
+                                    <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+
+                        </ImageView>
+                                    <Label text="Security Settings" textFill="#4CAF50">
+                                        <font>
+                                            <Font name="System Bold" size="16.0" />
+                                        </font>
+                                        <HBox.margin>
+                                            <Insets left="10.0" />
+                                        </HBox.margin>
+                                    </Label>
+                                </children>
+                            </HBox>
+                            <Separator style="-fx-background-color: #4CAF50;">
+                                <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                </VBox.margin>
+                            </Separator>
+            
+                            <!-- Current Password -->
+                            <VBox prefHeight="60.0">
+                                <children>
+                                    <Label text="Current Password" textFill="#555555">
+                                        <font>
+                                            <Font size="12.0" />
+                                        </font>
+                                    </Label>
+                                    <PasswordField fx:id="currentPasswordField" style="-fx-background-radius: 5; -fx-border-color: #dcdcdc; -fx-border-radius: 5;" />
+                                </children>
+                            </VBox>
+            
+                            <!-- New Password & Confirm -->
+                            <HBox prefHeight="60.0" spacing="20.0">
+                                <children>
+                                    <VBox prefHeight="60.0" prefWidth="340.0">
+                                        <children>
+                                            <Label text="New Password" textFill="#555555">
+                                                <font>
+                                                    <Font size="12.0" />
+                                                </font>
+                                            </Label>
+                                            <PasswordField fx:id="newPasswordField" style="-fx-background-radius: 5; -fx-border-color: #dcdcdc; -fx-border-radius: 5;" />
+                                        </children>
+                                    </VBox>
+                                    <VBox prefHeight="60.0" prefWidth="340.0">
+                                        <children>
+                                            <Label text="Confirm New Password" textFill="#555555">
+                                                <font>
+                                                    <Font size="12.0" />
+                                                </font>
+                                            </Label>
+                                            <PasswordField fx:id="confirmPasswordField" style="-fx-background-radius: 5; -fx-border-color: #dcdcdc; -fx-border-radius: 5;" />
+                                        </children>
+                                    </VBox>
+                                </children>
+                            </HBox>
+            
+                            <!-- Change Password Button -->
+                            <Button fx:id="changePasswordButton" mnemonicParsing="false" onAction="#handleChangePassword" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #8BC34A; -fx-background-radius: 20;" text="Change Password" textFill="WHITE">
+                                <font>
+                                    <Font name="System Bold" size="14.0" />
+                                </font>
+                                <VBox.margin>
+                                    <Insets top="10.0" />
+                                </VBox.margin>
+                                <graphic>
+                                    <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+
+                        </ImageView>
+                                </graphic>
+                            </Button>
+                        </children>
+                    </VBox>
+                  </children>
+              </VBox>
             </children>
-        </VBox>
+        </StackPane>
+
+        <!-- Status Messages -->
+        <HBox alignment="CENTER" layoutX="50.0" layoutY="690.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
+            <children>
+                <Label fx:id="errorLabel" textFill="#e74c3c">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                    <HBox.margin>
+                        <Insets right="20.0" />
+                    </HBox.margin>
+                </Label>
+                <Label fx:id="successLabel" textFill="#4CAF50">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+            </children>
+        </HBox>
     </children>
 </AnchorPane>

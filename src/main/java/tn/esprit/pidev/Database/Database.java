@@ -10,6 +10,7 @@ public class Database {
     private static final String DATABASE_USER = "root";
     private static final String DATABASE_PASSWORD = ""; // Set your password here
     private static Connection connection;
+    private static Database instance;
 
     public static Connection getConnection() {
         if (connection == null) {
@@ -24,6 +25,18 @@ public class Database {
         }
         return connection;
     }
+
+    // Méthode pour obtenir l'instance unique
+    public static synchronized Database getInstance() {
+        if (instance == null) {
+            instance = new Database();
+        }
+        return instance;
+    }
+
+
+
+
 
     public static void closeConnection() {
         if (connection != null) {

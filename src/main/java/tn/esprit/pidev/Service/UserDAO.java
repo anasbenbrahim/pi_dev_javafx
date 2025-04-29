@@ -353,4 +353,114 @@ public class UserDAO {
             System.out.println("Error closing resources: " + ex.getMessage());
         }
     }
+
+
+    public boolean banUser(int userId) {
+        String query = "UPDATE user SET isBanned = true WHERE id = ?";
+
+        try (Connection connection = Database.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setInt(1, userId);
+            int rowsAffected = preparedStatement.executeUpdate();
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+            System.err.println("Erreur lors du bannissement de l'utilisateur: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean unbanUser(int userId) {
+        String query = "UPDATE user SET isBanned = false WHERE id = ?";
+
+        try (Connection connection = Database.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setInt(1, userId);
+            int rowsAffected = preparedStatement.executeUpdate();
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+            System.err.println("Erreur lors du débannissement de l'utilisateur: " + e.getMessage());
+            return false;
+        }
+    }
+
+
+    /**
+     * Gets a user by their ID
+     * @param userId The user's ID
+     * @return User object if found, null otherwise
+     */
+    public User getUserById(int userId) {
+        String query = "SELECT * FROM user WHERE id = ?";
+
+        try {
+            pst = connection.prepareStatement(query);
+            pst.setInt(1, userId);
+
+            rs = pst.executeQuery();
+
+            if (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt("id"));
+                user.setEmail(rs.getString("email"));
+                user.setFirstName(rs.getString("first_name"));
+                user.setLastName(rs.getString("last_name"));
+
+                user.setSpecialite(rs.getString("specialite"));
+                user.setAddress(rs.getString("address"));
+                user.setBirthDate(rs.getDate("birth_date"));
+                user.setPhoneNumber(rs.getString("phone_number"));
+                user.setPhoto(rs.getString("photo"));
+                user.setBanned(rs.getBoolean("is_banned"));
+
+                return user;
+            }
+            return null;
+        } catch (SQLException ex) {
+            System.out.println("Error getting user: " + ex.getMessage());
+            return null;
+        } finally {
+            closeResources();
+        }
+    }
+
+
+    public List<User> getUsersByRole(String role) {
+        List<User> users = new ArrayList<>();
+        String query = "SELECT * FROM user WHERE role = ?";
+
+        try {
+            pst = connection.prepareStatement(query);
+            pst.setString(1, role);
+            rs = pst.executeQuery();
+
+            while (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt("id"));
+                user.setEmail(rs.getString("email"));
+                user.setFirstName(rs.getString("first_name"));
+                user.setLastName(rs.getString("last_name"));
+
+                user.setSpecialite(rs.getString("specialite"));
+                user.setAddress(rs.getString("address"));
+                user.setBirthDate(rs.getDate("birth_date"));
+                user.setPhoneNumber(rs.getString("phone_number"));
+                user.setPhoto(rs.getString("photo"));
+                user.setBanned(rs.getBoolean("is_banned"));
+
+                users.add(user);
+            }
+            return users;
+        } catch (SQLException ex) {
+            System.out.println("Error getting users by role: " + ex.getMessage());
+            return users;
+        } finally {
+            closeResources();
+        }
+    }
+
+
 }

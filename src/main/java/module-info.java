@@ -19,6 +19,7 @@ module tn.esprit.pidev {
     requires jbcrypt;
     requires java.mail;
     requires java.desktop;
+    requires twilio;
 
 
     opens tn.esprit.pidev to javafx.fxml;

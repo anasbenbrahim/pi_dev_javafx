@@ -16,6 +16,7 @@ public class User {
     private String address;
     private Date birthDate;
     private String phoneNumber;
+    private boolean isBanned;
     public static User connecte;
 
     // Default constructor
@@ -52,6 +53,30 @@ public class User {
         this.address = address;
         this.birthDate = birthDate;
         this.phoneNumber = phoneNumber;
+    }
+
+    public User(int id, String email, String password, String name, String[] roles, String specialite, String firstName, String lastName, String photo, String address, Date birthDate, String phoneNumber, boolean isBanned) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.roles = roles;
+        this.specialite = specialite;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.photo = photo;
+        this.address = address;
+        this.birthDate = birthDate;
+        this.phoneNumber = phoneNumber;
+        this.isBanned = isBanned;
+    }
+
+    public boolean isBanned() {
+        return isBanned;
+    }
+
+    public void setBanned(boolean banned) {
+        isBanned = banned;
     }
 
     // Getters and Setters
@@ -159,6 +184,7 @@ public class User {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", roles=" + Arrays.toString(roles) +
+                ", isBanned=" + isBanned +
                 '}';
     }
 }
