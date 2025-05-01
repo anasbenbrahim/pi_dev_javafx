@@ -58,7 +58,6 @@ public class UpdatePublication {
         String description = descriptionupdate.getText();
         String imagePath = imageupdate.getText();
 
-        // Validation
         if (!isValidTitre(titre)) {
             showAlert("Erreur", "Le titre doit contenir au moins 3 caractères et ne doit pas inclure de chiffres.", Alert.AlertType.ERROR);
             return;

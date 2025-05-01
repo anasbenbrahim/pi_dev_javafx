@@ -30,7 +30,6 @@ public class ServicePublication implements IService<Publication> {
         }
     }
 
-    // Upload image to Cloudinary and return the URL
     private String uploadImageToCloudinary(File imageFile) {
         try {
             Map uploadResult = cloudinary.uploader().upload(imageFile, ObjectUtils.emptyMap());
@@ -47,7 +46,6 @@ public class ServicePublication implements IService<Publication> {
         try {
             validateConnection();
             String imageUrl = publication.getImageUrl();
-            // If imageUrl is a local file path, upload to Cloudinary
             if (imageUrl != null && new File(imageUrl).exists()) {
                 imageUrl = uploadImageToCloudinary(new File(imageUrl));
                 publication.setImageUrl(imageUrl);
@@ -73,7 +71,6 @@ public class ServicePublication implements IService<Publication> {
         try {
             validateConnection();
             String imageUrl = publication.getImageUrl();
-            // If imageUrl is a local file path, upload to Cloudinary
             if (imageUrl != null && new File(imageUrl).exists()) {
                 imageUrl = uploadImageToCloudinary(new File(imageUrl));
                 publication.setImageUrl(imageUrl);

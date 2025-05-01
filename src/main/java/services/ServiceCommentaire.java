@@ -7,25 +7,37 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Service class for managing Commentaire entities in the database.
+ * Provides CRUD operations and retrieval of comments by publication.
+ */
 public class ServiceCommentaire implements IService<Commentaire> {
-    private Connection con;
+    private final Connection con;
 
+    /**
+     * Constructor initializes the database connection.
+     */
     public ServiceCommentaire() {
         this.con = DataSource.getInstance().getConnection();
     }
 
+    /**
+     * Validates that the database connection is active.
+     * @throws SQLException if the connection is null or closed
+     */
     private void validateConnection() throws SQLException {
         if (con == null || con.isClosed()) {
             throw new SQLException("Database connection is null or closed.");
         }
     }
 
+
     @Override
     public void insert(Commentaire commentaire) {
         try {
             validateConnection();
-            String req = "INSERT INTO commentaire (description, publication_id, client_id, image) VALUES (?, ?, ?, ?)";
-            try (PreparedStatement ps = con.prepareStatement(req, Statement.RETURN_GENERATED_KEYS)) {
+            String query = "INSERT INTO commentaire (description, publication_id, client_id, image) VALUES (?, ?, ?, ?)";
+            try (PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
                 ps.setString(1, commentaire.getDescription());
                 ps.setInt(2, commentaire.getPublicationId());
                 ps.setInt(3, commentaire.getClientId());
@@ -36,7 +48,7 @@ public class ServiceCommentaire implements IService<Commentaire> {
                         commentaire.setId(rs.getInt(1));
                     }
                 }
-                System.out.println("Comment added successfully!");
+                System.out.println("Comment added successfully with ID: " + commentaire.getId());
             }
         } catch (SQLException e) {
             System.err.println("Error inserting comment: " + e.getMessage());
@@ -44,18 +56,19 @@ public class ServiceCommentaire implements IService<Commentaire> {
         }
     }
 
+
     @Override
     public void update(Commentaire commentaire) {
         try {
             validateConnection();
-            String req = "UPDATE commentaire SET description=?, image=? WHERE id=?";
-            try (PreparedStatement ps = con.prepareStatement(req)) {
+            String query = "UPDATE commentaire SET description = ?, image = ? WHERE id = ?";
+            try (PreparedStatement ps = con.prepareStatement(query)) {
                 ps.setString(1, commentaire.getDescription());
                 ps.setString(2, commentaire.getImage());
                 ps.setInt(3, commentaire.getId());
                 int rowsAffected = ps.executeUpdate();
                 if (rowsAffected > 0) {
-                    System.out.println("Comment updated successfully!");
+                    System.out.println("Comment updated successfully with ID: " + commentaire.getId());
                 } else {
                     System.err.println("No comment found with ID: " + commentaire.getId());
                 }
@@ -66,6 +79,7 @@ public class ServiceCommentaire implements IService<Commentaire> {
         }
     }
 
+
     @Override
     public void delete(int id) {
         try {
@@ -75,15 +89,15 @@ public class ServiceCommentaire implements IService<Commentaire> {
             System.out.println("Deleted " + notificationsDeleted + " notifications for comment ID: " + id);
 
             // Delete comment
-            String req = "DELETE FROM commentaire WHERE id=?";
-            try (PreparedStatement ps = con.prepareStatement(req)) {
+            String query = "DELETE FROM commentaire WHERE id = ?";
+            try (PreparedStatement ps = con.prepareStatement(query)) {
                 ps.setInt(1, id);
                 int rowsAffected = ps.executeUpdate();
                 if (rowsAffected == 0) {
                     System.err.println("No comment found with ID: " + id);
                     throw new SQLException("No comment found with ID: " + id);
                 }
-                System.out.println("Comment deleted successfully!");
+                System.out.println("Comment deleted successfully with ID: " + id);
             }
         } catch (SQLException e) {
             System.err.println("Error deleting comment: " + e.getMessage());
@@ -92,26 +106,29 @@ public class ServiceCommentaire implements IService<Commentaire> {
         }
     }
 
-    private int deleteRelatedRecords(String sql, int id) throws SQLException {
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
+
+    private int deleteRelatedRecords(String query, int id) throws SQLException {
+        try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, id);
             return ps.executeUpdate();
         }
     }
 
+
     @Override
     public List<Commentaire> getAll() {
-        List<Commentaire> list = new ArrayList<>();
+        List<Commentaire> comments = new ArrayList<>();
         try {
             validateConnection();
-            String req = "SELECT * FROM commentaire";
-            try (Statement st = con.createStatement(); ResultSet rs = st.executeQuery(req)) {
+            String query = "SELECT * FROM commentaire";
+            try (Statement st = con.createStatement(); ResultSet rs = st.executeQuery(query)) {
                 while (rs.next()) {
-                    list.add(new Commentaire(
+                    comments.add(new Commentaire(
                             rs.getInt("id"),
-                            rs.getString("description"),
                             rs.getInt("publication_id"),
-                            rs.getInt("client_id")
+                            rs.getInt("client_id"),
+                            rs.getString("description"),
+                            rs.getString("image")
                     ));
                 }
             }
@@ -119,58 +136,64 @@ public class ServiceCommentaire implements IService<Commentaire> {
             System.err.println("Error retrieving comments: " + e.getMessage());
             e.printStackTrace();
         }
-        return list;
+        return comments;
     }
+
 
     @Override
     public Commentaire getById(int id) {
         try {
             validateConnection();
-            String req = "SELECT * FROM commentaire WHERE id=?";
-            try (PreparedStatement ps = con.prepareStatement(req)) {
+            String query = "SELECT * FROM commentaire WHERE id = ?";
+            try (PreparedStatement ps = con.prepareStatement(query)) {
                 ps.setInt(1, id);
                 try (ResultSet rs = ps.executeQuery()) {
                     if (rs.next()) {
                         return new Commentaire(
                                 rs.getInt("id"),
-                                rs.getString("description"),
                                 rs.getInt("publication_id"),
-                                rs.getInt("client_id")
+                                rs.getInt("client_id"),
+                                rs.getString("description"),
+                                rs.getString("image")
                         );
                     }
                 }
             }
         } catch (SQLException e) {
-            System.err.println("Error retrieving comment: " + e.getMessage());
+            System.err.println("Error retrieving comment with ID " + id + ": " + e.getMessage());
             e.printStackTrace();
         }
         return null;
     }
 
+
     public List<Commentaire> afficherCommentairesParPublication(int publicationId) {
-        List<Commentaire> list = new ArrayList<>();
+        List<Commentaire> comments = new ArrayList<>();
         try {
             validateConnection();
-            String req = "SELECT * FROM commentaire WHERE publication_id=?";
-            try (PreparedStatement ps = con.prepareStatement(req)) {
+            String query = "SELECT * FROM commentaire WHERE publication_id = ?";
+            try (PreparedStatement ps = con.prepareStatement(query)) {
                 ps.setInt(1, publicationId);
                 try (ResultSet rs = ps.executeQuery()) {
                     while (rs.next()) {
                         Commentaire commentaire = new Commentaire(
                                 rs.getInt("id"),
-                                rs.getString("description"),
                                 rs.getInt("publication_id"),
-                                rs.getInt("client_id")
+                                rs.getInt("client_id"),
+                                rs.getString("description"),
+                                rs.getString("image")
                         );
-                        System.out.println("Fetched comment: " + commentaire.getDescription());
-                        list.add(commentaire);
+                        System.out.println("Fetched comment ID: " + commentaire.getId() +
+                                ", Description: " + commentaire.getDescription() +
+                                ", Image: " + commentaire.getImage());
+                        comments.add(commentaire);
                     }
                 }
             }
         } catch (SQLException e) {
-            System.err.println("Error retrieving comments for publication: " + e.getMessage());
+            System.err.println("Error retrieving comments for publication ID " + publicationId + ": " + e.getMessage());
             e.printStackTrace();
         }
-        return list;
+        return comments;
     }
 }

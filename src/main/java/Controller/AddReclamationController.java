@@ -33,7 +33,6 @@ public class AddReclamationController {
         String titre = titreField.getText();
         String description = descriptionField.getText();
 
-        // Validation
         if (!isValidTitre(titre)) {
             showAlert("Erreur", "Le titre doit contenir au moins 3 caractères et ne doit pas inclure de chiffres.", Alert.AlertType.ERROR);
             return;
@@ -71,7 +70,6 @@ public class AddReclamationController {
         if (titre == null || titre.trim().length() < 3) {
             return false;
         }
-        // No digits allowed
         return titre.matches("^[\\p{L}\\s\\p{P}]+$") && !titre.matches(".*\\d.*");
     }
 

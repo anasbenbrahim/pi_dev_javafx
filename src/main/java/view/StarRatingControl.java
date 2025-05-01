@@ -16,7 +16,6 @@ public class StarRatingControl extends HBox {
         setSpacing(5);
         getStyleClass().add("star-rating");
 
-        // Create 5 star icons
         for (int i = 0; i < 5; i++) {
             ImageView star = new ImageView(starEmpty);
             star.setFitWidth(24);
@@ -24,7 +23,6 @@ public class StarRatingControl extends HBox {
             final int starIndex = i + 1;
             star.setUserData(starIndex);
 
-            // Hover effect
             star.setOnMouseEntered(e -> highlightStars(starIndex));
             star.setOnMouseExited(e -> highlightStars(rating.get()));
 

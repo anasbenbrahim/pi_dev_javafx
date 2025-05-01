@@ -42,7 +42,7 @@ public class Publicationdetail {
     private Publication publication;
     private ServiceCommentaire commentaireService;
     private RatingService ratingService;
-    private final int currentClientId = 1; // Replace with actual user system
+    private final int currentClientId = 1;
     private Button[] starButtons;
     private NavigationManager navigationManager;
 
@@ -165,6 +165,20 @@ public class Publicationdetail {
                 commentText.setWrapText(true);
                 commentText.setStyle("-fx-font-size: 14px; -fx-text-fill: #2c6b2f; -fx-opacity: 1.0;");
 
+                // Add image if available
+                if (commentaire.getImage() != null && !commentaire.getImage().isEmpty()) {
+                    try {
+                        Image image = new Image("file:" + commentaire.getImage(), 200, 100, true, true);
+                        ImageView commentImageView = new ImageView(image);
+                        commentImageView.setPreserveRatio(true);
+                        commentBox.getChildren().add(commentImageView);
+                    } catch (Exception e) {
+                        Label imageError = new Label("Image not available");
+                        imageError.setStyle("-fx-font-size: 12px; -fx-text-fill: #F44336;");
+                        commentBox.getChildren().add(imageError);
+                    }
+                }
+
                 HBox buttonBox = new HBox(10);
                 buttonBox.setAlignment(Pos.CENTER_RIGHT);
 
@@ -174,7 +188,7 @@ public class Publicationdetail {
                 editButton.setOnAction(e -> openEditCommentForm(commentaire));
 
                 Button deleteButton = new Button("Supprimer");
-                deleteButton.getStyleClass().add("action-button");
+                        deleteButton.getStyleClass().add("action-button");
                 deleteButton.setStyle("-fx-background-color: #F44336; -fx-font-size: 12px; -fx-padding: 5 10;");
                 deleteButton.setOnAction(e -> deleteComment(commentaire.getId()));
 
@@ -188,8 +202,7 @@ public class Publicationdetail {
     private void deleteComment(int commentId) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Delete Comment");
-        alert.setHeaderText("Are you sure you want to delete this comment?");
-        alert.setContentText("This action cannot be undone.");
+        alert.setHeaderText("Êtes-vous sûr de vouloir supprimer cette publication?");
         if (alert.showAndWait().get() == ButtonType.OK) {
             commentaireService.delete(commentId);
             loadComments();

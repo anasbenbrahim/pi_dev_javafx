@@ -7,7 +7,7 @@ public class Commentaire {
     private String description;
     private String image;
 
-    // Constructor for adding a new comment (used in Addcommentaire)
+    // Constructor for adding a new comment without an image
     public Commentaire(String description, int publicationId, int clientId) {
         this.description = description;
         this.publicationId = publicationId;
@@ -15,7 +15,7 @@ public class Commentaire {
         this.image = null;
     }
 
-    // Constructor for full initialization (e.g., from database)
+    // Constructor for database retrieval without image
     public Commentaire(int id, String description, int publicationId, int clientId) {
         this.id = id;
         this.description = description;
@@ -24,8 +24,17 @@ public class Commentaire {
         this.image = null;
     }
 
-    // Constructor with image
+    // Constructor for adding a new comment with an image
     public Commentaire(int publicationId, int clientId, String description, String image) {
+        this.publicationId = publicationId;
+        this.clientId = clientId;
+        this.description = description;
+        this.image = image;
+    }
+
+    // Constructor for database retrieval with image
+    public Commentaire(int id, int publicationId, int clientId, String description, String image) {
+        this.id = id;
         this.publicationId = publicationId;
         this.clientId = clientId;
         this.description = description;

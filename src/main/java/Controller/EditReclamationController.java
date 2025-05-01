@@ -53,7 +53,6 @@ public class EditReclamationController {
         String description = descriptionField.getText();
         LocalDate date = dateField.getValue();
 
-        // Validation
         if (!isValidTitre(titre)) {
             showAlert("Erreur", "Le titre doit contenir au moins 3 caractères et ne doit pas inclure de chiffres.", Alert.AlertType.ERROR);
             return;

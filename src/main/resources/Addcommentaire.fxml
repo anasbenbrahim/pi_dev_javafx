@@ -14,6 +14,11 @@
 
     <TextArea fx:id="commentTextArea" promptText="Entrez votre commentaire" wrapText="true" styleClass="input-field" prefWidth="350" maxWidth="350" prefHeight="100"/>
 
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Button fx:id="selectImageButton" text="Choisir une image" onAction="#selectImage" styleClass="action-button"/>
+        <Label fx:id="imageNameLabel" text="Aucune image sélectionnée" styleClass="card-date"/>
+    </HBox>
+
     <HBox spacing="15" alignment="CENTER">
         <Button fx:id="submitButton" text="Ajouter Commentaire" onAction="#submitComment" styleClass="submit-button"/>
         <Button fx:id="retourButton" text="Retour" onAction="#goBack" styleClass="action-button"/>

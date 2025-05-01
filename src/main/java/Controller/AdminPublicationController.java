@@ -8,8 +8,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import modele.Publication;
 import modele.Reclamation;
+import modele.User;
 import services.ServicePublication;
 import services.ServiceReclamation;
+import services.ServiceUser;
+import services.EmailService;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -33,6 +36,8 @@ public class AdminPublicationController implements Initializable {
 
     private final ServicePublication servicePublication = new ServicePublication();
     private final ServiceReclamation serviceReclamation = new ServiceReclamation();
+    private final ServiceUser serviceUser = new ServiceUser();
+    private final EmailService emailService = new EmailService();
     private NavigationManager navigationManager;
     private Runnable refreshCallback;
 
@@ -134,11 +139,30 @@ public class AdminPublicationController implements Initializable {
                     Reclamation reclamation = getTableView().getItems().get(getIndex());
                     reclamation.setStatus("Approuvée");
                     serviceReclamation.update(reclamation);
+
+                    // Send email notification
+                    User user = serviceUser.getById(reclamation.getClientId());
+                    if (user != null && user.getEmail() != null && !user.getEmail().isEmpty()) {
+                        String subject = "Votre réclamation a été approuvée";
+                        String body = "Bonjour,\n\nVotre réclamation intitulée \"" + reclamation.getTitre() +
+                                "\" a été approuvée.\nDétails : " + reclamation.getDescription() +
+                                "\n\nCordialement,\nL'équipe d'administration";
+                        try {
+                            emailService.sendEmail(user.getEmail(), subject, body);
+                            showAlert(Alert.AlertType.INFORMATION, "Succès", "Email envoyé à " + user.getEmail());
+                        } catch (Exception e) {
+                            showAlert(Alert.AlertType.ERROR, "Erreur", "Échec de l'envoi de l'email : " + e.getMessage());
+                        }
+                    } else {
+                        showAlert(Alert.AlertType.WARNING, "Avertissement",
+                                "Aucun email trouvé pour l'utilisateur avec ID: " + reclamation.getClientId());
+                    }
+
                     loadReclamations();
                 });
             }
             @Override
-            protected void updateItem(Void  item, boolean empty) {
+            protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
                 setGraphic(empty ? null : approveBtn);
             }
@@ -162,6 +186,14 @@ public class AdminPublicationController implements Initializable {
                 setGraphic(empty ? null : deleteBtn);
             }
         });
+    }
+
+    private void showAlert(Alert.AlertType type, String title, String message) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     @FXML

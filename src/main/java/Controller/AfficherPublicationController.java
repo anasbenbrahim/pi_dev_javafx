@@ -51,10 +51,9 @@ public class AfficherPublicationController {
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
             filterPublicationsByTitre(newValue);
         });
-        retourButton.setVisible(false); // Hidden on main view
+        retourButton.setVisible(false);
     }
 
-    // Public method to trigger refresh
     public void refreshPublications() {
         System.out.println("Refreshing publications in AfficherPublicationController");
         loadPublications();
@@ -276,7 +275,7 @@ public class AfficherPublicationController {
     }
 
     private boolean isAdminUser() {
-        return true; // Replace with actual logic
+        return true;
     }
 
     @FXML

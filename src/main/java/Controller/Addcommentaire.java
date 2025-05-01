@@ -3,7 +3,9 @@ package Controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.stage.FileChooser;
 import modele.Publication;
 import modele.Commentaire;
 import modele.Notification;
@@ -11,11 +13,15 @@ import services.ServiceCommentaire;
 import services.NotificationService;
 import utils.FiltreCommentaire;
 
+import java.io.File;
+
 public class Addcommentaire {
 
     @FXML private TextArea commentTextArea;
     @FXML private Button submitButton;
     @FXML private Button retourButton;
+    @FXML private Button selectImageButton;
+    @FXML private Label imageNameLabel;
 
     private Publication publication;
     private Commentaire commentaire;
@@ -24,6 +30,7 @@ public class Addcommentaire {
     private Runnable onCommentAdded;
     private final int currentClientId = 1; // Replace with actual user system
     private NavigationManager navigationManager;
+    private File selectedImageFile;
 
     public Addcommentaire() {
         commentaireService = new ServiceCommentaire();
@@ -39,6 +46,9 @@ public class Addcommentaire {
         if (commentaire != null) {
             commentTextArea.setText(commentaire.getDescription());
             submitButton.setText("Update Comment");
+            if (commentaire.getImage() != null && !commentaire.getImage().isEmpty()) {
+                imageNameLabel.setText(new File(commentaire.getImage()).getName());
+            }
         }
     }
 
@@ -58,6 +68,20 @@ public class Addcommentaire {
     }
 
     @FXML
+    private void selectImage() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select Image");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg")
+        );
+        File file = fileChooser.showOpenDialog(commentTextArea.getScene().getWindow());
+        if (file != null) {
+            selectedImageFile = file;
+            imageNameLabel.setText(file.getName());
+        }
+    }
+
+    @FXML
     private void submitComment() {
         String description = commentTextArea.getText();
         if (description == null || description.trim().isEmpty()) {
@@ -66,13 +90,15 @@ public class Addcommentaire {
         }
 
         String filteredDescription = FiltreCommentaire.filtreCommentaire(description);
+        String imagePath = (selectedImageFile != null) ? selectedImageFile.getAbsolutePath() : null;
 
         try {
             if (commentaire == null) {
                 Commentaire newComment = new Commentaire(
-                        filteredDescription,
                         publication.getId(),
-                        currentClientId
+                        currentClientId,
+                        filteredDescription,
+                        imagePath
                 );
                 commentaireService.insert(newComment);
 
@@ -85,7 +111,8 @@ public class Addcommentaire {
                 );
                 notificationService.addNotification(notification);
             } else {
-                commentaire.setDescription(filteredDescription);
+                commentaire.setDescription (filteredDescription);
+                commentaire.setImage(imagePath);
                 commentaireService.update(commentaire);
             }
 

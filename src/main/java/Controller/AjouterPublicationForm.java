@@ -53,7 +53,6 @@ public class AjouterPublicationForm {
         String description = descriptionField.getText();
         String imagePath = imageUrlField.getText();
 
-        // Validation
         if (!isValidTitre(titre)) {
             showAlert("Erreur", "Le titre doit contenir au moins 3 caractères et ne doit pas inclure de chiffres.", Alert.AlertType.ERROR);
             return;
