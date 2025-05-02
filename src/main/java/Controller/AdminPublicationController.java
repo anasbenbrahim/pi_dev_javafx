@@ -8,13 +8,16 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import modele.Publication;
 import modele.Reclamation;
-import modele.User;
 import services.ServicePublication;
 import services.ServiceReclamation;
-import services.ServiceUser;
 import services.EmailService;
+import utils.DataSource;
 
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class AdminPublicationController implements Initializable {
@@ -36,8 +39,8 @@ public class AdminPublicationController implements Initializable {
 
     private final ServicePublication servicePublication = new ServicePublication();
     private final ServiceReclamation serviceReclamation = new ServiceReclamation();
-    private final ServiceUser serviceUser = new ServiceUser();
     private final EmailService emailService = new EmailService();
+    private final Connection con = DataSource.getInstance().getConnection();
     private NavigationManager navigationManager;
     private Runnable refreshCallback;
 
@@ -140,22 +143,22 @@ public class AdminPublicationController implements Initializable {
                     reclamation.setStatus("Approuvée");
                     serviceReclamation.update(reclamation);
 
-                    // Send email notification
-                    User user = serviceUser.getById(reclamation.getClientId());
-                    if (user != null && user.getEmail() != null && !user.getEmail().isEmpty()) {
+                    // Fetch client email directly from the client table
+                    String clientEmail = getClientEmail(reclamation.getClientId());
+                    if (clientEmail != null && !clientEmail.isEmpty()) {
                         String subject = "Votre réclamation a été approuvée";
                         String body = "Bonjour,\n\nVotre réclamation intitulée \"" + reclamation.getTitre() +
                                 "\" a été approuvée.\nDétails : " + reclamation.getDescription() +
                                 "\n\nCordialement,\nL'équipe d'administration";
                         try {
-                            emailService.sendEmail(user.getEmail(), subject, body);
-                            showAlert(Alert.AlertType.INFORMATION, "Succès", "Email envoyé à " + user.getEmail());
+                            emailService.sendEmail(clientEmail, subject, body);
+                            showAlert(Alert.AlertType.INFORMATION, "Succès", "Email envoyé à " + clientEmail);
                         } catch (Exception e) {
                             showAlert(Alert.AlertType.ERROR, "Erreur", "Échec de l'envoi de l'email : " + e.getMessage());
                         }
                     } else {
                         showAlert(Alert.AlertType.WARNING, "Avertissement",
-                                "Aucun email trouvé pour l'utilisateur avec ID: " + reclamation.getClientId());
+                                "Aucun email trouvé pour le client avec ID: " + reclamation.getClientId());
                     }
 
                     loadReclamations();
@@ -167,6 +170,21 @@ public class AdminPublicationController implements Initializable {
                 setGraphic(empty ? null : approveBtn);
             }
         });
+    }
+
+    private String getClientEmail(int clientId) {
+        String req = "SELECT email FROM client WHERE id = ?";
+        try (PreparedStatement ps = con.prepareStatement(req)) {
+            ps.setInt(1, clientId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("email");
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error retrieving client email: " + e.getMessage());
+        }
+        return null;
     }
 
     private void addDeleteButtonToReclamationTable() {

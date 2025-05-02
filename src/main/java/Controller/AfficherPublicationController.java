@@ -41,7 +41,7 @@ public class AfficherPublicationController {
     private final ServicePublication publicationService = new ServicePublication();
     private final NotificationService notificationService = new NotificationService();
     private final RatingService ratingService = new RatingService();
-    private final int currentClientId = 1; // Replace with actual user system
+    private final int currentClientId = 1; // Replace with actual client system
     private NavigationManager navigationManager;
     private Stage primaryStage;
     private Button notificationButton; // Store for updating badge
@@ -319,7 +319,7 @@ public class AfficherPublicationController {
         voirReclamationsItem.setOnAction(e -> openAllReclamationsView());
 
         contextMenu.getItems().addAll(viewItem, reclamationItem, voirReclamationsItem);
-        if (isAdminUser()) {
+        if (isAdminClient()) {
             contextMenu.getItems().addAll(updateItem, deleteItem);
         }
 
@@ -330,7 +330,7 @@ public class AfficherPublicationController {
         return card;
     }
 
-    private boolean isAdminUser() {
+    private boolean isAdminClient() {
         return true;
     }
 
