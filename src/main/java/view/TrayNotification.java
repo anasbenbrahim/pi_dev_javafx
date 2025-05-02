@@ -6,8 +6,6 @@ import javafx.animation.SequentialTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
@@ -44,11 +42,6 @@ public class TrayNotification {
         box.setPrefWidth(300);
         box.setMaxWidth(300);
 
-        // Icon
-        ImageView icon = new ImageView(getIconForType(type));
-        icon.setFitWidth(24);
-        icon.setFitHeight(24);
-
         // Title
         Label titleLabel = new Label(title);
         titleLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: white;");
@@ -65,8 +58,8 @@ public class TrayNotification {
         closeLabel.setOnMouseClicked(e -> popup.hide());
 
         // Layout
-        HBox header = new HBox(10, icon, titleLabel, new Region(), closeLabel);
-        HBox.setHgrow(header.getChildren().get(2), Priority.ALWAYS);
+        HBox header = new HBox(10, titleLabel, new Region(), closeLabel);
+        HBox.setHgrow(header.getChildren().get(1), Priority.ALWAYS);
         header.setAlignment(Pos.CENTER_LEFT);
 
         box.getChildren().addAll(header, messageLabel);
@@ -80,21 +73,6 @@ public class TrayNotification {
             case WARNING -> "-fx-background-color: #FF9800; -fx-background-radius: 5; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0, 0, 2);";
             case ERROR -> "-fx-background-color: #F44336; -fx-background-radius: 5; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0, 0, 2);";
         };
-    }
-
-    private Image getIconForType(NotificationType type) {
-        String iconPath = switch (type) {
-            case SUCCESS -> "/images/success.png";
-            case INFO -> "/images/info.png";
-            case WARNING -> "/images/warning.png";
-            case ERROR -> "/images/error.png";
-        };
-        try {
-            return new Image(getClass().getResourceAsStream(iconPath));
-        } catch (Exception e) {
-            // Fallback to a default image
-            return new Image(getClass().getResourceAsStream("/images/info.png"));
-        }
     }
 
     public void showAndDismiss(Stage owner, Duration displayTime) {

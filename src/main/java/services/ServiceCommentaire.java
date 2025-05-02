@@ -2,40 +2,61 @@ package services;
 
 import modele.Commentaire;
 import utils.DataSource;
-
+import okhttp3.*;
 import java.sql.*;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Service class for managing Commentaire entities in the database.
- * Provides CRUD operations and retrieval of comments by publication.
- */
 public class ServiceCommentaire implements IService<Commentaire> {
     private final Connection con;
+    private final OkHttpClient httpClient;
 
-    /**
-     * Constructor initializes the database connection.
-     */
     public ServiceCommentaire() {
         this.con = DataSource.getInstance().getConnection();
+        this.httpClient = new OkHttpClient();
     }
 
-    /**
-     * Validates that the database connection is active.
-     * @throws SQLException if the connection is null or closed
-     */
     private void validateConnection() throws SQLException {
         if (con == null || con.isClosed()) {
             throw new SQLException("Database connection is null or closed.");
         }
     }
 
+    private void moderateComment(String content) throws SQLException, ProfanityException {
+        System.out.println("Checking comment: " + content);
+        try {
+            String url = "https://www.purgomalum.com/service/containsprofanity?text=" +
+                    java.net.URLEncoder.encode(content, java.nio.charset.StandardCharsets.UTF_8);
+            Request request = new Request.Builder().url(url).get().build();
+            try (Response response = httpClient.newCall(request).execute()) {
+                if (!response.isSuccessful()) {
+                    String responseBody = response.body() != null ? response.body().string() : "No response body";
+                    throw new SQLException("PurgoMalum API request failed: HTTP " + response.code() + " - " + responseBody);
+                }
+                String result = response.body().string();
+                System.out.println("PurgoMalum API response: " + result);
+                if (result.trim().equalsIgnoreCase("true")) {
+                    throw new ProfanityException("Your comment contains inappropriate words and was flagged by PurgoMalum");
+                }
+            }
+        } catch (Exception e) {
+            if (e instanceof ProfanityException) {
+                throw (ProfanityException) e;
+            }
+            String errorMessage = "Error checking comment with PurgoMalum: " + e.getMessage();
+            System.err.println(errorMessage);
+            e.printStackTrace();
+            throw new SQLException("Failed to check comment: " + e.getMessage(), e);
+        }
+    }
 
     @Override
     public void insert(Commentaire commentaire) {
         try {
             validateConnection();
+            moderateComment(commentaire.getDescription());
+
             String query = "INSERT INTO commentaire (description, publication_id, client_id, image) VALUES (?, ?, ?, ?)";
             try (PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
                 ps.setString(1, commentaire.getDescription());
@@ -50,17 +71,21 @@ public class ServiceCommentaire implements IService<Commentaire> {
                 }
                 System.out.println("Comment added successfully with ID: " + commentaire.getId());
             }
+        } catch (ProfanityException e) {
+            throw new RuntimeException(e.getMessage(), e);
         } catch (SQLException e) {
             System.err.println("Error inserting comment: " + e.getMessage());
             e.printStackTrace();
+            throw new RuntimeException("Failed to insert comment: " + e.getMessage(), e);
         }
     }
-
 
     @Override
     public void update(Commentaire commentaire) {
         try {
             validateConnection();
+            moderateComment(commentaire.getDescription());
+
             String query = "UPDATE commentaire SET description = ?, image = ? WHERE id = ?";
             try (PreparedStatement ps = con.prepareStatement(query)) {
                 ps.setString(1, commentaire.getDescription());
@@ -73,22 +98,22 @@ public class ServiceCommentaire implements IService<Commentaire> {
                     System.err.println("No comment found with ID: " + commentaire.getId());
                 }
             }
+        } catch (ProfanityException e) {
+            throw new RuntimeException(e.getMessage(), e);
         } catch (SQLException e) {
             System.err.println("Error updating comment: " + e.getMessage());
             e.printStackTrace();
+            throw new RuntimeException("Failed to update comment: " + e.getMessage(), e);
         }
     }
-
 
     @Override
     public void delete(int id) {
         try {
             validateConnection();
-            // Delete related notifications
             int notificationsDeleted = deleteRelatedRecords("DELETE FROM notification WHERE commentaire_id = ?", id);
             System.out.println("Deleted " + notificationsDeleted + " notifications for comment ID: " + id);
 
-            // Delete comment
             String query = "DELETE FROM commentaire WHERE id = ?";
             try (PreparedStatement ps = con.prepareStatement(query)) {
                 ps.setInt(1, id);
@@ -106,14 +131,12 @@ public class ServiceCommentaire implements IService<Commentaire> {
         }
     }
 
-
     private int deleteRelatedRecords(String query, int id) throws SQLException {
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, id);
             return ps.executeUpdate();
         }
     }
-
 
     @Override
     public List<Commentaire> getAll() {
@@ -138,7 +161,6 @@ public class ServiceCommentaire implements IService<Commentaire> {
         }
         return comments;
     }
-
 
     @Override
     public Commentaire getById(int id) {
@@ -165,7 +187,6 @@ public class ServiceCommentaire implements IService<Commentaire> {
         }
         return null;
     }
-
 
     public List<Commentaire> afficherCommentairesParPublication(int publicationId) {
         List<Commentaire> comments = new ArrayList<>();

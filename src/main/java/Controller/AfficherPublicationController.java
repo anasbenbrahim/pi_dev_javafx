@@ -17,12 +17,16 @@ import services.ServicePublication;
 import services.NotificationService;
 import services.RatingService;
 import view.TrayNotification;
+import utils.EventBus;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.animation.Timeline;
+import javafx.animation.KeyFrame;
+import javafx.scene.text.Text;
 
 public class AfficherPublicationController {
 
@@ -39,9 +43,16 @@ public class AfficherPublicationController {
     private final RatingService ratingService = new RatingService();
     private final int currentClientId = 1; // Replace with actual user system
     private NavigationManager navigationManager;
+    private Stage primaryStage;
+    private Button notificationButton; // Store for updating badge
+    private Text notificationBadge; // Badge for unread count
 
     public void setNavigationManager(NavigationManager navigationManager) {
         this.navigationManager = navigationManager;
+    }
+
+    public void setStage(Stage stage) {
+        this.primaryStage = stage;
     }
 
     @FXML
@@ -52,20 +63,57 @@ public class AfficherPublicationController {
             filterPublicationsByTitre(newValue);
         });
         retourButton.setVisible(false);
+        startNotificationCheck();
+        // Subscribe to comment events
+        EventBus.subscribe(event -> {
+            if (event.equals("NEW_COMMENT")) {
+                updateNotificationBadge();
+            }
+        });
+    }
+
+    private void setupNotificationButton() {
+        notificationButton = new Button("🔔");
+        notificationButton.getStyleClass().add("action-button");
+        notificationButton.setStyle("-fx-font-size: 16px;");
+
+        // Create badge for unread notifications
+        notificationBadge = new Text();
+        notificationBadge.getStyleClass().add("notification-badge");
+        notificationBadge.setVisible(false); // Hidden initially
+
+        // StackPane to overlay badge on button
+        StackPane buttonContainer = new StackPane(notificationButton, notificationBadge);
+        StackPane.setAlignment(notificationBadge, Pos.TOP_RIGHT);
+        StackPane.setMargin(notificationBadge, new Insets(0, 0, 5, 5));
+
+        notificationButton.setOnAction(e -> showNotifications());
+        topBar.getChildren().add(buttonContainer);
+        HBox.setMargin(buttonContainer, new Insets(0, 10, 0, 10));
+
+        updateNotificationBadge(); // Initial update
+    }
+
+    private void startNotificationCheck() {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), e -> updateNotificationBadge()));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
+    }
+
+    public void updateNotificationBadge() {
+        List<Notification> notifications = notificationService.getNotificationsByClientId(currentClientId);
+        long unreadCount = notifications.stream().filter(n -> !n.isReading()).count();
+        if (unreadCount > 0) {
+            notificationBadge.setText(String.valueOf(unreadCount));
+            notificationBadge.setVisible(true);
+        } else {
+            notificationBadge.setVisible(false);
+        }
     }
 
     public void refreshPublications() {
         System.out.println("Refreshing publications in AfficherPublicationController");
         loadPublications();
-    }
-
-    private void setupNotificationButton() {
-        Button notificationButton = new Button("🔔");
-        notificationButton.getStyleClass().add("action-button");
-        notificationButton.setStyle("-fx-font-size: 16px;");
-        notificationButton.setOnAction(e -> showNotifications());
-        topBar.getChildren().add(notificationButton);
-        HBox.setMargin(notificationButton, new Insets(0, 10, 0, 10));
     }
 
     private void showNotifications() {
@@ -117,8 +165,12 @@ public class AfficherPublicationController {
                             "Notification marquée comme lue.",
                             TrayNotification.NotificationType.SUCCESS
                     );
-                    Stage stage = (Stage) scrollPane.getScene().getWindow();
-                    tray.showAndDismiss(stage, Duration.seconds(3));
+                    if (primaryStage != null) {
+                        tray.showAndDismiss(primaryStage, Duration.seconds(3));
+                    } else {
+                        System.err.println("Unable to show TrayNotification: Primary Stage is null");
+                    }
+                    updateNotificationBadge(); // Update badge after marking as read
                 });
 
                 Button deleteButton = new Button("Supprimer");
@@ -132,8 +184,12 @@ public class AfficherPublicationController {
                             "Notification supprimée.",
                             TrayNotification.NotificationType.INFO
                     );
-                    Stage stage = (Stage) scrollPane.getScene().getWindow();
-                    tray.showAndDismiss(stage, Duration.seconds(3));
+                    if (primaryStage != null) {
+                        tray.showAndDismiss(primaryStage, Duration.seconds(3));
+                    } else {
+                        System.err.println("Unable to show TrayNotification: Primary Stage is null");
+                    }
+                    updateNotificationBadge(); // Update badge after deletion
                 });
 
                 notificationBox.getChildren().addAll(messageLabel, markReadButton, deleteButton);

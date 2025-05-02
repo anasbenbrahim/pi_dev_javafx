@@ -14,6 +14,7 @@ import services.NotificationService;
 import utils.FiltreCommentaire;
 
 import java.io.File;
+import java.sql.SQLException;
 
 public class Addcommentaire {
 
@@ -111,7 +112,7 @@ public class Addcommentaire {
                 );
                 notificationService.addNotification(notification);
             } else {
-                commentaire.setDescription (filteredDescription);
+                commentaire.setDescription(filteredDescription);
                 commentaire.setImage(imagePath);
                 commentaireService.update(commentaire);
             }
@@ -121,11 +122,14 @@ public class Addcommentaire {
             }
 
             navigationManager.goBack();
-        } catch (Exception e) {
-            showAlert("Error", "Failed to submit comment: " + e.getMessage());
+        } catch (RuntimeException e) {
+            if (e.getCause() instanceof SQLException && e.getMessage().contains("inappropriate words")) {
+                showAlert("Invalid Comment", "Your comment contains inappropriate words. Please revise and try again.");
+            } else {
+                showAlert("Error", "Failed to submit comment: " + e.getMessage());
+            }
         }
     }
-
     @FXML
     private void goBack() {
         navigationManager.goBack();
