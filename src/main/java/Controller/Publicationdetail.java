@@ -165,7 +165,10 @@ public class Publicationdetail {
                 commentText.setWrapText(true);
                 commentText.setStyle("-fx-font-size: 14px; -fx-text-fill: #2c6b2f; -fx-opacity: 1.0;");
 
-                // Add image if available
+                Label translatedTextLabel = new Label("");
+                translatedTextLabel.setWrapText(true);
+                translatedTextLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #555; -fx-font-style: italic;");
+
                 if (commentaire.getImage() != null && !commentaire.getImage().isEmpty()) {
                     try {
                         Image image = new Image("file:" + commentaire.getImage(), 200, 100, true, true);
@@ -188,12 +191,42 @@ public class Publicationdetail {
                 editButton.setOnAction(e -> openEditCommentForm(commentaire));
 
                 Button deleteButton = new Button("Supprimer");
-                        deleteButton.getStyleClass().add("action-button");
+                deleteButton.getStyleClass().add("action-button");
                 deleteButton.setStyle("-fx-background-color: #F44336; -fx-font-size: 12px; -fx-padding: 5 10;");
                 deleteButton.setOnAction(e -> deleteComment(commentaire.getId()));
 
-                buttonBox.getChildren().addAll(editButton, deleteButton);
-                commentBox.getChildren().addAll(commentText, buttonBox);
+                ComboBox<String> languageComboBox = new ComboBox<>();
+                languageComboBox.getItems().addAll("English", "French", "Spanish", "German", "Italian");
+                languageComboBox.setPromptText("Select Language");
+                languageComboBox.getStyleClass().add("language-selector");
+
+                Button translateButton = new Button("Traduire");
+                translateButton.getStyleClass().add("action-button");
+                translateButton.setStyle("-fx-font-size: 12px; -fx-padding: 5 10;");
+                translateButton.setOnAction(e -> {
+                    String selectedLanguage = languageComboBox.getValue();
+                    if (selectedLanguage == null) {
+                        showAlert("Error", "Please select a target language.");
+                        return;
+                    }
+                    String targetLangCode = switch (selectedLanguage) {
+                        case "English" -> "en";
+                        case "French" -> "fr";
+                        case "Spanish" -> "es";
+                        case "German" -> "de";
+                        case "Italian" -> "it";
+                        default -> "en";
+                    };
+                    try {
+                        String translatedText = commentaireService.translateComment(commentaire.getDescription(), "auto", targetLangCode);
+                        translatedTextLabel.setText("Translated (" + selectedLanguage + "): " + translatedText);
+                    } catch (RuntimeException ex) {
+                        showAlert("Translation Error", "Failed to translate comment: " + ex.getMessage());
+                    }
+                });
+
+                buttonBox.getChildren().addAll(editButton, deleteButton, languageComboBox, translateButton);
+                commentBox.getChildren().addAll(commentText, translatedTextLabel, buttonBox);
                 commentsContainer.getChildren().add(commentBox);
             }
         }

@@ -3,6 +3,11 @@ package services;
 import modele.Commentaire;
 import utils.DataSource;
 import okhttp3.*;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.sql.*;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -27,7 +32,7 @@ public class ServiceCommentaire implements IService<Commentaire> {
         System.out.println("Checking comment: " + content);
         try {
             String url = "https://www.purgomalum.com/service/containsprofanity?text=" +
-                    java.net.URLEncoder.encode(content, java.nio.charset.StandardCharsets.UTF_8);
+                    URLEncoder.encode(content, StandardCharsets.UTF_8);
             Request request = new Request.Builder().url(url).get().build();
             try (Response response = httpClient.newCall(request).execute()) {
                 if (!response.isSuccessful()) {
@@ -48,6 +53,51 @@ public class ServiceCommentaire implements IService<Commentaire> {
             System.err.println(errorMessage);
             e.printStackTrace();
             throw new SQLException("Failed to check comment: " + e.getMessage(), e);
+        }
+    }
+
+    public String translateComment(String text, String sourceLang, String targetLang) {
+        try {
+            // Map "auto" to MyMemory's expected source language format if needed
+            if ("auto".equalsIgnoreCase(sourceLang)) {
+                sourceLang = "en"; // Default to English for auto-detection; MyMemory doesn't support "auto"
+            }
+            String langPair = sourceLang + "|" + targetLang;
+            String encodedText = URLEncoder.encode(text, StandardCharsets.UTF_8);
+            String url = "https://api.mymemory.translated.net/get?q=" + encodedText + "&langpair=" + langPair;
+
+            Request request = new Request.Builder()
+                    .url(url)
+                    .get()
+                    .build();
+
+            try (Response response = httpClient.newCall(request).execute()) {
+                if (!response.isSuccessful()) {
+                    String responseBody = response.body() != null ? response.body().string() : "No response body";
+                    throw new IOException("Translation API request failed: HTTP " + response.code() + " - " + responseBody);
+                }
+                String responseBody = response.body().string();
+                JSONObject responseJson = new JSONObject(responseBody);
+
+                // Check response status
+                int status = responseJson.getInt("responseStatus");
+                if (status != 200) {
+                    String errorDetails = responseJson.optString("responseDetails", "Unknown error");
+                    throw new IOException("Translation API failed with status " + status + ": " + errorDetails);
+                }
+
+                // Extract translated text
+                JSONObject responseData = responseJson.getJSONObject("responseData");
+                String translatedText = responseData.getString("translatedText");
+                if (translatedText == null || translatedText.trim().isEmpty()) {
+                    throw new IOException("Translation API returned empty or invalid response");
+                }
+                return translatedText;
+            }
+        } catch (Exception e) {
+            System.err.println("Error translating comment: " + e.getMessage());
+            e.printStackTrace();
+            throw new RuntimeException("Failed to translate comment: " + e.getMessage(), e);
         }
     }
 

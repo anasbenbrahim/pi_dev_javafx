@@ -8,17 +8,17 @@
             fx:controller="Controller.Publicationdetail" fitToWidth="true"
             styleClass="card-scroll-pane" stylesheets="@styles/publication.css">
     <content>
-        <VBox fx:id="mainContainer" spacing="15" style="-fx-background-color: #f5f9f5;" alignment="TOP_CENTER" maxWidth="600">
+        <VBox fx:id="mainContainer" spacing="20" style="-fx-background-color: #f5f9f5;" alignment="CENTER" maxWidth="700">
             <padding>
                 <Insets top="20" right="20" bottom="20" left="20"/>
             </padding>
 
-            <Label fx:id="titleLabel" styleClass="card-title" wrapText="true" maxWidth="550"/>
-            <ImageView fx:id="imageView" fitWidth="550" fitHeight="300" preserveRatio="true" styleClass="card-image"/>
-            <Label fx:id="descriptionLabel" styleClass="card-description" wrapText="true" maxWidth="550"/>
-            <Label fx:id="dateLabel" styleClass="card-date" maxWidth="550"/>
+            <Label fx:id="titleLabel" styleClass="card-title" wrapText="true" maxWidth="650"/>
+            <ImageView fx:id="imageView" fitWidth="600" fitHeight="300" preserveRatio="true" styleClass="card-image"/>
+            <Label fx:id="descriptionLabel" styleClass="card-description" wrapText="true" maxWidth="650"/>
+            <Label fx:id="dateLabel" styleClass="card-date" maxWidth="650"/>
 
-            <HBox fx:id="ratingBox" spacing="5" alignment="CENTER_LEFT">
+            <HBox fx:id="ratingBox" spacing="10" alignment="CENTER_LEFT">
                 <Label text="Évaluation: " styleClass="form-label"/>
                 <Button fx:id="star1" text="☆" styleClass="star-button" onAction="#ratePublication"/>
                 <Button fx:id="star2" text="☆" styleClass="star-button" onAction="#ratePublication"/>
@@ -28,7 +28,7 @@
                 <Label fx:id="averageRatingLabel" text="(0.0)" styleClass="card-date"/>
             </HBox>
 
-            <VBox fx:id="commentsContainer" spacing="10" styleClass="comment-box" maxWidth="550"/>
+            <VBox fx:id="commentsContainer" spacing="15" styleClass="comment-container" maxWidth="650"/>
 
             <HBox spacing="15" alignment="CENTER">
                 <Button fx:id="addCommentButton" text="Ajouter Commentaire" onAction="#openAddCommentForm" styleClass="submit-button"/>
