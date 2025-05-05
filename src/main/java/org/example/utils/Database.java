@@ -8,7 +8,7 @@ public class Database {
     private Connection connection;
     private static Database instance;
 
-    private final String URL = "jdbc:mysql://localhost:3306/projet_integration_final";
+    private final String URL = "jdbc:mysql://localhost:3306/db_projet_pi";
     private final String USERNAME = "root";
     private final String PASSWORD = "";
 

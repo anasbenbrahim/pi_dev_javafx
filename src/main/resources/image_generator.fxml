@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/22.0.1" xmlns:fx="http://javafx.com/fxml/1" stylesheets="style.css" fx:controller="org.example.controllers.ImageGenerator">
+    <!-- Left Sidebar -->
+    <left>
+        <VBox styleClass="sidebar" prefWidth="250">
+            <!-- Logo Section -->
+            <VBox styleClass="logo-section">
+                <ImageView styleClass="app-logo" fitWidth="50" fitHeight="50"/>
+                <Label styleClass="app-title" text="AI Image Studio"/>
+                <Label styleClass="app-subtitle" text="Generate beautiful images"/>
+            </VBox>
+
+            <!-- Menu Section -->
+            <VBox styleClass="menu-section">
+                <Label styleClass="menu-header" text="MAIN MENU"/>
+                <Button styleClass="menu-button" text="Dashboard"/>
+                <Button styleClass="menu-button" text="Image Generator"/>
+                <Button styleClass="menu-button" text="History"/>
+            </VBox>
+
+            <!-- User Section -->
+            <VBox styleClass="user-section" alignment="CENTER">
+                <ImageView styleClass="user-avatar" fitWidth="40" fitHeight="40"/>
+                <Label styleClass="user-name" text="John Doe"/>
+                <Label styleClass="user-role" text="Premium User"/>
+            </VBox>
+        </VBox>
+    </left>
+
+    <!-- Main Content with ScrollPane -->
+    <center>
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED">
+            <VBox styleClass="content-container" spacing="20">
+                <Label styleClass="page-title" text="Image Generator"/>
+
+                <!-- Form Container -->
+                <VBox styleClass="form-container" spacing="15">
+                    <Label styleClass="form-label" text="Image Description"/>
+                    <TextArea fx:id="descriptionTextArea" styleClass="form-field"
+                              promptText="Describe the image you want to generate..."
+                              wrapText="true" prefRowCount="4"/>
+
+                    <!-- Advanced Options -->
+                    <TitledPane text="Advanced Options" animated="false">
+                        <GridPane hgap="10" vgap="10">
+                            <Label text="Size:" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="form-label"/>
+                            <ComboBox fx:id="sizeComboBox" styleClass="form-field" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                            <Label text="Style:" GridPane.rowIndex="1" GridPane.columnIndex="0" styleClass="form-label"/>
+                            <ComboBox fx:id="styleComboBox" styleClass="form-field" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                        </GridPane>
+                    </TitledPane>
+
+                    <Button fx:id="generateButton" styleClass="primary-button" text="Generate Image" onAction="#handleGenerateImage"/>
+                </VBox>
+
+                <!-- Results Section -->
+                <VBox styleClass="card" spacing="15" alignment="CENTER">
+                    <Label styleClass="card-title" text="Generated Image"/>
+                    <ProgressIndicator fx:id="progressIndicator" visible="false" progress="-1"/>
+                    <ImageView fx:id="resultImageView" fitWidth="512" fitHeight="512" preserveRatio="true"/>
+                    <HBox spacing="10">
+                        <Button fx:id="saveButton" styleClass="secondary-button" text="Save Image" onAction="#handleSaveImage"/>
+                        <Button styleClass="secondary-button" text="Try Again" onAction="#handleGenerateImage"/>
+                    </HBox>
+                </VBox>
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>

@@ -109,7 +109,7 @@
     -fx-icon-color: rgba(255,255,255,0.9);
 }
 
-.menu-button:active {
+.menu-button {
     -fx-background-color: rgba(255, 255, 255, 0.15);
     -fx-text-fill: white;
     -fx-font-weight: bold;

@@ -12,11 +12,19 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.sql.*;
+import java.util.Arrays;
+import java.util.List;
 
 public class Ollama {
     private String model;
     private String text;
     private Connection connection = Database.getInstance().getConnection();
+    private static final List<String> AGRICULTURE_KEYWORDS = Arrays.asList(
+            "agriculture", "farming", "crop", "soil", "harvest", "irrigation",
+            "fertilizer", "pesticide", "livestock", "cattle", "poultry",
+            "horticulture", "agronomy", "cultivation", "agribusiness", "tractor",
+            "farm", "farmer", "organic", "sustainable", "crop rotation", "yield"
+    );
 
     public Ollama(String model, String text) throws IOException {
         this.model = model;
@@ -43,8 +51,17 @@ public class Ollama {
             throw new RuntimeException(e);
         }
     }
+    private boolean isAgricultureRelated(String text) {
+        String lowerText = text.toLowerCase();
+        return AGRICULTURE_KEYWORDS.stream()
+                .anyMatch(keyword -> lowerText.contains(keyword.toLowerCase()));
+    }
 
     public String generate()throws IOException{
+        if (!isAgricultureRelated(text)) {
+            return "I'm sorry, I only answer questions related to agriculture. " +
+                    "Please ask me about farming, crops, soil, or other agriculture topics.";
+        }
         URL url =new URL("http://localhost:11434/api/generate");
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
