@@ -7,84 +7,69 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.effect.*?>
-
 <?import java.net.URL?>
-<TabPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+
+<BorderPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
          fx:controller="tn.esprit.pidev.Controller.MainViewController"
-         style="-fx-background-color: #f8faf5;"
-         tabClosingPolicy="UNAVAILABLE">
-
-    <!-- Style des onglets -->
-    <stylesheets>
-        <URL value="@../styles/agriculture-theme.css" />
-    </stylesheets>
-
-    <!-- Onglet Catégories -->
-    <Tab text="Catégories">
-        <content>
-            <fx:include source="category/CategoryList.fxml" />
-        </content>
-        <graphic>
-            <ImageView fitHeight="20" fitWidth="20">
-
-            </ImageView>
-        </graphic>
-    </Tab>
-
-    <!-- Onglet Produits -->
-    <Tab text="Produits">
-        <content>
-            <fx:include source="produit/ProduitList.fxml" />
-        </content>
-        <graphic>
-            <ImageView fitHeight="20" fitWidth="20">
-
-            </ImageView>
-        </graphic>
-    </Tab>
-
-    <!-- Onglet Marché -->
-    <Tab text="Marché Agricole">
-        <content>
-            <StackPane style="-fx-background-color: #f8faf5;">
-                <VBox alignment="CENTER" spacing="30" style="-fx-padding: 40;">
-                    <ImageView fitHeight="120" fitWidth="120" preserveRatio="true">
-
-                    </ImageView>
-
-                    <Label text="Espace Marché Agricole"
-                           style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #3d5c1e;"/>
-
-                    <Button fx:id="marcheButton" text="Explorer le Marché"
-                            onAction="#navigateToMarche"
-                            style="-fx-background-color: linear-gradient(to right, #4a8c24, #6b9e3a);
-                                   -fx-text-fill: white;
-                                   -fx-font-size: 16px;
-                                   -fx-font-weight: bold;
-                                   -fx-padding: 12 30;
-                                   -fx-background-radius: 8;
-                                   -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 5);">
-                        <graphic>
-                            <ImageView fitHeight="20" fitWidth="20">
-
-                            </ImageView>
-                        </graphic>
-                    </Button>
-
-                    <Label text="Découvrez les produits frais de nos agriculteurs locaux"
-                           style="-fx-text-fill: #5a7c3b; -fx-font-style: italic;"/>
-                </VBox>
-            </StackPane>
-        </content>
-        <graphic>
-            <ImageView fitHeight="20" fitWidth="20">
-
-            </ImageView>
-        </graphic>
-    </Tab>
-
-    <!-- Barre de navigation inférieure -->
-    <opaqueInsets>
-        <Insets bottom="40.0"/>
-    </opaqueInsets>
-</TabPane>
+         style="-fx-background-color: #f8faf5;">
+    <center>
+        <TabPane tabClosingPolicy="UNAVAILABLE">
+            <stylesheets>
+                <URL value="@../styles/agriculture-theme.css" />
+            </stylesheets>
+            <Tab text="Catégories">
+                <content>
+                    <fx:include source="category/CategoryList.fxml" />
+                </content>
+                <graphic>
+                    <ImageView fitHeight="20" fitWidth="20"/>
+                </graphic>
+            </Tab>
+            <Tab text="Produits">
+                <content>
+                    <fx:include source="produit/ProduitList.fxml" />
+                </content>
+                <graphic>
+                    <ImageView fitHeight="20" fitWidth="20"/>
+                </graphic>
+            </Tab>
+            <Tab text="Marché Agricole">
+                <content>
+                    <StackPane style="-fx-background-color: #f8faf5;">
+                        <VBox alignment="CENTER" spacing="30" style="-fx-padding: 40;">
+                            <ImageView fitHeight="120" fitWidth="120" preserveRatio="true"/>
+                            <Label text="Espace Marché Agricole"
+                                   style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #3d5c1e;"/>
+                            <Button fx:id="marcheButton" text="Explorer le Marché"
+                                    onAction="#navigateToMarche"
+                                    style="-fx-background-color: linear-gradient(to right, #4a8c24, #6b9e3a);
+                                           -fx-text-fill: white;
+                                           -fx-font-size: 16px;
+                                           -fx-font-weight: bold;
+                                           -fx-padding: 12 30;
+                                           -fx-background-radius: 8;
+                                           -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 5);">
+                                <graphic>
+                                    <ImageView fitHeight="20" fitWidth="20"/>
+                                </graphic>
+                            </Button>
+                            <Label text="Découvrez les produits frais de nos agriculteurs locaux"
+                                   style="-fx-text-fill: #5a7c3b; -fx-font-style: italic;"/>
+                        </VBox>
+                    </StackPane>
+                </content>
+                <graphic>
+                    <ImageView fitHeight="20" fitWidth="20"/>
+                </graphic>
+            </Tab>
+        </TabPane>
+    </center>
+    <bottom>
+        <HBox alignment="CENTER" spacing="20" style="-fx-padding: 10;">
+            <Button text="Produits" onAction="#goToProduitList" />
+            <Button text="Catégories" onAction="#goToCategoryList" />
+            <Button text="Commandes" onAction="#goToOrderHistory" />
+            <Button text="Marché" onAction="#goToMarche" />
+        </HBox>
+    </bottom>
+</BorderPane>

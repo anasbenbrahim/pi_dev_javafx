@@ -80,6 +80,9 @@ public class Produit {
     }
 
     public void setPrix(double prix) {
+        if (prix <= 0) {
+            throw new IllegalArgumentException("Le prix doit être positif");
+        }
         this.prix = prix;
     }
 
@@ -88,6 +91,9 @@ public class Produit {
     }
 
     public void setQuantite(int quantite) {
+        if (quantite < 0) {
+            throw new IllegalArgumentException("La quantité ne peut pas être négative");
+        }
         this.quantite = quantite;
     }
 

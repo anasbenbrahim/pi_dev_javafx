@@ -11,7 +11,11 @@ public class ProduitService {
     private Connection connection;
 
     public ProduitService() {
-        connection = DatabaseConnection.getConnection();
+        try {
+            connection = DatabaseConnection.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void addProduit(Produit produit) {
@@ -167,6 +171,33 @@ public class ProduitService {
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Erreur lors de la récupération des produits par catégorie: " + e.getMessage());
+        }
+        return produits;
+    }
+
+    public List<Produit> getAllAvailableProduits() {
+        List<Produit> produits = new ArrayList<>();
+        String query = "SELECT * FROM produit WHERE quantite > 0";
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+
+            while (resultSet.next()) {
+                Produit produit = new Produit(
+                        resultSet.getInt("id"),
+                        resultSet.getInt("user_id"),
+                        resultSet.getInt("category_id"),
+                        resultSet.getString("nomprod"),
+                        resultSet.getString("image"),
+                        resultSet.getDouble("prix"),
+                        resultSet.getInt("quantite"),
+                        resultSet.getString("descr"),
+                        resultSet.getInt("status")
+                );
+                produits.add(produit);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Erreur lors de la récupération des produits disponibles: " + e.getMessage());
         }
         return produits;
     }

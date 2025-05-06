@@ -11,7 +11,11 @@ public class CategoryService {
     private Connection connection;
 
     public CategoryService() {
-        connection = DatabaseConnection.getConnection();
+        try {
+            connection = DatabaseConnection.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void addCategory(Category category) {

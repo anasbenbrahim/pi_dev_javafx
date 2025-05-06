@@ -5,7 +5,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.event.ActionEvent;
+import javafx.scene.Node;
+import javafx.stage.Stage;
 import tn.esprit.pidev.Model.Category;
+import tn.esprit.pidev.Util.NavigationHelper;
 
 import java.util.Arrays;
 import java.util.List;
@@ -64,6 +68,12 @@ public class CategoryFormController {
     @FXML
     private void handleCancel() {
         closeForm();
+    }
+
+    @FXML
+    private void goToCategoryList(ActionEvent event) {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        NavigationHelper.navigateTo(stage, "/tn/esprit/pidev/view/category/CategoryList.fxml", "Liste des catégories");
     }
 
     private boolean isInputValid() {

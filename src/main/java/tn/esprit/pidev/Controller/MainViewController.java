@@ -4,9 +4,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.Node;
+import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import tn.esprit.pidev.Util.NavigationHelper;
 
 public class MainViewController {
     
@@ -24,5 +27,29 @@ public class MainViewController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void goToProduitList(ActionEvent event) {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        NavigationHelper.navigateTo(stage, "/tn/esprit/pidev/view/produit/ProduitList.fxml", "Liste des produits");
+    }
+
+    @FXML
+    private void goToCategoryList(ActionEvent event) {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        NavigationHelper.navigateTo(stage, "/tn/esprit/pidev/view/category/CategoryList.fxml", "Liste des catégories");
+    }
+
+    @FXML
+    private void goToOrderHistory(ActionEvent event) {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        NavigationHelper.navigateTo(stage, "/tn/esprit/pidev/view/order/OrderHistory.fxml", "Historique des commandes");
+    }
+
+    @FXML
+    private void goToMarche(ActionEvent event) {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        NavigationHelper.navigateTo(stage, "/tn/esprit/pidev/view/marche-view.fxml", "Marché");
     }
 }

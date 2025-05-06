@@ -12,7 +12,11 @@ public class OrderDAO {
     private Connection conn;
 
     public OrderDAO() {
-        conn = DatabaseConnection.getConnection();
+        try {
+            conn = DatabaseConnection.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public int createOrder(Order order) {
@@ -22,9 +26,9 @@ public class OrderDAO {
             pstmt.setTimestamp(2, Timestamp.valueOf(order.getCreatedAt()));
             pstmt.setDouble(3, order.getTotal());
             pstmt.setString(4, order.getStatus());
-            
+
             pstmt.executeUpdate();
-            
+
             ResultSet rs = pstmt.getGeneratedKeys();
             if (rs.next()) {
                 return rs.getInt(1);
@@ -94,5 +98,56 @@ public class OrderDAO {
             e.printStackTrace();
         }
         return items;
+    }
+
+    public boolean updateOrderStatus(int orderId, String status) {
+        String sql = "UPDATE orders SET status = ? WHERE id = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, status);
+            pstmt.setInt(2, orderId);
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public Order getOrderById(int orderId) {
+        String sql = "SELECT * FROM orders WHERE id = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, orderId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                Order order = new Order(
+                    rs.getInt("user_id"),
+                    rs.getTimestamp("created_at").toLocalDateTime(),
+                    rs.getDouble("total"),
+                    rs.getString("status")
+                );
+                order.setId(rs.getInt("id"));
+                order.setItems(getOrderItems(order.getId()));
+                return order;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public boolean deleteOrder(int orderId) {
+        String deleteItemsSql = "DELETE FROM order_item WHERE order_id = ?";
+        String deleteOrderSql = "DELETE FROM orders WHERE id = ?";
+        try (PreparedStatement pstmtItems = conn.prepareStatement(deleteItemsSql);
+             PreparedStatement pstmtOrder = conn.prepareStatement(deleteOrderSql)) {
+            pstmtItems.setInt(1, orderId);
+            pstmtItems.executeUpdate();
+            pstmtOrder.setInt(1, orderId);
+            int rowsAffected = pstmtOrder.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

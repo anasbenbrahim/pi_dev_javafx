@@ -14,7 +14,9 @@
     <top>
         <HBox style="-fx-background-color: #4a8c24; -fx-padding: 15;" alignment="CENTER">
             <ImageView fitHeight="40" fitWidth="40" preserveRatio="true">
-
+                <image>
+                    <Image url="@../../icons/add.png" />
+                </image>
             </ImageView>
             <Label text="Formulaire Produit Agricole"
                    style="-fx-text-fill: white; -fx-font-size: 20; -fx-font-weight: bold;">
@@ -66,7 +68,7 @@
                 <!-- Rangée 4 -->
                 <HBox spacing="10" alignment="CENTER_LEFT">
                     <Label text="Quantité:" style="-fx-font-weight: bold; -fx-text-fill: #3d5c1e;" minWidth="100"/>
-                    <TextField fx:id="quantiteField" style="-fx-background-radius: 5;" promptText="Ex: 100kg"/>
+                    <TextField fx:id="quantiteField" style="-fx-background-radius: 5;" promptText="Ex: 100"/>
                 </HBox>
 
                 <!-- Rangée 5 -->
@@ -105,6 +107,8 @@
                             style="-fx-background-color: #4a8c24; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 8 20;"/>
                     <Button text="Annuler" onAction="#handleCancel"
                             style="-fx-background-color: #a3a3a3; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 8 20;"/>
+                    <Button text="Retour à la liste" onAction="#goToProduitList"
+                            style="-fx-background-color: #a3a3a3; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 8 20;"/>
                 </HBox>
             </VBox>
         </GridPane>
@@ -113,7 +117,7 @@
     <!-- Pied de page champêtre -->
     <bottom>
         <HBox alignment="CENTER" style="-fx-background-color: #e8f4d8; -fx-padding: 10;">
-            <Label text=" 2023 AgroGestion - Tous droits réservés"
+            <Label text="© 2025 AgroGestion - Tous droits réservés"
                    style="-fx-text-fill: #5a7c3b; -fx-font-style: italic;"/>
         </HBox>
     </bottom>

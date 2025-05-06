@@ -1,0 +1,142 @@
+/* Modern Admin Dashboard CSS */
+
+.root {
+    -fx-font-family: 'Segoe UI', 'Arial', sans-serif;
+    -fx-background-color: #f4f7fa;
+}
+
+/* Sidebar */
+.sidebar {
+    -fx-background-color: #212b36;
+    -fx-pref-width: 210px;
+    -fx-padding: 30 0 30 0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 12, 0, 0, 2);
+}
+.sidebar .button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #cfd8dc;
+    -fx-font-size: 16px;
+    -fx-padding: 14 0 14 32;
+    -fx-alignment: CENTER_LEFT;
+    -fx-cursor: hand;
+}
+.sidebar .button:selected, .sidebar .button:hover {
+    -fx-background-color: #388e3c;
+    -fx-text-fill: #fff;
+}
+.sidebar .image-view {
+    -fx-opacity: 0.8;
+    -fx-padding: 0 12 0 0;
+}
+
+/* Top Bar */
+.topbar {
+    -fx-background-color: #fff;
+    -fx-padding: 18 32 18 32;
+    -fx-effect: dropshadow(gaussian, rgba(56,142,60,0.08), 8, 0, 0, 2);
+    -fx-alignment: CENTER_RIGHT;
+}
+.topbar .label {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #222;
+}
+
+/* Main Content */
+.main-content {
+    -fx-background-color: #f4f7fa;
+    -fx-padding: 32 32 32 32;
+}
+
+.card {
+    -fx-background-color: #fff;
+    -fx-background-radius: 16;
+    -fx-effect: dropshadow(gaussian, rgba(56,142,60,0.10), 10, 0, 0, 2);
+    -fx-padding: 24;
+    -fx-spacing: 20;
+}
+
+/* Agriculture Product Cards */
+.agri-card {
+    -fx-background-color: linear-gradient(to bottom right, #f1f8e9 70%, #c8e6c9 100%);
+    -fx-background-radius: 18;
+    -fx-padding: 22 32 22 32;
+    -fx-effect: dropshadow(gaussian, rgba(124,179,66,0.13), 8, 0, 0, 2);
+    -fx-spacing: 10;
+    -fx-alignment: center;
+    -fx-border-color: #dcedc8;
+    -fx-border-radius: 18;
+    -fx-border-width: 1.5;
+    -fx-min-width: 180px;
+}
+.agri-card .label {
+    -fx-font-size: 15px;
+}
+.agri-card:hover {
+    -fx-background-color: linear-gradient(to bottom right, #e6ee9c 80%, #aed581 100%);
+    -fx-cursor: hand;
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+    -fx-effect: dropshadow(gaussian, rgba(124,179,66,0.22), 16, 0, 0, 4);
+}
+
+/* TableView */
+.table-view {
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-background-color: #fff;
+    -fx-padding: 10;
+    -fx-effect: dropshadow(gaussian, rgba(56,142,60,0.07), 8, 0, 0, 2);
+    -fx-font-size: 15px;
+}
+.table-row-cell:filled:selected, .table-row-cell:filled:selected:hover {
+    -fx-background-color: linear-gradient(to right, #e8f4d8 70%, #c8e6c9 100%);
+}
+.table-row-cell:filled {
+    -fx-background-color: #f7faf7;
+}
+.table-row-cell:odd {
+    -fx-background-color: #f1f8e9;
+}
+.table-row-cell:hover {
+    -fx-background-color: #e0f2f1;
+}
+
+.button {
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+    -fx-font-size: 15px;
+    -fx-background-insets: 0;
+    -fx-effect: dropshadow(gaussian, rgba(56,142,60,0.13), 2, 0, 0, 1);
+    -fx-transition: background-color 0.2s;
+}
+.button:hover {
+    -fx-opacity: 0.92;
+    -fx-translate-y: -1;
+}
+
+.text-field {
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-background-color: #e8f4d8;
+    -fx-font-size: 15px;
+}
+
+/* Profile avatar */
+.avatar {
+    -fx-background-radius: 50%;
+    -fx-pref-width: 38px;
+    -fx-pref-height: 38px;
+    -fx-background-color: #c8e6c9;
+    -fx-alignment: center;
+}
+
+/* Footer */
+.footer {
+    -fx-background-color: #e8f4d8;
+    -fx-padding: 10;
+    -fx-border-radius: 0 0 14 14;
+    -fx-alignment: center;
+    -fx-font-style: italic;
+    -fx-text-fill: #5a7c3b;
+}

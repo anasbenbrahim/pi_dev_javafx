@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane style="-fx-background-color: linear-gradient(to bottom, #f5fff5, #e0f7e0);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.pidev.Controller.MarcheController">
+<BorderPane style="-fx-background-color: linear-gradient(to bottom, #f5fff5, #e0f7e0);" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.pidev.Controller.MarcheController">
 
     <!-- En-tête -->
     <top>
@@ -34,6 +34,8 @@
                     <Label style="-fx-font-size: 18; -fx-text-fill: #388e3c; -fx-font-style: italic;" text="Produits Frais et Locaux" />
                 </VBox>
                 <Region HBox.hgrow="ALWAYS" />
+                <Button text="Accueil" onAction="#goToMainView" />
+                <Button text="Historique Commandes" onAction="#goToOrderHistory" />
             </HBox>
             <Separator style="-fx-background-color: #c8e6c9;" />
         </VBox>

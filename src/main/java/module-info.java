@@ -14,6 +14,9 @@ module tn.esprit.pidev {
     requires com.almasb.fxgl.all;
     requires jbcrypt;
     requires java.mail;
+    requires stripe.java;
+
+    opens tn.esprit.pidev.icons to javafx.fxml;
 
     opens tn.esprit.pidev to javafx.fxml;
     exports tn.esprit.pidev;

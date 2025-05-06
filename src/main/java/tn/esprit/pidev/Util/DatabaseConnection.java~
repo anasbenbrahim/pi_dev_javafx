@@ -9,17 +9,12 @@ public class DatabaseConnection {
     private static final String USER = "root";
     private static final String PASSWORD = "";
 
-    /**
-     * Gets a database connection.
-     * @return A database connection
-     * @throws SQLException if a database access error occurs
-     */
-    public static Connection getConnection() throws SQLException {
+    public static Connection getConnection() {
         try {
             return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
             System.err.println("Connection failed: " + e.getMessage());
-            throw e; // Rethrow to allow proper handling by caller
+            return null;
         }
     }
 }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="tn.esprit.pidev.Controller.OrderHistoryController" style="-fx-background-color: linear-gradient(to bottom, #f8fff5, #e0f7e0);">
+    <top>
+        <HBox spacing="16" alignment="CENTER_LEFT" style="-fx-background-color: #e8f4d8; -fx-background-radius: 0 0 18 18; -fx-padding: 18 36 12 36;">
+            <ImageView fitHeight="42" fitWidth="42" pickOnBounds="true" preserveRatio="true">
+               
+            </ImageView>
+            <VBox spacing="4">
+                <Label text="Historique de vos commandes" style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: #388e3c;" />
+                <Label text="Visualisez toutes vos commandes passées et suivez leur statut !" style="-fx-font-size: 13; -fx-text-fill: #7bb661;" />
+            </VBox>
+        </HBox>
+    </top>
+    <center>
+        <ScrollPane fitToWidth="true" style="-fx-background-color:transparent;">
+            <VBox fx:id="ordersContainer" spacing="18" alignment="TOP_CENTER" style="-fx-padding: 16 0 16 0;" />
+        </ScrollPane>
+    </center>
+    <bottom>
+        <HBox spacing="18" alignment="CENTER" style="-fx-padding: 18 0 18 0;">
+            <Button text="Détail Commande" onAction="#goToOrderDetail" style="-fx-background-color: #7bb661; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 10 25;" />
+            <Button text="Accueil" onAction="#goToMainView" style="-fx-background-color: #a3a3a3; -fx-text-fill: white; -fx-background-radius: 8; -fx-padding: 10 25;" />
+        </HBox>
+    </bottom>
+</BorderPane>

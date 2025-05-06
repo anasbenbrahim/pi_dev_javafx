@@ -1,6 +1,7 @@
 package tn.esprit.pidev.Controller;
 
 import javafx.fxml.FXML;
+import tn.esprit.pidev.Util.NavigationHelper;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -8,25 +9,32 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 import tn.esprit.pidev.Model.*;
 import tn.esprit.pidev.Service.*;
+import tn.esprit.pidev.Controller.PaymentController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
-
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.fxml.FXMLLoader;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.*;
+import javafx.stage.Stage;
+import javafx.event.ActionEvent;
 
 public class MarcheController implements Initializable {
     @FXML
     private GridPane produitsGrid;
-    
+
     @FXML
     private ListView<PanierItem> panierListView;
-    
+
     @FXML
     private Label totalLabel;
 
@@ -59,7 +67,7 @@ public class MarcheController implements Initializable {
 
     private void loadAndDisplayProduits() {
         allProduits.clear();
-        List<Produit> produits = produitService.getAllProduits();
+        List<Produit> produits = produitService.getAllAvailableProduits();
         allProduits.addAll(produits);
         filterAndDisplayProduits();
     }
@@ -148,6 +156,8 @@ public class MarcheController implements Initializable {
         nomLabel.setStyle("-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: #388e3c;");
         Label prixLabel = new Label(String.format("%.2f DT", produit.getPrix()));
         prixLabel.setStyle("-fx-font-size: 16; -fx-text-fill: #2e7d32;");
+        Label quantiteLabel = new Label(produit.getQuantite() + " kg");
+        quantiteLabel.setStyle("-fx-font-size: 16; -fx-text-fill: #2e7d32;");
         Label descrLabel = new Label(produit.getDescr());
         descrLabel.setWrapText(true);
         descrLabel.setMaxWidth(140);
@@ -155,7 +165,7 @@ public class MarcheController implements Initializable {
         Button addBtn = new Button("Ajouter au panier");
         addBtn.setStyle("-fx-background-color: linear-gradient(to right, #43a047, #66bb6a); -fx-text-fill: white; -fx-background-radius: 22; -fx-padding: 7 18; -fx-font-size: 15; -fx-cursor: hand; -fx-font-weight: bold;");
         addBtn.setOnAction(e -> ajouterAuPanier(produit));
-        card.getChildren().addAll(imageView, nomLabel, prixLabel, descrLabel, addBtn);
+        card.getChildren().addAll(imageView, nomLabel, prixLabel,quantiteLabel, descrLabel, addBtn);
         return card;
     }
 
@@ -173,13 +183,13 @@ public class MarcheController implements Initializable {
                     Label nameLabel = new Label(item.getProduit().getNomprod());
                     Label quantityLabel = new Label("x" + item.getQuantite());
                     Label priceLabel = new Label(String.format("%.2fDT", item.getTotal()));
-                    
+
                     Button plusBtn = new Button("+");
                     Button minusBtn = new Button("-");
-                    
+
                     plusBtn.setOnAction(e -> ajouterAuPanier(item.getProduit()));
                     minusBtn.setOnAction(e -> retirerDuPanier(item.getProduit()));
-                    
+
                     cell.getChildren().addAll(nameLabel, quantityLabel, priceLabel, minusBtn, plusBtn);
                     setGraphic(cell);
                 }
@@ -242,7 +252,7 @@ public class MarcheController implements Initializable {
         double total = panierItems.stream()
             .mapToDouble(PanierItem::getTotal)
             .sum();
-            
+
         Order order = new Order(
             1, // TODO: Remplacer par l'ID de l'utilisateur connecté
             LocalDateTime.now(),
@@ -261,28 +271,43 @@ public class MarcheController implements Initializable {
                     panierItem.getProduit().getPrix()
                 );
                 items.add(item);
-                
+
                 // Mettre à jour le stock
                 Produit produit = panierItem.getProduit();
                 produit.setQuantite(produit.getQuantite() - panierItem.getQuantite());
                 produitService.updateProduit(produit);
             }
-            
+
             orderDAO.addOrderItems(orderId, items);
 
             // Vider le panier
             panier.clear();
             panierItems.clear();
             updateTotal();
-            
+
             // Recharger les produits pour mettre à jour les quantités affichées
             loadAndDisplayProduits();
 
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Succès");
-            alert.setHeaderText(null);
-            alert.setContentText("Votre commande a été validée avec succès!");
-            alert.showAndWait();
+            // Redirect to payment page
+            Stage stage = (Stage) totalLabel.getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tn/esprit/pidev/view/payment/PaymentView.fxml"));
+            try {
+                Parent paymentView = loader.load();
+                PaymentController paymentController = loader.getController();
+                paymentController.setOrder(orderId);
+
+                Scene scene = new Scene(paymentView);
+                stage.setScene(scene);
+                stage.setTitle("Paiement de Commande");
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erreur");
+                alert.setHeaderText(null);
+                alert.setContentText("Erreur lors du chargement de la page de paiement.");
+                alert.showAndWait();
+            }
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
@@ -290,5 +315,17 @@ public class MarcheController implements Initializable {
             alert.setContentText("Une erreur est survenue lors de la validation de votre commande.");
             alert.showAndWait();
         }
+    }
+
+    @FXML
+    private void goToOrderHistory(javafx.event.ActionEvent event) {
+        javafx.stage.Stage stage = (javafx.stage.Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        tn.esprit.pidev.Util.NavigationHelper.navigateTo(stage, "/tn/esprit/pidev/view/order/OrderHistory.fxml", "Historique des commandes");
+    }
+
+    @FXML
+    private void goToMainView(ActionEvent event) {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        NavigationHelper.navigateTo(stage, "/tn/esprit/pidev/view/MainView.fxml", "Accueil");
     }
 }

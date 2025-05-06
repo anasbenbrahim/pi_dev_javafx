@@ -68,6 +68,10 @@
                         </ImageView>
                     </graphic>
                 </Button>
+
+                <Button text="Retour à la liste" onAction="#goToCategoryList"
+                        style="-fx-background-color: #a3a3a3; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10 25;">
+                </Button>
             </HBox>
         </GridPane>
     </center>
