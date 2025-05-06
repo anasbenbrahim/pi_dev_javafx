@@ -20,10 +20,15 @@ import tn.esprit.pidev.Model.Category;
 import tn.esprit.pidev.Model.Produit;
 import tn.esprit.pidev.Service.CategoryService;
 import tn.esprit.pidev.Service.ProduitService;
+import tn.esprit.pidev.Service.InventoryAIService;
+import tn.esprit.pidev.Service.OrderItemService;
+import tn.esprit.pidev.Model.OrderItem;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -45,10 +50,13 @@ public class ProduitController {
     @FXML private VBox notifListPane;
     @FXML private ListView<String> notifListView;
     @FXML private Button closeNotifPaneBtn;
+    @FXML private TextArea forecastOutput;
 
     private ProduitService produitService = new ProduitService();
     private ObservableList<Produit> produitList = FXCollections.observableArrayList();
     private CategoryService categoryService = new CategoryService();
+    private final InventoryAIService inventoryAIService = new InventoryAIService();
+    private final OrderItemService orderItemService = new OrderItemService();
 
     // Liste des notifications
     private final ObservableList<String> notificationHistory = FXCollections.observableArrayList();
@@ -367,5 +375,62 @@ public class ProduitController {
         alert.setHeaderText(header);
         alert.setContentText(content);
         alert.showAndWait();
+    }
+
+    @FXML
+    private void handleForecastDemand() {
+        if (selectedProduit == null) {
+            showAlert("Sélection requise", null, "Veuillez sélectionner un produit pour la prévision.");
+            return;
+        }
+        List<Double> salesHistory = getSalesHistoryForProduit(selectedProduit.getId(), 12);
+        if (salesHistory.size() < 2) {
+            showAlert("Données insuffisantes", null, "Pas assez d'historique de ventes pour la prévision (min 2).");
+            return;
+        }
+        int periods = 3; // Forecast next 3 periods (e.g., months)
+        double[] forecast = inventoryAIService.forecastDemand(salesHistory, periods);
+        StringBuilder sb = new StringBuilder();
+        sb.append("Prévision de la demande pour les ").append(periods).append(" prochaines périodes :\n\n");
+        sb.append("Ventes récentes utilisées : ");
+        for (int i = 0; i < salesHistory.size(); i++) {
+            sb.append((i > 0 ? ", " : "")).append(String.format("%.2f", salesHistory.get(i)));
+        }
+        sb.append("\n\nPrévision (pondérée, les ventes récentes comptent plus) :\n");
+        for (int i = 0; i < forecast.length; i++) {
+            sb.append("Période ").append(i + 1).append(" : ").append(String.format("%.2f", forecast[i])).append(" unités\n");
+        }
+        sb.append("\nNote : Cette prévision utilise la moyenne pondérée des ventes récentes. Les périodes récentes ont plus d'impact. Plus il y a d'historique, plus la prévision est fiable.\n");
+        if (forecastOutput != null) {
+            forecastOutput.setText(sb.toString());
+        } else {
+            showAlert("Prévision", null, sb.toString());
+        }
+    }
+
+    private List<Double> getSalesHistoryForProduit(int produitId, int periods) {
+        // This is a simple example: sum order items by product for recent orders
+        List<Double> salesHistory = new java.util.ArrayList<>();
+        // You may want to fetch by date or by last N orders
+        // For demo, fetch all order items for this product and group as needed
+        // (Replace with your real logic if needed)
+        try {
+            // Example: get all order items for this product
+            String sql = "SELECT quantite FROM order_item WHERE produit_id = ? ORDER BY id DESC LIMIT ?";
+            try (PreparedStatement ps = tn.esprit.pidev.Util.DatabaseConnection.getConnection().prepareStatement(sql)) {
+                ps.setInt(1, produitId);
+                ps.setInt(2, periods);
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        salesHistory.add(rs.getDouble("quantite"));
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // Reverse to chronological order if needed
+        java.util.Collections.reverse(salesHistory);
+        return salesHistory;
     }
 }

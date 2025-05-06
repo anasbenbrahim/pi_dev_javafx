@@ -29,7 +29,7 @@ public class StripeService {
                     .setQuantity(1L)
                     .setPriceData(
                         SessionCreateParams.LineItem.PriceData.builder()
-                            .setCurrency("usd")
+                            .setCurrency("TND")
                             .setUnitAmount(amountCents)
                             .setProductData(
                                 SessionCreateParams.LineItem.PriceData.ProductData.builder()

@@ -15,6 +15,8 @@ module tn.esprit.pidev {
     requires jbcrypt;
     requires java.mail;
     requires stripe.java;
+    requires smile.core;
+    requires smile.data;
 
     opens tn.esprit.pidev.icons to javafx.fxml;
 

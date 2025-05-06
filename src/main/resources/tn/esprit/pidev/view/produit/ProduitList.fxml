@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
@@ -89,26 +90,29 @@
                                         <Text style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-fill: white;" text="+" />
                                     </graphic>
                                 </Button>
+                                <Button onAction="#handleForecastDemand" style="-fx-background-color: #1976d2; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 12 20; -fx-graphic-text-gap: 8;" text="Prévoir Demande" />
                                 <Button onAction="#handleEditProduit" style="-fx-background-color: #fbc02d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 12 20;" text="Modifier" />
                                 <Button onAction="#handleDeleteProduit" style="-fx-background-color: #e53935; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 12 20;" text="Supprimer" />
                                 <Button onAction="#handleExportCSV" style="-fx-background-color: #7e57c2; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 12 20;" text="Exporter CSV" />
                             </HBox>
-                        </VBox>
+                            <TextArea fx:id="forecastOutput" editable="false" prefRowCount="3" wrapText="true" style="-fx-background-radius: 8; -fx-font-size: 15px; -fx-padding: 8; -fx-background-color: #f1f8e9; -fx-border-color: #c8e6c9; -fx-border-radius: 8;" />
 
-                        <!-- Notification flottante toast à droite - Style moderne -->
-                        <VBox fx:id="ruptureToast" alignment="TOP_RIGHT" style="-fx-background-color: linear-gradient(to right, #ffffff, #fff8f5); -fx-border-color: #e53935; -fx-border-width: 0 0 0 4; -fx-background-radius: 12; -fx-border-radius: 12; -fx-padding: 16; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 15, 0.2, 0, 5); -fx-max-width: 360; -fx-spacing: 12; -fx-translate-x: 380; -fx-translate-y: 20; -fx-opacity: 0;" visible="false">
-                            <HBox alignment="CENTER_LEFT" spacing="10">
-                                <Label style="-fx-font-size: 20px; -fx-text-fill: #e53935;" text="🚨" />
-                                <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #e53935;" text="Rupture de stock" />
-                                <Region HBox.hgrow="ALWAYS" />
-                                <Button fx:id="closeToastBtn" style="-fx-background-color: transparent; -fx-text-fill: #757575; -fx-font-size: 16; -fx-cursor: hand;" text="✖" />
-                            </HBox>
-                            <HBox style="-fx-background-color: #e0e0e0; -fx-min-height: 1; -fx-max-height: 1;" />
-                            <VBox spacing="8" style="-fx-padding: 4 0 0 0;">
-                                <Label style="-fx-font-size: 14px; -fx-text-fill: #616161;" text="Les produits suivants sont en rupture:" />
-                                <Label fx:id="ruptureListLabel" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #e53935;" wrapText="true" />
+                            <!-- Notification flottante toast à droite - Style moderne -->
+                            <VBox fx:id="ruptureToast" alignment="TOP_RIGHT" style="-fx-background-color: linear-gradient(to right, #ffffff, #fff8f5); -fx-border-color: #e53935; -fx-border-width: 0 0 0 4; -fx-background-radius: 12; -fx-border-radius: 12; -fx-padding: 16; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 15, 0.2, 0, 5); -fx-max-width: 360; -fx-spacing: 12; -fx-translate-x: 380; -fx-translate-y: 20; -fx-opacity: 0;" visible="false">
+                                <HBox alignment="CENTER_LEFT" spacing="10">
+                                    <Label style="-fx-font-size: 20px; -fx-text-fill: #e53935;" text="🚨" />
+                                    <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #e53935;" text="Rupture de stock" />
+                                    <Region HBox.hgrow="ALWAYS" />
+                                    <Button fx:id="closeToastBtn" style="-fx-background-color: transparent; -fx-text-fill: #757575; -fx-font-size: 16; -fx-cursor: hand;" text="✖" />
+                                </HBox>
+                                <HBox style="-fx-background-color: #e0e0e0; -fx-min-height: 1; -fx-max-height: 1;" />
+                                <VBox spacing="8" style="-fx-padding: 4 0 0 0;">
+                                    <Label style="-fx-font-size: 14px; -fx-text-fill: #616161;" text="Les produits suivants sont en rupture:" />
+                                    <Label fx:id="ruptureListLabel" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #e53935;" wrapText="true" />
+                                </VBox>
                             </VBox>
                         </VBox>
+
                     </children>
                 </StackPane>
             </content>

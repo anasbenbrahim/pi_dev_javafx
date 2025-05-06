@@ -29,7 +29,7 @@ public class StripePaymentService {
         long amountInCents = Math.round(order.getTotal() * 100);
         
         PaymentIntentCreateParams params = PaymentIntentCreateParams.builder()
-            .setCurrency("eur")
+            .setCurrency("TND")
             .setAmount(amountInCents)
             .setDescription("Order #" + order.getId())
             .putMetadata("orderId", String.valueOf(order.getId()))
