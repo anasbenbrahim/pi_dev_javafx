@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/22.0.1" xmlns:fx="http://javafx.com/fxml/1" stylesheets="style.css" fx:controller="org.example.controllers.ImageGenerator">
+<BorderPane xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" stylesheets="style.css" fx:controller="org.example.controllers.ImageGenerator">
     <!-- Left Sidebar -->
     <left>
         <VBox styleClass="sidebar" prefWidth="250">
